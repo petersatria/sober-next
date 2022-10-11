@@ -6,9 +6,9 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div>
-        Hello Home
-        <Link href="/cart"><button>Go to cart</button></Link>
-        <Link href="/cart/96"><button>Go to cart with id</button></Link>
+      Hello Home
+      <Link href="/cart"><button>Go to cart</button></Link>
+      <Link href="/cart/96"><button>Go to cart with id</button></Link>
     </div>
   )
 }
