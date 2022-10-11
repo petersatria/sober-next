@@ -16,7 +16,7 @@ import { settings, settingsRelated } from "../../components/Slider";
 
 const ProductDetail = (props) => {
 	const [items, setItems] = useState(1);
-	const [fix, setFix] = useState('')
+	const [relatedProducts, setRelatedProducts] = useState('')
 
 
 	const dispatch = useDispatch()
@@ -30,8 +30,6 @@ const ProductDetail = (props) => {
 		const p = products.map((pr) => {
 			return pr
 		})
-
-		console.log(p)
 
 		return p.filter(
 			p => p?.category === product?.category && p._id !== product._id
@@ -55,26 +53,11 @@ const ProductDetail = (props) => {
 	// 	dispatch(addCart({ productId: id, quantity: items }))
 	// }
 
-
-
-	// const relatedProducts = (products) => {
-	// 	if (relatedCategory(products).length > 3) {
-	// 		return relatedCategory(products)
-	// 	} else {
-	// 		return products
-	// 	}
-	// }
-
-	// const prd = relatedProducts(products)
-	// const shuffled = prd?.sort(() => 0.5 - Math.random());
-
 	const shuffled = () => {
 		if (relatedCategory(products).length > 3) {
-			setFix(relatedCategory(products).sort(() => 0.5 - Math.random()))
+			setRelatedProducts(relatedCategory(products).sort(() => 0.5 - Math.random()))
 		} else {
-			setFix(products.filter(
-				p => p._id !== product._id
-			).sort(() => 0.5 - Math.random()))
+			setRelatedProducts(products.filter(p => p._id !== product._id).sort(() => 0.5 - Math.random()))
 		}
 	}
 
@@ -149,7 +132,7 @@ const ProductDetail = (props) => {
 						<div className={`mt-md-5 ${styles.border}`}>
 							<h2 className={`mt-5 ${styles.relatedProductTitle}`}>Related Products</h2>
 							<Slider {...settingsRelated}>
-								{fix && fix.slice(0, 4).map(product => (
+								{relatedProducts && relatedProducts.slice(0, 4).map(product => (
 									<div key={Math.random().toString() + product._id} className="mt-5 p-3">
 										<Product product={product} />
 									</div>
