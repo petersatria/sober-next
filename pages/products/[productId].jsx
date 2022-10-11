@@ -72,7 +72,9 @@ const ProductDetail = (props) => {
 		if (relatedCategory(products).length > 3) {
 			setFix(relatedCategory(products).sort(() => 0.5 - Math.random()))
 		} else {
-			setFix(products.sort(() => 0.5 - Math.random()))
+			setFix(products.filter(
+				p => p._id !== product._id
+			).sort(() => 0.5 - Math.random()))
 		}
 	}
 
