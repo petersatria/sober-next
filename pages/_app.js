@@ -2,6 +2,8 @@ import '../styles/globals.css';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Layout from '../components/layout/layout';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 function MyApp({ Component, pageProps }) {
     return (
         <Provider store={store}>
