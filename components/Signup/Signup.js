@@ -5,6 +5,7 @@ import useFetch from '../../hooks/use-fetch';
 import Form from '../GeneralUI/Form';
 import Input from '../GeneralUI/Input';
 import Notification from '../GeneralUI/Notification';
+import LoadingSpinner from '../GeneralUI/LoadingSpinner';
 
 import ValidationFunction from '../../lib/ValidationFunction';
 
@@ -17,6 +18,7 @@ const host =
 
 const Signup = () => {
     const [notif, setNotif] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     // Router
     const router = useRouter();
@@ -33,12 +35,10 @@ const Signup = () => {
 
     // Side effects
     useEffect(() => {
+        if (!result) return;
+
         if (result === 'pending') {
-            setNotif({
-                title: 'Registering',
-                message: 'Please wait',
-                status: 'pending',
-            });
+            setLoading(true);
             return;
         }
 
@@ -62,6 +62,7 @@ const Signup = () => {
             }, 3500);
         }
 
+        setLoading(false);
         const timer = setTimeout(() => setNotif(null), 5000);
 
         return () => {
@@ -105,9 +106,6 @@ const Signup = () => {
         birthdateInputRef.current.reset();
     };
 
-    if (result === 'success') {
-    }
-
     return (
         <div className={styles.signup}>
             {notif && (
@@ -117,6 +115,8 @@ const Signup = () => {
                     status={notif.status}
                 />
             )}
+
+            {loading && <LoadingSpinner />}
 
             <Form onSubmit={submitFormHandler}>
                 <div className={styles['form-group']}>

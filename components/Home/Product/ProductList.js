@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './ProductList.module.css';
 import Link from 'next/link';
@@ -7,16 +7,17 @@ import { useState } from 'react';
 import Image from 'next/future/image';
 // import { useDispatch } from 'react-redux';
 // import { addCart } from '../../store/actions/CartAction';
+import ProductModal from './ProductModal';
 
 const ProductList = (props) => {
     // const dispatch = useDispatch();
     // State
-    const [cartActive, setCartActive] = useState(false);
+    const [modalActive, setModalActive] = useState(false);
     const { product } = props;
 
     // Handler
-    const clickHandler = () => {
-        setCartActive((prevState) => true);
+    const showModalHandler = () => {
+        setModalActive(true);
         // const dataCart = {
         //     productId: product._id,
         //     quantity: 1
@@ -27,6 +28,10 @@ const ProductList = (props) => {
         // dispatch(addCart(dataCart));
     };
 
+    const modalSubmitHandler = (value) => {
+        console.log(value);
+    };
+
     // Props
     const price = props.price?.toLocaleString('id-ID', {
         style: 'currency',
@@ -34,52 +39,63 @@ const ProductList = (props) => {
     });
 
     return (
-        <div className={styles.container}>
-            <span className={styles['link-wrapper']}>
-                <Link href={`/products/${product._id}`}>
-                    <a
-                        onClick={() => {
-                            window.scrollTo(0, 0);
-                        }}
-                    >
-                        <div className={styles.link}>
-                            <Image
-                                src={props.img[0]}
-                                alt="Product"
-                                className={styles.img}
-                                width={300}
-                                height={420}
-                                layout="responsive"
-                            />
-                            <Image
-                                src={props.img[1]}
-                                alt="Product"
-                                className={`${styles.img} ${styles['img--2']}`}
-                                width={300}
-                                height={420}
-                                layout="responsive"
-                            />
-                        </div>
-                    </a>
-                </Link>
-            </span>
+        <>
+            {modalActive && (
+                <ProductModal
+                    image={props.img[1]}
+                    name={props.name}
+                    onClose={() => setModalActive(false)}
+                    onSubmit={modalSubmitHandler}
+                />
+            )}
 
-            <button onClick={clickHandler} className={styles.btn}>
-                <FontAwesomeIcon icon={cartActive ? faCheck : faCartShopping} />
-            </button>
+            <div className={styles.container}>
+                <span className={styles['link-wrapper']}>
+                    <Link href={`/products/${product._id}`}>
+                        <a
+                            onClick={() => {
+                                window.scrollTo(0, 0);
+                            }}
+                        >
+                            <div className={styles.link}>
+                                <Image
+                                    src={props.img[0]}
+                                    alt="Product"
+                                    className={styles.img}
+                                    width={300}
+                                    height={420}
+                                    layout="responsive"
+                                />
+                                <Image
+                                    src={props.img[1]}
+                                    alt="Product"
+                                    className={`${styles.img} ${styles['img--2']}`}
+                                    width={300}
+                                    height={420}
+                                    layout="responsive"
+                                />
+                            </div>
+                        </a>
+                    </Link>
+                </span>
 
-            <div className={styles.text}>
-                <p className={styles.name}>{props.name}</p>
+                <button onClick={showModalHandler} className={styles.btn}>
+                    <FontAwesomeIcon icon={faCartShopping} />
+                </button>
 
-                <p className={styles.price}>{price}</p>
+                <div className={styles.text}>
+                    <p className={styles.name}>{props.name}</p>
+
+                    <p className={styles.price}>{price}</p>
+                </div>
+
+                <div className={styles.tags}>
+                    {props.hot && <div className={styles.hot}>Hot</div>}
+                    {/* <div className={styles.new}>New</div> */}
+                    {/* <div className={styles.discount}>20%</div> */}
+                </div>
             </div>
-
-            <div className={styles.tags}>
-                {props.hot && <div className={styles.hot}>Hot</div>}
-                {/* <div className={styles.new}>New</div> */}
-                {/* <div className={styles.discount}>20%</div> */}
-            </div>
-        </div>
+        </>
     );
 };
 

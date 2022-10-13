@@ -2,7 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const turnInactive = (state) => {
     const stateArr = Object.entries(state);
-    return Object.fromEntries(stateArr.map((s) => [s[0], false]));
+    return Object.fromEntries(
+        stateArr.map((s) => {
+            if (s[0] === 'headerTransparant') return [s[0], s[1]];
+
+            return [s[0], false];
+        })
+    );
 };
 
 const initialState = {

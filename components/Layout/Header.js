@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Header.module.css';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 // import { logoutUser } from '../../store/actions/LoginAction';
@@ -31,8 +31,6 @@ const Header = () => {
 
         window.addEventListener('scroll', scrollHandler);
 
-        dispatch(headerActions.homeIsActive());
-
         return () => window.removeEventListener('scroll', scrollHandler);
     }, []);
 
@@ -46,6 +44,9 @@ const Header = () => {
         ? `${styles.link} ${styles.active}`
         : styles.link;
     const blogLinkStyle = blogIsActive ? `${styles.link} ${styles.active}` : styles.link;
+    const headerStyle = headerTransparant
+        ? styles.header
+        : `${styles.header} ${styles['header--active']}`;
 
     const onLogoutClick = () => {
         dispatch(logoutUser());
@@ -57,13 +58,7 @@ const Header = () => {
     };
 
     return (
-        <header
-            className={
-                headerTransparant
-                    ? styles.header
-                    : `${styles.header} ${styles['header--active']}`
-            }
-        >
+        <header className={headerStyle}>
             <nav className={styles.nav}>
                 <ul className={styles.list}>
                     <li className={styles.item}>
@@ -137,13 +132,6 @@ const Header = () => {
 
             <nav className={styles.nav}>
                 <ul className={styles.list}>
-                    <li className={styles.item}>
-                        <Link href="/">
-                            <a className={styles['sub-link']}>
-                                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            </a>
-                        </Link>
-                    </li>
                     {/* {isLoggedIn ? (
                         <>
                             <li className={styles.item}>

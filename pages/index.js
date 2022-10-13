@@ -1,9 +1,13 @@
+import { useDispatch } from 'react-redux';
+import { headerActions } from '../redux/actions/headerSlicer';
 import axios from 'axios';
 
 import Hero from '../components/Home/Hero/Hero';
 import ProductsBestWeek from '../components/Home/Product/ProductsBestWeek';
 import ProductsByCategory from '../components/Home/Product/ProductsByCategory';
 import Newsletter from '../components/Home/Newsletter/Newsletter';
+import { useEffect, useState } from 'react';
+import SearchBar from '../components/Home/SearchBar/SearchBar';
 
 export default function HomePage({
     productsBestWeek,
@@ -12,6 +16,8 @@ export default function HomePage({
     productsDress,
     productsJacket,
 }) {
+    const dispatch = useDispatch();
+
     const productsCategoryItem = [
         {
             items: productsBaju,
@@ -43,9 +49,14 @@ export default function HomePage({
         },
     ];
 
+    useEffect(() => {
+        dispatch(headerActions.homeIsActive());
+    }, []);
+
     return (
         <>
             <Hero />
+            <SearchBar />
             <ProductsBestWeek items={productsBestWeek} />
             {productsCategoryItem.map((item) => (
                 <ProductsByCategory

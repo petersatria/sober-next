@@ -1,21 +1,23 @@
+import { useEffect, useState } from 'react';
 import ReactDom from 'react-dom';
 import styles from './Overlay.module.css';
 
-const Backdrop = (props) => {
-    return <div className={styles.backdrop}></div>;
-};
+const Overlay = ({ children }) => {
+    const [doc, setDoc] = useState(null);
 
-const Modal = (props) => {
-    return <div className={styles.modal}>{props.children}</div>;
-};
+    useEffect(() => {
+        setDoc(window.document);
+    }, []);
 
-const Overlay = (props) => {
-    return ReactDom.createPortal(
-        <>
-            <Backdrop />
-            <Modal>{props.children}</Modal>
-        </>,
-        document.getElementById('modal-root')
+    return doc ? (
+        ReactDom.createPortal(
+            <>
+                <div className={styles.overlay}>{children}</div>
+            </>,
+            doc.getElementById('modal-root')
+        )
+    ) : (
+        <></>
     );
 };
 
