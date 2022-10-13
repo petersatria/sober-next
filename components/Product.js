@@ -19,7 +19,7 @@ const Product = (props) => {
 			<div className="col mb-5">
 				<div className={`card h-100 border-0 ${styles.wrapperProduct}`}>
 					<Link href={`/products/${product._id}`} >
-						<div className={`card-img-top`} >
+						<div className={``} >
 							<div>
 								<Image quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={` ${styles.productImg}`} src={product.images[0]} alt="" />
 								<Image quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={` ${styles.productHover}`} src={product.images[1]} alt="" />
