@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { sizeActions } from '../../redux/actions/sizeSlicer';
 import useFetch from '../../hooks/use-fetch';
 
 import Notification from '../GeneralUI/Notification';
@@ -13,6 +15,11 @@ const host =
         : process.env.REACT_APP_URL;
 
 const AddProduct = () => {
+    // REDUX SELECTOR DISPATCH AND ACTIONS
+    const { s, m, l, xl } = useSelector((state) => state.size);
+    const dispatch = useDispatch();
+    const { sActive, mActive, lActive, xlActive } = sizeActions;
+
     // ROUTER
     const router = useRouter();
 
@@ -29,7 +36,10 @@ const AddProduct = () => {
     const [detailValue, setDetailValue] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
     const [thumbnailValue, setThumbnailValue] = useState('');
-    const [stockValue, setStockValue] = useState('');
+    const [stockSValue, setStockSValue] = useState('');
+    const [stockMValue, setStockMValue] = useState('');
+    const [stockLValue, setStockLValue] = useState('');
+    const [stockXLValue, setStockXLValue] = useState('');
     const [sizeValue, setSizeValue] = useState('');
     const [summaryValue, setSummaryValue] = useState('');
     const [imageValue, setImageValue] = useState([]);
@@ -48,7 +58,12 @@ const AddProduct = () => {
             price: priceValue,
             category: categoryValue,
             size: sizeValue,
-            stock: stockValue,
+            stock: {
+                s: stockSValue,
+                m: stockMValue,
+                l: stockLValue,
+                xl: stockXLValue,
+            },
             images: imageValue,
         };
 
@@ -62,6 +77,7 @@ const AddProduct = () => {
     };
 
     // SIDE EFFECT
+    // Notification
     useEffect(() => {
         if (!result) return;
 
@@ -99,6 +115,25 @@ const AddProduct = () => {
         };
     }, [result]);
 
+    // Size
+    useEffect(() => {
+        if (sizeValue === 's') {
+            dispatch(sActive());
+        }
+
+        if (sizeValue === 'm') {
+            dispatch(mActive());
+        }
+
+        if (sizeValue === 'l') {
+            dispatch(lActive());
+        }
+
+        if (sizeValue === 'xl') {
+            dispatch(xlActive());
+        }
+    }, [sizeValue]);
+
     // DYNAMIC IMAGE INPUT
     const imageUrlEL = [];
 
@@ -134,6 +169,10 @@ const AddProduct = () => {
     const buttonImage = `${styles.btn} ${styles.image}`;
     const buttonBack = `${styles.btn} ${styles.back}`;
     const textarea = `${styles.input} ${styles.textarea}`;
+    const stockS = `${styles.control} ${s ? '' : styles.hidden}`;
+    const stockM = `${styles.control} ${m ? '' : styles.hidden}`;
+    const stockL = `${styles.control} ${l ? '' : styles.hidden}`;
+    const stockXL = `${styles.control} ${xl ? '' : styles.hidden}`;
 
     return (
         <>
@@ -186,56 +225,39 @@ const AddProduct = () => {
                         </div>
                     </div>
 
-                    <div className={styles.controls}>
-                        <div className={styles.control}>
-                            <label className={styles.label} htmlFor="thumbnail">
-                                Category
-                            </label>
-                            <select
-                                onChange={(e) => setCategoryValue(e.target.value)}
-                                className={styles.input}
-                                value={categoryValue}
-                                required
-                            >
-                                <option></option>
-                                <option value="baju">Baju</option>
-                                <option value="celana">Celana</option>
-                                <option value="dress">Dress</option>
-                                <option value="jacket">Jacket</option>
-                            </select>
-                        </div>
+                    <div className={styles.control}>
+                        <label className={styles.label} htmlFor="thumbnail">
+                            Category
+                        </label>
+                        <select
+                            onChange={(e) => setCategoryValue(e.target.value)}
+                            className={styles.input}
+                            value={categoryValue}
+                            required
+                        >
+                            <option></option>
+                            <option value="baju">Baju</option>
+                            <option value="celana">Celana</option>
+                            <option value="dress">Dress</option>
+                            <option value="jacket">Jacket</option>
+                        </select>
+                    </div>
 
-                        <div className={controlShort}>
-                            <label className={styles.label} htmlFor="stock">
-                                Stock
-                            </label>
-                            <input
-                                onChange={(e) => setStockValue(e.target.value)}
-                                value={stockValue}
-                                className={styles.input}
-                                type="number"
-                                id="stock"
-                                min="0"
-                                required
-                            />
-                        </div>
+                    <div className={styles.control}>
+                        <label className={styles.label} htmlFor="thumbnail">
+                            Thumbnail
+                        </label>
+                        <input
+                            onChange={(e) => setThumbnailValue(e.target.value)}
+                            value={thumbnailValue}
+                            className={styles.input}
+                            type="url"
+                            id="thumbnail"
+                            required
+                        />
                     </div>
 
                     <div className={styles.controls}>
-                        <div className={styles.control}>
-                            <label className={styles.label} htmlFor="thumbnail">
-                                Thumbnail
-                            </label>
-                            <input
-                                onChange={(e) => setThumbnailValue(e.target.value)}
-                                value={thumbnailValue}
-                                className={styles.input}
-                                type="url"
-                                id="thumbnail"
-                                required
-                            />
-                        </div>
-
                         <div className={controlShort}>
                             <label className={styles.label} htmlFor="size">
                                 Size
@@ -246,12 +268,67 @@ const AddProduct = () => {
                                 value={sizeValue}
                                 required
                             >
-                                <option></option>
                                 <option value="s">S</option>
                                 <option value="m">M</option>
                                 <option value="l">L</option>
                                 <option value="xl">XL</option>
                             </select>
+                        </div>
+
+                        <div className={stockS}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock S
+                            </label>
+                            <input
+                                onChange={(e) => setStockSValue(e.target.value)}
+                                value={stockSValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-s"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className={stockM}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock M
+                            </label>
+                            <input
+                                onChange={(e) => setStockMValue(e.target.value)}
+                                value={stockMValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-m"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className={stockL}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock L
+                            </label>
+                            <input
+                                onChange={(e) => setStockLValue(e.target.value)}
+                                value={stockLValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-l"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className={stockXL}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock XL
+                            </label>
+                            <input
+                                onChange={(e) => setStockXLValue(e.target.value)}
+                                value={stockXLValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-xl"
+                                min="0"
+                            />
                         </div>
                     </div>
 
