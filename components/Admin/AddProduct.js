@@ -28,7 +28,7 @@ const AddProduct = () => {
 
     // STATE
     // Image
-    const [imgNum, setImgNum] = useState(1);
+    const [imgNum, setImgNum] = useState(2);
 
     // Input value
     const [nameValue, setNameValue] = useState('');
@@ -59,10 +59,10 @@ const AddProduct = () => {
             category: categoryValue,
             size: sizeValue,
             stock: {
-                s: stockSValue,
-                m: stockMValue,
-                l: stockLValue,
-                xl: stockXLValue,
+                s: +stockSValue,
+                m: +stockMValue,
+                l: +stockLValue,
+                xl: +stockXLValue,
             },
             images: imageValue,
         };
@@ -159,6 +159,7 @@ const AddProduct = () => {
                     className={styles.input}
                     type="url"
                     id="image"
+                    required
                 />
             </div>
         );
@@ -374,13 +375,15 @@ const AddProduct = () => {
                                 Add Image
                             </button>
 
-                            <button
-                                onClick={() => setImgNum((state) => state - 1)}
-                                type="button"
-                                className={buttonImage}
-                            >
-                                Remove Image
-                            </button>
+                            {imgNum > 2 && (
+                                <button
+                                    onClick={() => setImgNum((state) => state - 1)}
+                                    type="button"
+                                    className={buttonImage}
+                                >
+                                    Remove Image
+                                </button>
+                            )}
                         </div>
 
                         <button className={styles.btn}>Add Product</button>

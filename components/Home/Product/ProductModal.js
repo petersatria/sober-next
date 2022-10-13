@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/future/image';
 import Overlay from '../../GeneralUI/Overlay';
 import styles from './ProductModal.module.css';
@@ -7,6 +7,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const ProductModal = ({ image, name, onClose, onSubmit }) => {
     const selectRef = useRef();
+    const [imageLoad, setImageLoad] = useState(true);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -15,11 +16,29 @@ const ProductModal = ({ image, name, onClose, onSubmit }) => {
         onClose();
     };
 
+    const loadHandler = (e) => {
+        setImageLoad(false);
+    };
+
+    // ELEMENT
+    const loadingSpinnerEl = (
+        <span className={styles.loader}>
+            <span className={styles.inner}></span>
+        </span>
+    );
+
     return (
         <Overlay>
             <div className={styles.container}>
                 <div className={styles.image}>
-                    <Image src={image} alt={name} width={600} height={600} />
+                    <Image
+                        onLoad={loadHandler}
+                        src={image}
+                        alt={name}
+                        width={600}
+                        height={600}
+                    />
+                    {imageLoad && loadingSpinnerEl}
                 </div>
 
                 <div className={styles.content}>

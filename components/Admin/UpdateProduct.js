@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
 import useFetch from '../../hooks/use-fetch';
 
 import Notification from '../GeneralUI/Notification';
+import { sizeActions } from '../../redux/actions/sizeSlicer';
 
 import styles from './AddProduct.module.css';
 import Link from 'next/link';
@@ -13,14 +15,21 @@ const host =
         : process.env.REACT_APP_URL;
 
 const UpdateProduct = ({ items, id }) => {
+    // REDUX SELECTOR DISPATCH AND ACTIONS
+    const { s, m, l, xl } = useSelector((state) => state.size);
+    const dispatch = useDispatch();
+    const { sActive, mActive, lActive, xlActive } = sizeActions;
+
     // INITIAL INPUT VALUE
     const initialNameValue = items.name ? items.name : '';
     const initialPriceValue = items.price ? items.price : '';
     const initialDetailValue = items.detail ? items.detail : '';
     const initialCategoryValue = items.category ? items.category : '';
     const initialThumbnailValue = items.thumbnail ? items.thumbnail : '';
-    const initialStockValue = items.stock ? items.stock : '';
-    const initialSizeValue = items.size ? items.size : '';
+    const initialStockSValue = items.size.s ? items.size.s : '';
+    const initialStockMValue = items.size.m ? items.size.m : '';
+    const initialStockLValue = items.size.l ? items.size.l : '';
+    const initialStockXLValue = items.size.xl ? items.size.xl : '';
     const initialSummaryValue = items.summary ? items.summary : '';
     const initialimagesArr = items.images.length > 0 ? items.images : [];
 
@@ -40,9 +49,12 @@ const UpdateProduct = ({ items, id }) => {
     const [detailValue, setDetailValue] = useState(initialDetailValue);
     const [categoryValue, setCategoryValue] = useState(initialCategoryValue);
     const [thumbnailValue, setThumbnailValue] = useState(initialThumbnailValue);
-    const [stockValue, setStockValue] = useState(initialStockValue);
+    const [stockSValue, setStockSValue] = useState(initialStockSValue);
+    const [stockMValue, setStockMValue] = useState(initialStockMValue);
+    const [stockLValue, setStockLValue] = useState(initialStockLValue);
+    const [stockXLValue, setStockXLValue] = useState(initialStockXLValue);
     const [imageValue, setImageValue] = useState(initialimagesArr);
-    const [sizeValue, setSizeValue] = useState(initialSizeValue);
+    const [sizeValue, setSizeValue] = useState('');
     const [summaryValue, setSummaryValue] = useState(initialSummaryValue);
 
     // Notification
@@ -59,7 +71,12 @@ const UpdateProduct = ({ items, id }) => {
             price: priceValue,
             category: categoryValue,
             size: sizeValue,
-            stock: stockValue,
+            stock: {
+                s: stockSValue,
+                m: stockMValue,
+                l: stockLValue,
+                xl: stockXLValue,
+            },
             images: imageValue,
             summary: summaryValue,
         };
@@ -72,6 +89,7 @@ const UpdateProduct = ({ items, id }) => {
     };
 
     // SIDE EFFECT
+    // Notification
     useEffect(() => {
         if (!result) return;
 
@@ -109,6 +127,25 @@ const UpdateProduct = ({ items, id }) => {
         };
     }, [result]);
 
+    // Size
+    useEffect(() => {
+        if (sizeValue === 's') {
+            dispatch(sActive());
+        }
+
+        if (sizeValue === 'm') {
+            dispatch(mActive());
+        }
+
+        if (sizeValue === 'l') {
+            dispatch(lActive());
+        }
+
+        if (sizeValue === 'xl') {
+            dispatch(xlActive());
+        }
+    }, [sizeValue]);
+
     // DYNAMIC IMAGE INPUT
     const imageUrlEL = [];
 
@@ -144,6 +181,10 @@ const UpdateProduct = ({ items, id }) => {
     const buttonImage = `${styles.btn} ${styles.image}`;
     const buttonBack = `${styles.btn} ${styles.back}`;
     const textarea = `${styles.input} ${styles.textarea}`;
+    const stockS = `${styles.control} ${s ? '' : styles.hidden}`;
+    const stockM = `${styles.control} ${m ? '' : styles.hidden}`;
+    const stockL = `${styles.control} ${l ? '' : styles.hidden}`;
+    const stockXL = `${styles.control} ${xl ? '' : styles.hidden}`;
 
     return (
         <>
@@ -196,56 +237,39 @@ const UpdateProduct = ({ items, id }) => {
                         </div>
                     </div>
 
-                    <div className={styles.controls}>
-                        <div className={styles.control}>
-                            <label className={styles.label} htmlFor="thumbnail">
-                                Category
-                            </label>
-                            <select
-                                onChange={(e) => setCategoryValue(e.target.value)}
-                                className={styles.input}
-                                value={categoryValue}
-                                required
-                            >
-                                <option></option>
-                                <option value="baju">Baju</option>
-                                <option value="celana">Celana</option>
-                                <option value="dress">Dress</option>
-                                <option value="jacket">Jacket</option>
-                            </select>
-                        </div>
+                    <div className={styles.control}>
+                        <label className={styles.label} htmlFor="thumbnail">
+                            Category
+                        </label>
+                        <select
+                            onChange={(e) => setCategoryValue(e.target.value)}
+                            className={styles.input}
+                            value={categoryValue}
+                            required
+                        >
+                            <option></option>
+                            <option value="baju">Baju</option>
+                            <option value="celana">Celana</option>
+                            <option value="dress">Dress</option>
+                            <option value="jacket">Jacket</option>
+                        </select>
+                    </div>
 
-                        <div className={controlShort}>
-                            <label className={styles.label} htmlFor="stock">
-                                Stock
-                            </label>
-                            <input
-                                onChange={(e) => setStockValue(e.target.value)}
-                                value={stockValue}
-                                className={styles.input}
-                                type="number"
-                                min="0"
-                                id="stock"
-                                required
-                            />
-                        </div>
+                    <div className={styles.control}>
+                        <label className={styles.label} htmlFor="thumbnail">
+                            Thumbnail
+                        </label>
+                        <input
+                            onChange={(e) => setThumbnailValue(e.target.value)}
+                            value={thumbnailValue}
+                            className={styles.input}
+                            type="url"
+                            id="thumbnail"
+                            required
+                        />
                     </div>
 
                     <div className={styles.controls}>
-                        <div className={styles.control}>
-                            <label className={styles.label} htmlFor="thumbnail">
-                                Thumbnail
-                            </label>
-                            <input
-                                onChange={(e) => setThumbnailValue(e.target.value)}
-                                value={thumbnailValue}
-                                className={styles.input}
-                                type="url"
-                                id="thumbnail"
-                                required
-                            />
-                        </div>
-
                         <div className={controlShort}>
                             <label className={styles.label} htmlFor="size">
                                 Size
@@ -256,12 +280,67 @@ const UpdateProduct = ({ items, id }) => {
                                 value={sizeValue}
                                 required
                             >
-                                <option></option>
                                 <option value="s">S</option>
                                 <option value="m">M</option>
                                 <option value="l">L</option>
                                 <option value="xl">XL</option>
                             </select>
+                        </div>
+
+                        <div className={stockS}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock S
+                            </label>
+                            <input
+                                onChange={(e) => setStockSValue(e.target.value)}
+                                value={stockSValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-s"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className={stockM}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock M
+                            </label>
+                            <input
+                                onChange={(e) => setStockMValue(e.target.value)}
+                                value={stockMValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-m"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className={stockL}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock L
+                            </label>
+                            <input
+                                onChange={(e) => setStockLValue(e.target.value)}
+                                value={stockLValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-l"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className={stockXL}>
+                            <label className={styles.label} htmlFor="stock">
+                                Stock XL
+                            </label>
+                            <input
+                                onChange={(e) => setStockXLValue(e.target.value)}
+                                value={stockXLValue}
+                                className={styles.input}
+                                type="number"
+                                id="stock-xl"
+                                min="0"
+                            />
                         </div>
                     </div>
 
@@ -307,13 +386,15 @@ const UpdateProduct = ({ items, id }) => {
                                 Add Image
                             </button>
 
-                            <button
-                                onClick={() => setImgNum((state) => state - 1)}
-                                type="button"
-                                className={buttonImage}
-                            >
-                                Remove Image
-                            </button>
+                            {imgNum > 2 && (
+                                <button
+                                    onClick={() => setImgNum((state) => state - 1)}
+                                    type="button"
+                                    className={buttonImage}
+                                >
+                                    Remove Image
+                                </button>
+                            )}
                         </div>
 
                         <button className={styles.btn}>Update Product</button>
