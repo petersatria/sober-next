@@ -1,7 +1,9 @@
-import useSWR from 'swr';
-import axios from 'axios';
+import { useRef, useState } from 'react';
+import useFetch from '../../../hooks/use-fetch';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import SearchResultModal from './SearchResultModal';
 
 import styles from './SearchBar.module.css';
 
@@ -10,31 +12,60 @@ const host =
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-const fetcher = (url) => axios.get(url).then((res) => res.data);
-
 const SearchBar = () => {
-    // const { data } = useSWR(`${host}api/searchProduct`, fetcher);
+    // FETCH
+    const { sendRequest } = useFetch(true);
 
-    // if (data) {
-    //     console.log(data);
-    // }
+    // REF
+    const inputRef = useRef();
+
+    // STATE
+    const [searchResult, setSearchResult] = useState(null);
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        const dataHandler = (data) => {
+            setSearchResult(data.result);
+        };
+
+        sendRequest(
+            {
+                url: `${host}api/searchProduct`,
+                method: 'POST',
+                data: { search: inputRef.current.value },
+            },
+            dataHandler
+        );
+    };
+
+    const closeHandler = () => {
+        setSearchResult(null);
+    };
 
     return (
-        <div className={styles.container}>
-            <h2>Find your best clothes</h2>
+        <>
+            {searchResult && (
+                <SearchResultModal result={searchResult} onClose={closeHandler} />
+            )}
 
-            <form>
-                <input
-                    className={styles.input}
-                    type="text"
-                    required
-                    placeholder="Search..."
-                />
-                <button className={styles.btn}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
-            </form>
-        </div>
+            <div className={styles.container}>
+                <h2>Find your best clothes</h2>
+
+                <form onSubmit={submitHandler}>
+                    <input
+                        ref={inputRef}
+                        className={styles.input}
+                        type="text"
+                        required
+                        placeholder="Search..."
+                    />
+                    <button className={styles.btn}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
+                </form>
+            </div>
+        </>
     );
 };
 

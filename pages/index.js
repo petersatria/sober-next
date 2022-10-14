@@ -16,8 +16,10 @@ export default function HomePage({
     productsDress,
     productsJacket,
 }) {
+    // DISPATCH REDUX
     const dispatch = useDispatch();
 
+    // PRODUCTS BY CATEGORY INITIAL ITEMS
     const productsCategoryItem = [
         {
             items: productsBaju,
