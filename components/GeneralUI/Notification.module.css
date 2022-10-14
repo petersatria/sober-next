@@ -1,0 +1,30 @@
+.notif {
+    width: 40rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 1.6rem;
+    text-transform: capitalize;
+    padding: 3rem 0.5rem;
+    color: white;
+    position: absolute;
+    top: 0;
+    border-radius: 10px;
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.295);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.success {
+    background-color: rgb(146, 204, 58);
+}
+
+.error {
+    background-color: rgb(184, 59, 59);
+}
+
+.pending {
+    background-color: black;
+}

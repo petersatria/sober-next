@@ -1,0 +1,45 @@
+.container {
+    width: 90%;
+    height: 38rem;
+    padding: 1rem;
+    background-color: burlywood;
+    border: 1px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-y: scroll;
+    box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.305);
+}
+
+.container::-webkit-scrollbar {
+    opacity: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.heading {
+    align-self: flex-end;
+    margin-bottom: -1rem;
+}
+
+.btn {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.result {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 13rem));
+    justify-content: center;
+    column-gap: 3.2rem;
+    row-gap: 6.4rem;
+}

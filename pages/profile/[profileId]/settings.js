@@ -1,6 +1,6 @@
-import Layout from '../../../component/tes/layout'
-import ProfileSidebar from '../../../component/profile/ProfileSidebar'
-import ProfileEdit from '../../../component/profile/ProfileEdit'
+import Layout from '../../../components/profile/tes/layout'
+import ProfileSidebar from '../../../components/profile/ProfileSidebar'
+import ProfileEdit from '../../../components/profile/ProfileEdit'
 import { useRouter } from 'next/router'
 
 export default function Contact() {

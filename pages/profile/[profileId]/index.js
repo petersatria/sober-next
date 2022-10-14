@@ -1,6 +1,6 @@
-import Layout from '../../../component/tes/layout'
-import ProfileSidebar from '../../../component/profile/ProfileSidebar'
-import ProfileDetail from '../../../component/profile/ProfileDetail'
+import Layout from '../../../components/profile/tes/layout'
+import ProfileSidebar from '../../../components/profile/ProfileSidebar'
+import ProfileDetail from '../../../components/profile/ProfileDetail'
 import { useRouter } from 'next/router'
 
 
