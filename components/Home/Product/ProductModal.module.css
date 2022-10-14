@@ -1,0 +1,149 @@
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 50%;
+    height: 25rem;
+    display: flex;
+    border: 1px solid black;
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+}
+
+.image {
+    flex: 1;
+    border-right: 1px solid black;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.content {
+    flex: 0 0 45%;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+    text-align: center;
+}
+
+.heading {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.label {
+    margin-bottom: 0.8rem;
+    display: inline-block;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap: 3rem;
+    margin: 0 auto;
+}
+
+.input select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid black;
+    display: inline-block;
+}
+
+.input select:focus {
+    outline: none;
+}
+
+.input option {
+    font-size: 0.9rem;
+}
+
+.btn {
+    border: none;
+    cursor: pointer;
+}
+
+.btn.close {
+    width: 10%;
+    font-size: 1.5rem;
+    color: black;
+    background-color: transparent;
+    margin-left: auto;
+}
+
+.btn.add {
+    font-size: 0.8rem;
+    background-color: black;
+    color: white;
+    padding: 0.8rem 0.5rem;
+    border-radius: 9px;
+    transition: all 0.3s;
+}
+
+.btn.add:hover {
+    transform: translateY(-0.3rem);
+}
+
+/* Loading spinner */
+.loader {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid black;
+    animation: loader 2s infinite ease;
+    position: absolute;
+    top: 40%;
+    left: 25%;
+}
+
+.inner {
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: #ccc;
+    animation: loader-inner 2s infinite ease-in;
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(180deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    75% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loader-inner {
+    0% {
+        height: 0%;
+    }
+    25% {
+        height: 0%;
+    }
+    50% {
+        height: 100%;
+    }
+    75% {
+        height: 100%;
+    }
+    100% {
+        height: 0%;
+    }
+}
