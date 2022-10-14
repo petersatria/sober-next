@@ -12,11 +12,7 @@ const host =
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-const fetcher = (url) =>
-    axios
-        .get(url)
-        .then((res) => res.data.result.filter((product) => product.category === category))
-        .catch((err) => []);
+const fetcher = (url) => axios.get(url).then((res) => res.data.result);
 
 const ProductsByCategory = ({ items, image, heading, category }) => {
     // State
@@ -29,7 +25,8 @@ const ProductsByCategory = ({ items, image, heading, category }) => {
     // Side Effect
     useEffect(() => {
         if (!data) return setProducts(items);
-        setProducts(data);
+        const productsByCategory = data.filter((p) => p.category === category);
+        setProducts(productsByCategory);
     }, [data]);
 
     // Handler

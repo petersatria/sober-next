@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-
+import Image from 'next/future/image';
 import styles from './Header.module.css';
 import { useEffect } from 'react';
 import Link from 'next/link';
@@ -121,7 +121,9 @@ const Header = () => {
             <div>
                 <Link href="/">
                     <a>
-                        <img
+                        <Image
+                            width={232}
+                            height={48}
                             src="/logo/header/logo-light.svg"
                             onClick={scrollUpPage}
                             alt="Brand Logo"

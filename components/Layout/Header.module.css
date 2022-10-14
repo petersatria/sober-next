@@ -18,6 +18,12 @@
     backdrop-filter: blur(10px);
 }
 
+.header img {
+    width: 8.25rem;
+    height: 1.5rem;
+    margin-top: -1rem;
+}
+
 .list {
     list-style: none;
     display: flex;
