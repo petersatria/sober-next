@@ -1,0 +1,14 @@
+.formEdit{
+    font-weight: 500;
+    line-height: 2rem;
+    font-size: 1rem;
+    color: #909097;
+}
+
+.formEdit input{
+    color: #909093;
+}
+
+.heading{
+    color: #909097;
+}
