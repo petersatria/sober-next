@@ -8,133 +8,187 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { logoutUser } from '../../store/actions/LoginAction';
 // import { eraseCookie, getCookie } from '../../moduleComponents/cookie';
 import { headerActions } from '../../redux/actions/headerSlicer';
+import { eraseCookie, getCookie } from "../../moduleComponents/cookie";
+import { getUserData, isUserLoggedIn } from "../../redux/actions/authentication";
+import { confirmNotification } from "../../moduleComponents/notification";
+import { useRouter } from "next/router";
 
 const Header = () => {
-    // const { carts } = useSelector((state) => state.cart);
-    // const { isLoggedIn, username } = useSelector((state) => state.user);
-    const {
-        blogIsActive,
-        featureIsActive,
-        headerTransparant,
-        homeIsActive,
-        pagesIsActive,
-        shopIsActive,
-    } = useSelector((state) => state.header);
-    const dispatch = useDispatch();
-    // const cookie = JSON.parse(getCookie('userCookie'));
+  // const { carts } = useSelector((state) => state.cart);
+  // const { isLoggedIn, username } = useSelector((state) => state.user);
+  const {
+    blogIsActive,
+    featureIsActive,
+    headerTransparant,
+    homeIsActive,
+    pagesIsActive,
+    shopIsActive,
+  } = useSelector((state) => state.header);
+  const dispatch = useDispatch();
+  // const cookie = JSON.parse(getCookie('userCookie'));
 
-    useEffect(() => {
-        const scrollHandler = () => {
-            if (window.scrollY > 90) return dispatch(headerActions.fillHeader());
-            if (window.scrollY === 0) return dispatch(headerActions.transparantHeader());
-        };
-
-        window.addEventListener('scroll', scrollHandler);
-
-        return () => window.removeEventListener('scroll', scrollHandler);
-    }, []);
-
-    // Styles;
-    const homeLinkStyle = homeIsActive ? `${styles.link} ${styles.active}` : styles.link;
-    const shopLinkStyle = shopIsActive ? `${styles.link} ${styles.active}` : styles.link;
-    const featuresLinkStyle = featureIsActive
-        ? `${styles.link} ${styles.active}`
-        : styles.link;
-    const pagesLinkStyle = pagesIsActive
-        ? `${styles.link} ${styles.active}`
-        : styles.link;
-    const blogLinkStyle = blogIsActive ? `${styles.link} ${styles.active}` : styles.link;
-    const headerStyle = headerTransparant
-        ? styles.header
-        : `${styles.header} ${styles['header--active']}`;
-
-    const onLogoutClick = () => {
-        dispatch(logoutUser());
-        eraseCookie('userCookie');
+  useEffect(() => {
+    const scrollHandler = () => {
+      if (window.scrollY > 90) return dispatch(headerActions.fillHeader());
+      if (window.scrollY === 0) return dispatch(headerActions.transparantHeader());
     };
 
-    const scrollUpPage = () => {
-        window.scrollTo(0, 0);
-    };
+    window.addEventListener('scroll', scrollHandler);
 
-    return (
-        <header className={headerStyle}>
-            <nav className={styles.nav}>
-                <ul className={styles.list}>
-                    <li className={styles.item}>
-                        <Link href="/">
-                            <a
-                                onClick={() => dispatch(headerActions.homeIsActive())}
-                                className={homeLinkStyle}
-                            >
-                                Home
-                            </a>
-                        </Link>
-                    </li>
+    return () => window.removeEventListener('scroll', scrollHandler);
+  }, []);
 
-                    <li className={styles.item}>
-                        <Link href="/product">
-                            <a
-                                onClick={() => dispatch(headerActions.shopIsActive())}
-                                className={shopLinkStyle}
-                            >
-                                Shop
-                            </a>
-                        </Link>
-                    </li>
+  useEffect(() => {
+    if (getCookie("userCookie") !== null) {
+      dispatch(getUserData(JSON.parse(getCookie("userCookie"))));
+      dispatch(isUserLoggedIn(true));
+      return;
+    }
+  }, []);
 
-                    <li className={styles.item}>
-                        <Link href="/features">
-                            <a
-                                onClick={() => dispatch(headerActions.featureIsActive())}
-                                className={featuresLinkStyle}
-                            >
-                                Features
-                            </a>
-                        </Link>
-                    </li>
+  // Styles;
+  const homeLinkStyle = homeIsActive ? `${styles.link} ${styles.active}` : styles.link;
+  const shopLinkStyle = shopIsActive ? `${styles.link} ${styles.active}` : styles.link;
+  const featuresLinkStyle = featureIsActive
+    ? `${styles.link} ${styles.active}`
+    : styles.link;
+  const pagesLinkStyle = pagesIsActive
+    ? `${styles.link} ${styles.active}`
+    : styles.link;
+  const blogLinkStyle = blogIsActive ? `${styles.link} ${styles.active}` : styles.link;
+  const headerStyle = headerTransparant
+    ? styles.header
+    : `${styles.header} ${styles['header--active']}`;
 
-                    <li className={styles.item}>
-                        <Link href="/pages">
-                            <a
-                                onClick={() => dispatch(headerActions.pagesIsActive())}
-                                className={pagesLinkStyle}
-                            >
-                                Pages
-                            </a>
-                        </Link>
-                    </li>
+  const onLogoutClick = async () => {
+    let titleText = "Are You Sure To Logout ?";
+    let confirmText = "Yes Please !";
+    let confirm = await confirmNotification(titleText, confirmText);
+    if (confirm) {
+      dispatch(isUserLoggedIn(false));
+      eraseCookie("userCookie");
+      router.push("/login");
+      return;
+    }
+  };
 
-                    <li className={styles.item}>
-                        <Link href="/blogs">
-                            <a
-                                onClick={() => dispatch(headerActions.blogIsActive())}
-                                className={blogLinkStyle}
-                            >
-                                Blog
-                            </a>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+  const scrollUpPage = () => {
+    window.scrollTo(0, 0);
+  };
 
-            <div>
-                <Link href="/">
-                    <a>
-                        <Image
-                            width={232}
-                            height={48}
-                            src="/logo/header/logo-light.svg"
-                            onClick={scrollUpPage}
-                            alt="Brand Logo"
-                        />
-                    </a>
-                </Link>
-            </div>
+  const userIsLogin = () =>
+    isLoggedIn ? (
+      <>
+        <li className={styles.item}>
+          <Link href={`/profile/${userInformation.id}/details`}>
+            <a className={styles["sub-link"]}>{userInformation.username}</a>
+          </Link>
+        </li>
 
-            <nav className={styles.nav}>
-                <ul className={styles.list}>
-                    {/* {isLoggedIn ? (
+        <li className={styles.item}>
+          <a className={styles["sub-link"]} onClick={onLogoutClick}>
+            Logout
+          </a>
+        </li>
+      </>
+    ) : (
+      <>
+        <li className={styles.item}>
+          <Link href="/login">
+            <a onClick={() => dispatch(headerActions.inActive())} className={styles["sub-link"]}>
+              Login
+            </a>
+          </Link>
+        </li>
+
+        <li className={styles.item}>
+          <Link href="/signup">
+            <a onClick={() => dispatch(headerActions.inActive())} className={styles["sub-link"]}>
+              Register
+            </a>
+          </Link>
+        </li>
+      </>
+    );
+
+  return (
+    <header className={headerStyle}>
+      <nav className={styles.nav}>
+        <ul className={styles.list}>
+          <li className={styles.item}>
+            <Link href="/">
+              <a
+                onClick={() => dispatch(headerActions.homeIsActive())}
+                className={homeLinkStyle}
+              >
+                Home
+              </a>
+            </Link>
+          </li>
+
+          <li className={styles.item}>
+            <Link href="/product">
+              <a
+                onClick={() => dispatch(headerActions.shopIsActive())}
+                className={shopLinkStyle}
+              >
+                Shop
+              </a>
+            </Link>
+          </li>
+
+          <li className={styles.item}>
+            <Link href="/features">
+              <a
+                onClick={() => dispatch(headerActions.featureIsActive())}
+                className={featuresLinkStyle}
+              >
+                Features
+              </a>
+            </Link>
+          </li>
+
+          <li className={styles.item}>
+            <Link href="/pages">
+              <a
+                onClick={() => dispatch(headerActions.pagesIsActive())}
+                className={pagesLinkStyle}
+              >
+                Pages
+              </a>
+            </Link>
+          </li>
+
+          <li className={styles.item}>
+            <Link href="/blogs">
+              <a
+                onClick={() => dispatch(headerActions.blogIsActive())}
+                className={blogLinkStyle}
+              >
+                Blog
+              </a>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
+      <div>
+        <Link href="/">
+          <a>
+            <Image
+              width={232}
+              height={48}
+              src="/logo/header/logo-light.svg"
+              onClick={scrollUpPage}
+              alt="Brand Logo"
+            />
+          </a>
+        </Link>
+      </div>
+
+      <nav className={styles.nav}>
+        <ul className={styles.list}>
+          {/* {isLoggedIn ? (
                         <>
                             <li className={styles.item}>
                                 <Link href={`/profile/${cookie.id}/details`}>
@@ -168,45 +222,45 @@ const Header = () => {
                         </>
                     )} */}
 
-                    {/* Sementara sampe integrasi ke redux dan cookies, langsung ganti aja klo mau integrasi cookie */}
-                    <li className={styles.item}>
-                        <Link href="/login">
-                            <a
-                                onClick={() => dispatch(headerActions.inActive())}
-                                className={styles['sub-link']}
-                            >
-                                Login
-                            </a>
-                        </Link>
-                    </li>
+          {/* Sementara sampe integrasi ke redux dan cookies, langsung ganti aja klo mau integrasi cookie */}
+          <li className={styles.item}>
+            <Link href="/login">
+              <a
+                onClick={() => dispatch(headerActions.inActive())}
+                className={styles['sub-link']}
+              >
+                Login
+              </a>
+            </Link>
+          </li>
 
-                    <li className={styles.item}>
-                        <Link href="/signup">
-                            <a
-                                onClick={() => dispatch(headerActions.inActive())}
-                                className={styles['sub-link']}
-                            >
-                                Register
-                            </a>
-                        </Link>
-                    </li>
-                    {/* ------------------------------------------------------------------------------------------- */}
+          <li className={styles.item}>
+            <Link href="/signup">
+              <a
+                onClick={() => dispatch(headerActions.inActive())}
+                className={styles['sub-link']}
+              >
+                Register
+              </a>
+            </Link>
+          </li>
+          {/* ------------------------------------------------------------------------------------------- */}
 
-                    <li className={styles.item}>
-                        <Link href="/cart">
-                            <a
-                                className={`${styles['sub-link']} ${styles['sub-link--cart']}`}
-                            >
-                                <FontAwesomeIcon icon={faCartShopping} />
+          <li className={styles.item}>
+            <Link href="/cart">
+              <a
+                className={`${styles['sub-link']} ${styles['sub-link--cart']}`}
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
 
-                                {/* <div className={styles.cart}>{carts.length}</div> */}
-                            </a>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-    );
+                {/* <div className={styles.cart}>{carts.length}</div> */}
+              </a>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
 };
 
 export default Header;

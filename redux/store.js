@@ -1,12 +1,22 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import cartReducer from './actions/cartSlicer';
 import headerReducer from './actions/headerSlicer';
 import sizeReducer from './actions/sizeSlicer';
+import authentication from "./actions/authentication";
 
-export default configureStore({
-    reducer: {
-        cart: cartReducer,
-        header: headerReducer,
-        size: sizeReducer,
-    },
+const reducers = combineReducers({
+  auth: authentication,
+  header: headerReducer,
 });
+
+const store = configureStore({
+  reducer:
+  {
+    cart: cartReducer,
+    header: headerReducer,
+    size: sizeReducer,
+  },
+  reducer: reducers,
+});
+
+export default store;

@@ -4,27 +4,27 @@ import LoaderSpinner from '../GeneralUI/LoadingSpinner';
 import { useEffect, useState } from 'react';
 
 const Layout = ({ children }) => {
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 1500);
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
 
-        return () => {
-            clearTimeout(timer);
-        };
-    }, []);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
-    const component = loading ? (
-        <LoaderSpinner />
-    ) : (
-        <>
-            <Header />
-            {children}
-            <Footer />
-        </>
-    );
+  const component = loading ? (
+    <LoaderSpinner />
+  ) : (
+    <>
+      <Header />
+      {children}
+      <Footer />
+    </>
+  );
 
-    return <>{component}</>;
+  return <>{component}</>;
 };
 
 export default Layout;
