@@ -8,7 +8,7 @@ export function middleware(req) {
   let user = req.cookies.get("userCookie");
   let verify = "";
 
-  if (pathname === "/login" || pathname === "/" || pathname === "/blogs") {
+  if (pathname === "/login" || pathname === "/" || pathname === "/blogs" || pathname === "/products" || pathname.includes('/product') || pathname === "/signup") {
     return NextResponse.next();
   }
 
