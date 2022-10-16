@@ -29,7 +29,7 @@ function ProfileEdit(id) {
     // console.log(userData);
     useEffect(() => {
       fetchdata(id.id)
-    },[id.id])
+    },[id])
     
     const fetchdata = async (id) => {
         try {
@@ -37,7 +37,10 @@ function ProfileEdit(id) {
           setName(data.data.name)
           setUsername(data.data.username)
           setEmail(data.data.email)
-          setBirthdate(data.data.birthdate)
+          if (data.data.birthdate !== "") {
+            const split = data.data.birthdate.split("T")
+            setBirthdate(split[0])
+          }
         } catch (error) {
           console.log(error);
         }
@@ -144,7 +147,7 @@ function ProfileEdit(id) {
                 }}/>
               </div>
               <div className='col-12 p-2'>
-                <button onClick={handleSubmit} className='btn btn-dark' style={{width: "20%"}}>Update</button>
+                    <button onClick={handleSubmit} className='btn btn-dark' style={{ width: "20%", height: "2.2rem"}}>Update Profile</button>
               </div>
               </div>
             </form>
