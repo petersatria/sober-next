@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { headerActions } from '../redux/actions/headerSlicer';
+import { fetchCart } from '../redux/actions/cartSlicer'
 import axios from 'axios';
 
 import Hero from '../components/Home/Hero/Hero';
@@ -53,6 +54,7 @@ export default function HomePage({
 
     useEffect(() => {
         dispatch(headerActions.homeIsActive());
+        dispatch(fetchCart())
     }, []);
 
     return (

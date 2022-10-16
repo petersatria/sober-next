@@ -11,17 +11,18 @@ import { useDispatch } from 'react-redux'
 import Page from "../../components/Page";
 import Image from 'next/future/image'
 import { settings, settingsRelated } from "../../components/Slider";
-
-// import { addCart } from '../../store/actions/CartAction'
-
+import { addToCart } from '../../redux/actions/cartSlicer'
+import { useRouter } from 'next/router'
 const ProductDetail = (props) => {
 	const [items, setItems] = useState(1);
 	const [relatedProducts, setRelatedProducts] = useState('')
+	const [sizeItem, setSizeItem] = useState('')
 
-
+	const router = useRouter()
 	const dispatch = useDispatch()
-
+	const { productId } = router.query
 	const { product, products } = props
+
 
 	// console.log('testss', Object.keys(product.size[0]))
 	// console.log('testss', product)
@@ -44,14 +45,16 @@ const ProductDetail = (props) => {
 		// } else {
 		// 	setItems(e.target.value)
 		// }
-		console.log(e.target.value)
+		const size = e.target.value
+		setSizeItem(size)
 	}
 
-	// const addToCartHandler = async () => {
-	// 	// await axios.post('http://localhost:5000/cart', { productId: id, quantity: items })
+	const addToCartHandler = async () => {
+		// await axios.post('http://localhost:5000/cart', { productId: id, quantity: items })
 
-	// 	dispatch(addCart({ productId: id, quantity: items }))
-	// }
+
+		dispatch(addToCart({ productId: productId, quantity: items, size:sizeItem }))
+	}
 
 	const shuffled = () => {
 		if (relatedCategory(products).length > 3) {
@@ -98,7 +101,7 @@ const ProductDetail = (props) => {
 								{/* <input className={`${styles.fullWidth} ${styles.inputNum}`} type="number" name="quantity" id="quantity" min={1} max={10} onChange={itemsHandler} value={items} /> */}
 								<div className="dropdown">
 									<button className={`btn dropdown-toggle ${styles.fullWidth}`} style={{ fontSize: "14px", padding: "10px", border: "1px solid " }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-										Select size
+										{sizeItem?sizeItem:'Select Size'}
 									</button>
 									<ul className="dropdown-menu">
 										{product.size && Object.keys(product.size[0]).map((sizes) => {
@@ -108,10 +111,10 @@ const ProductDetail = (props) => {
 								</div >
 							</div >
 							<div className="col-4 mt-5 mt-md-3 mt-lg-5">
-								<Link href='/cart'>
-									<div className={`btn btn-dark ${styles.fullWidth}`} style={{ fontSize: "14px", padding: "10px" }}>Add to cart</div>
+								{/* <Link href='/cart'> */}
+									<div className={`btn btn-dark ${styles.fullWidth}`} onClick={addToCartHandler} style={{ fontSize: "14px", padding: "10px" }}>Add to cart</div>
 									{/* onClick={addToCartHandler} */}
-								</Link>
+								{/* </Link> */}
 							</div>
 						</div >
 						<div className={`mt-5 mt-md-3 mt-lg-5 align-items-end ${styles.border}`}>

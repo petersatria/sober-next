@@ -1,10 +1,8 @@
-import { useSelector } from 'react-redux'
-
+import CartComponent from '../../components/Cart/Cart.js'
 export default function Cart() {
-    const cart = useSelector(state=>state)
   return (
     <div>
-        <span>hello cart</span>
+        <CartComponent/>
     </div>
   )
 }

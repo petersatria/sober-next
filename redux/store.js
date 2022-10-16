@@ -5,8 +5,8 @@ import sizeReducer from './actions/sizeSlicer';
 
 export default configureStore({
     reducer: {
-        cart: cartReducer,
+        carts: cartReducer,
         header: headerReducer,
         size: sizeReducer,
-    },
+    }
 });
