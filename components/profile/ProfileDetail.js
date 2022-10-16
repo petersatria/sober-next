@@ -21,7 +21,7 @@ function ProfileDetail(id) {
   const [userData, setUserData] = useState({});
    
   const [isLoading, setIsLoading] = useState(true)
-  const splitBirtdate = userData.birthdate ?  userData.birthdate.split("T") : [""]
+  const splitBirtdate = userData.birthdate === "" ?  userData.birthdate.split("T") : [""]
   const birthdate = splitBirtdate[0]
     
     useEffect(() => {
