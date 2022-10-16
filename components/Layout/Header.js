@@ -1,31 +1,22 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Image from 'next/future/image';
-import styles from './Header.module.css';
-import { useEffect } from 'react';
-import Link from 'next/link';
-import { useSelector, useDispatch } from 'react-redux';
-// import { logoutUser } from '../../store/actions/LoginAction';
-// import { eraseCookie, getCookie } from '../../moduleComponents/cookie';
-import { headerActions } from '../../redux/actions/headerSlicer';
+import styles from "./Header.module.css";
+import { useEffect } from "react";
+import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
 import { eraseCookie, getCookie } from "../../moduleComponents/cookie";
 import { getUserData, isUserLoggedIn } from "../../redux/actions/authentication";
+import { headerActions } from "../../redux/actions/headerSlicer";
 import { confirmNotification } from "../../moduleComponents/notification";
 import { useRouter } from "next/router";
 
 const Header = () => {
   // const { carts } = useSelector((state) => state.cart);
-  // const { isLoggedIn, username } = useSelector((state) => state.user);
-  const {
-    blogIsActive,
-    featureIsActive,
-    headerTransparant,
-    homeIsActive,
-    pagesIsActive,
-    shopIsActive,
-  } = useSelector((state) => state.header);
+  const router = useRouter();
+  const { blogIsActive, featureIsActive, headerTransparant, homeIsActive, pagesIsActive, shopIsActive } = useSelector((state) => state.header);
   const dispatch = useDispatch();
-  // const cookie = JSON.parse(getCookie('userCookie'));
+  const { isLoggedIn, userInformation } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const scrollHandler = () => {
@@ -33,9 +24,9 @@ const Header = () => {
       if (window.scrollY === 0) return dispatch(headerActions.transparantHeader());
     };
 
-    window.addEventListener('scroll', scrollHandler);
+    window.addEventListener("scroll", scrollHandler);
 
-    return () => window.removeEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
   useEffect(() => {
@@ -49,16 +40,10 @@ const Header = () => {
   // Styles;
   const homeLinkStyle = homeIsActive ? `${styles.link} ${styles.active}` : styles.link;
   const shopLinkStyle = shopIsActive ? `${styles.link} ${styles.active}` : styles.link;
-  const featuresLinkStyle = featureIsActive
-    ? `${styles.link} ${styles.active}`
-    : styles.link;
-  const pagesLinkStyle = pagesIsActive
-    ? `${styles.link} ${styles.active}`
-    : styles.link;
+  const featuresLinkStyle = featureIsActive ? `${styles.link} ${styles.active}` : styles.link;
+  const pagesLinkStyle = pagesIsActive ? `${styles.link} ${styles.active}` : styles.link;
   const blogLinkStyle = blogIsActive ? `${styles.link} ${styles.active}` : styles.link;
-  const headerStyle = headerTransparant
-    ? styles.header
-    : `${styles.header} ${styles['header--active']}`;
+  const headerStyle = headerTransparant ? styles.header : `${styles.header} ${styles["header--active"]}`;
 
   const onLogoutClick = async () => {
     let titleText = "Are You Sure To Logout ?";
@@ -117,10 +102,7 @@ const Header = () => {
         <ul className={styles.list}>
           <li className={styles.item}>
             <Link href="/">
-              <a
-                onClick={() => dispatch(headerActions.homeIsActive())}
-                className={homeLinkStyle}
-              >
+              <a onClick={() => dispatch(headerActions.homeIsActive())} className={homeLinkStyle}>
                 Home
               </a>
             </Link>
@@ -128,10 +110,7 @@ const Header = () => {
 
           <li className={styles.item}>
             <Link href="/product">
-              <a
-                onClick={() => dispatch(headerActions.shopIsActive())}
-                className={shopLinkStyle}
-              >
+              <a onClick={() => dispatch(headerActions.shopIsActive())} className={shopLinkStyle}>
                 Shop
               </a>
             </Link>
@@ -139,10 +118,7 @@ const Header = () => {
 
           <li className={styles.item}>
             <Link href="/features">
-              <a
-                onClick={() => dispatch(headerActions.featureIsActive())}
-                className={featuresLinkStyle}
-              >
+              <a onClick={() => dispatch(headerActions.featureIsActive())} className={featuresLinkStyle}>
                 Features
               </a>
             </Link>
@@ -150,21 +126,15 @@ const Header = () => {
 
           <li className={styles.item}>
             <Link href="/pages">
-              <a
-                onClick={() => dispatch(headerActions.pagesIsActive())}
-                className={pagesLinkStyle}
-              >
+              <a onClick={() => dispatch(headerActions.pagesIsActive())} className={pagesLinkStyle}>
                 Pages
               </a>
             </Link>
           </li>
 
           <li className={styles.item}>
-            <Link href="/blogs">
-              <a
-                onClick={() => dispatch(headerActions.blogIsActive())}
-                className={blogLinkStyle}
-              >
+            <Link href="/blog">
+              <a onClick={() => dispatch(headerActions.blogIsActive())} className={blogLinkStyle}>
                 Blog
               </a>
             </Link>
@@ -182,75 +152,20 @@ const Header = () => {
               onClick={scrollUpPage}
               alt="Brand Logo"
             />
+
           </a>
         </Link>
       </div>
 
       <nav className={styles.nav}>
         <ul className={styles.list}>
-          {/* {isLoggedIn ? (
-                        <>
-                            <li className={styles.item}>
-                                <Link href={`/profile/${cookie.id}/details`}>
-                                    <a className={styles['sub-link']}>{username}</a>
-                                </Link>
-                            </li>
-                            <li className={styles.item}>
-                                <Link>
-                                    <a
-                                        onClick={onLogoutClick}
-                                        className={styles['sub-link']}
-                                    >
-                                        Logout
-                                    </a>
-                                </Link>
-                            </li>
-                        </>
-                    ) : (
-                        <>
-                            <li className={styles.item}>
-                                <Link href="/login">
-                                    <a className={styles['sub-link']}>Login</a>
-                                </Link>
-                            </li>
+          {userIsLogin()}
 
-                            <li className={styles.item}>
-                                <Link href="/signup">
-                                    <a className={styles['sub-link']}>Register</a>
-                                </Link>
-                            </li>
-                        </>
-                    )} */}
-
-          {/* Sementara sampe integrasi ke redux dan cookies, langsung ganti aja klo mau integrasi cookie */}
-          <li className={styles.item}>
-            <Link href="/login">
-              <a
-                onClick={() => dispatch(headerActions.inActive())}
-                className={styles['sub-link']}
-              >
-                Login
-              </a>
-            </Link>
-          </li>
-
-          <li className={styles.item}>
-            <Link href="/signup">
-              <a
-                onClick={() => dispatch(headerActions.inActive())}
-                className={styles['sub-link']}
-              >
-                Register
-              </a>
-            </Link>
-          </li>
           {/* ------------------------------------------------------------------------------------------- */}
 
           <li className={styles.item}>
             <Link href="/cart">
-              <a
-                className={`${styles['sub-link']} ${styles['sub-link--cart']}`}
-              >
+              <a className={`${styles["sub-link"]} ${styles["sub-link--cart"]}`}>
                 <FontAwesomeIcon icon={faCartShopping} />
 
                 {/* <div className={styles.cart}>{carts.length}</div> */}
