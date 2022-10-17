@@ -69,7 +69,7 @@ const FormBody = () => {
     <div className="col-md-7 col-sm-10 col-lg-5 col-xl-5 offset-xl-1 px-md-3 mt-md-4 py-md-3 form-area">
       <form>
         <div className="mt-sm-0 mb-sm-1 divider d-flex align-items-center ">
-          <span className="mx-3 text-center text-dark fw-bold">
+          <span className="mx-3 text-center text-dark fw-bold text-divider">
             Sign in
           </span>
         </div>
@@ -97,7 +97,7 @@ const FormBody = () => {
           <label
             className="form-label ms-3 label"
             htmlFor="form1Example23"
-            style={focus ? { fontSize: "1rem", marginTop: "4px", transform: "translateY(0.1rem)", opacity: "1", visibility: "visible" } : { fontSize: "1rem", marginTop: "4px" }}
+            style={focus ? { fontSize: "0.8rem", marginTop: "4px", transform: "translateY(0.1rem)", opacity: "1", visibility: "visible" } : { fontSize: "0.8rem", marginTop: "4px" }}
           >
             Password
           </label>
@@ -113,7 +113,7 @@ const FormBody = () => {
           Sign in
         </button>
         <div className="divider d-flex align-items-center my-3">
-          <span className="text-center fw-bold mx-3 mb-0">
+          <span className="text-center fw-bold mx-3 mb-0 text-divider">
             OR
           </span>
         </div>
