@@ -7,7 +7,7 @@ import authentication from "./actions/authentication";
 const reducers = combineReducers({
   auth: authentication,
   header: headerReducer,
-  cart: cartReducer,
+  carts: cartReducer,
   header: headerReducer,
   size: sizeReducer,
 });
