@@ -33,6 +33,6 @@
     color: #999;
 }
 
-.media > *:hover {
+.media>*:hover {
     color: black;
 }

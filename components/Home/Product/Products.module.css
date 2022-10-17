@@ -16,13 +16,13 @@
 }
 
 .btn {
-    background-color: black;
-    border: none;
-    padding: 1rem 4rem;
-    font-size: 1.2rem;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s;
+    background-color: black !important;
+    border: none !important;
+    padding: 1rem 4rem !important;
+    font-size: 1.2rem !important;
+    color: white !important;
+    cursor: pointer !important;
+    transition: all 0.3s !important;
 }
 
 .btn:hover {
