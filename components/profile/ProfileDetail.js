@@ -5,23 +5,26 @@ import Placeholder from 'react-bootstrap/Placeholder';
 import useSWR from 'swr'
 import axios from "axios"
 import style from './ProfileDetail.module.css'
+import { getCookie } from "../../moduleComponents/cookie";
+import { token } from "../../moduleComponents/tokenAuthorization"
 
 
-const token = ""
+
+function ProfileDetail(id) {
+  const tokenAuth = token()
 const config = {
   headers: {
-    'Authorization': 'Bearer' + token
+    'Authorization': `Bearer ${tokenAuth}`
   }
 }
-
-const fetcher = url => axios.get(url, config).then((res) => res.data);
-function ProfileDetail(id) {
+  const fetcher = url => axios.get(url, config).then((res) => res.data);
+  console.log(tokenAuth);
   const { data, error } = useSWR(`http://localhost:5000/api/profile/${id.id}`, fetcher)
 
   const [userData, setUserData] = useState({});
 
   const [isLoading, setIsLoading] = useState(true)
-  const splitBirtdate = userData.birthdate ? userData.birthdate.split("T") : [""]
+  const splitBirtdate = userData.birthdate ?  userData.birthdate.split("T") : ""
   const birthdate = splitBirtdate[0]
 
   useEffect(() => {

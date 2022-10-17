@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import style from './ProfileEdit.module.css'
 import axios, { Axios } from "axios"
-import { useRouter } from 'next/router';
+import { token } from '../../moduleComponents/tokenAuthorization';
 
 
 function ProfileEdit(id) {
@@ -18,11 +18,11 @@ function ProfileEdit(id) {
     const [notif, setNotif] = useState(false)
     const [pwNotif, setPwNotif] = useState(false)
     const [wrongPw, setWrongPw] = useState(false)
-    const token = ""
+    const tokenAuth = token()
     const objectData = {username:username,email:email,name:name,birthdate:birthdate}
     const config = {
       headers: {
-        'Authorization': 'Bearer'+ token
+        'Authorization': `Bearer ${tokenAuth}`
         }
       }
     // const data = { username, name, email, birthdate }
