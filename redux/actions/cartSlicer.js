@@ -42,14 +42,15 @@ export const fetchCart = createAsyncThunk('fetch/cart', async(data,thunkAPI)=>{
         userId = token.id
     }
 
-
     try {
+        if(!token){
+            return thunkAPI.fulfillWithValue({carts:[]})
+        }
         const cartUser = await axios.get(`http://localhost:5000/cart/${userId}`, {
             headers:{
                 Authorization: `Bearer ${token.token}`
             }
         })
-        console.log(cartUser.data)
         return thunkAPI.fulfillWithValue(cartUser.data)
     } catch (error) {
         console.log(error)

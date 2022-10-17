@@ -3,7 +3,6 @@ import useSWR from 'swr';
 import axios from 'axios';
 import useFetch from '../../hooks/use-fetch';
 import { token } from '../../moduleComponents/tokenAuthorization';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
@@ -31,7 +30,6 @@ const Admin = () => {
     }, [data]);
 
     const userToken = token();
-
     const deleteHandler = function () {
         sendRequest({
             url: `${host}api/delete-product/${this}`,
