@@ -74,6 +74,11 @@
 	font-weight: 400;
 }
 
+.listPriceProduct {
+	font-size: 14px;
+	font-weight: 600;
+}
+
 /* End Font Styles */
 
 .productImg {

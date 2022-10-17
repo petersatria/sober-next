@@ -1,0 +1,11 @@
+.h1Tittle {
+	font-size: 5.5rem;
+	font-weight: 700;
+	margin: 3rem 0;
+}
+
+.pTittle {
+	font-size: 1.6rem;
+	font-weight: 200;
+	line-height: 3.5rem;
+}

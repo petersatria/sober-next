@@ -1,0 +1,42 @@
+.wrapperList {
+	border: 1px solid #eaebee;
+}
+
+.wrapperCard {
+	border: 1px solid #eaebee;
+	display: block;
+	position: relative;
+	/* margin: 20px; */
+	/* padding: 16px; */
+	box-shadow: 0 1px 6px 0 var(--color-shadow, rgba(49, 53, 59, 0.12));
+}
+
+.borderTop {
+	border-top: 1px solid #eaebee;
+}
+
+.orderTitle {
+	font-size: 32px;
+	font-weight: 500;
+	color: #1E1E23;
+	text-align: center;
+	padding: 20px;
+}
+
+.productName {
+	font-size: 24px;
+	font-weight: 200;
+	color: #1E1E23;
+}
+
+.productDesc {
+	font-size: 16px;
+	font-weight: 400;
+	color: #7C7C80;
+}
+
+.productPrice {
+	font-size: 24px;
+	font-weight: 500;
+	color: #1E1E23;
+}

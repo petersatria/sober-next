@@ -8,9 +8,12 @@ export function middleware(req) {
   let user = req.cookies.get("userCookie");
   let verify = "";
 
-  if (pathname === "/login" || pathname === "/" || pathname === "/blogs" || pathname === "/products" || pathname.includes('/product') || pathname === "/signup") {
+  if (pathname === "/login" || pathname === "/" || pathname === "/blogs" || pathname === "/about-us" || pathname.includes('/blogs') || pathname === "/products" || pathname.includes('/product') || pathname === "/signup") {
     return NextResponse.next();
   }
+  // if (pathname === "/login" || pathname === "/" || pathname === "/blogs" || pathname === "/products" || pathname.includes('/product') || pathname === "/signup") {
+  //   return NextResponse.next();
+  // }
 
   if (user !== undefined) {
     user = JSON.parse(req.cookies.get("userCookie"));

@@ -42,7 +42,7 @@ const Hero = () => {
                     <div className={styles.content}>
                         <h2 className={styles.heading}>Man Collection</h2>
 
-                        <Link href="/shop">
+                        <Link href="/products">
                             <a className={styles.link}>Shop Now</a>
                         </Link>
                     </div>
@@ -54,7 +54,7 @@ const Hero = () => {
                     <div className={styles.content}>
                         <h2 className={styles.heading}>Woman Collection</h2>
 
-                        <Link href="/shop">
+                        <Link href="/products">
                             <a className={styles.link}>Shop Now</a>
                         </Link>
                     </div>

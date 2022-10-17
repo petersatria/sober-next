@@ -29,7 +29,7 @@ const Product = (props) => {
 					</Link>
 					<div className={`card-body ${styles.productDesc}`} >
 						<p className={` ${styles.listProductFont}`}>{product.name}</p>
-						<p className={` ${styles.listProductFont}`}>{price}</p>
+						<p className={` ${styles.listPriceProduct}`}>{price}</p>
 					</div>
 				</div>
 			</div>

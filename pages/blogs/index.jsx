@@ -3,6 +3,7 @@ import axios from 'axios';
 import styles from '../../styles/Blog.module.css';
 import { useState } from 'react';
 import BlogPopular from '../../components/Blog/BlogPopular';
+import Page from "../../components/Page";
 
 const BlogList = (props) => {
     const [tags, setTags] = useState('');
@@ -84,58 +85,60 @@ const BlogList = (props) => {
     };
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-12 col-lg-8">
-                    {blogs &&
-                        blogs.map((blog) => (
-                            <div key={Math.random().toString() + blog._id}>
-                                <Blog blog={blog} />
-                                <div className={styles.borderBottom}></div>
-                            </div>
-                        ))}
-                </div>
-                <div className="col-12 col-lg-4 ps-5 my-5 d-none d-lg-block ">
-                    <div className="mb-5">
-                        <h2 className={styles.sidebarTitle}>Popular Post</h2>
+        <Page title={'All Blogs'} description={'All Blogs'}>
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 col-lg-8">
                         {blogs &&
-                            blogs
-                                .slice(0, 3)
-                                .map((blog) => (
-                                    <BlogPopular key={blog._id} blog={blog} />
-                                ))}
+                            blogs.map((blog) => (
+                                <div key={Math.random().toString() + blog._id}>
+                                    <Blog blog={blog} />
+                                    <div className={styles.borderBottom}></div>
+                                </div>
+                            ))}
                     </div>
-                    <div className={styles.borderBottom}></div>
-                    <div className="my-5">
-                        <h2 className={styles.sidebarTitle}>Categories</h2>
-                        <div className="mt-4">{counCategory(blogs)}</div>
-                    </div>
-                    <div className={styles.borderBottom}></div>
-                    <div className="my-5">
-                        <h2 className={styles.sidebarTitle}>Archives</h2>
-                        <div className="mt-4">{counDate(blogs)}</div>
-                    </div>
-                    <div className={styles.borderBottom}></div>
-                    <div className="my-5">
-                        <h2 className={styles.sidebarTitle}>Browse Tags</h2>
-                        {/* <div className="row d-flex flex-row justify-content-center text-center"> */}
-                        <div className="row text-center mt-4">
+                    <div className="col-12 col-lg-4 ps-5 my-5 d-none d-lg-block ">
+                        <div className="mb-5">
+                            <h2 className={styles.sidebarTitle}>Popular Post</h2>
                             {blogs &&
-                                blogs.map((blog) => {
-                                    return (
-                                        <div
-                                            key={blog.tag}
-                                            className={`col mx-1 my-1 ${styles.tag}`}
-                                        >
-                                            {blog.tag[1]}
-                                        </div>
-                                    );
-                                })}
+                                blogs
+                                    .slice(0, 3)
+                                    .map((blog) => (
+                                        <BlogPopular key={blog._id} blog={blog} />
+                                    ))}
+                        </div>
+                        <div className={styles.borderBottom}></div>
+                        <div className="my-5">
+                            <h2 className={styles.sidebarTitle}>Categories</h2>
+                            <div className="mt-4">{counCategory(blogs)}</div>
+                        </div>
+                        <div className={styles.borderBottom}></div>
+                        <div className="my-5">
+                            <h2 className={styles.sidebarTitle}>Archives</h2>
+                            <div className="mt-4">{counDate(blogs)}</div>
+                        </div>
+                        <div className={styles.borderBottom}></div>
+                        <div className="my-5">
+                            <h2 className={styles.sidebarTitle}>Browse Tags</h2>
+                            {/* <div className="row d-flex flex-row justify-content-center text-center"> */}
+                            <div className="row text-center mt-4">
+                                {blogs &&
+                                    blogs.map((blog) => {
+                                        return (
+                                            <div
+                                                key={blog.tag}
+                                                className={`col mx-1 my-1 ${styles.tag}`}
+                                            >
+                                                {blog.tag[1]}
+                                            </div>
+                                        );
+                                    })}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Page>
     );
 };
 

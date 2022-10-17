@@ -4,8 +4,7 @@ import styles from '../../styles/Blog.module.css';
 import axios from 'axios';
 import BlogRelated from '../../components/Blog/BlogRelated';
 import Link from 'next/link';
-
-const img = 'https://demo.uix.store/sober/wp-content/uploads/sites/2/2016/07/1-44.jpg';
+import Page from "../../components/Page";
 
 const BlogDetail = (props) => {
     const [relatedBlogs, setRelatedBlogs] = useState('');
@@ -28,96 +27,98 @@ const BlogDetail = (props) => {
     console.log(shuffle(blogs));
 
     return (
-        <div className="container my-5">
-            <div>
-                <div className="row d-flex flex-row justify-content-center">
-                    <div
-                        className={`col-4 text-end ${styles.smallTitle}`}
-                        style={{ color: '#bfbfc8' }}
-                    >
-                        {dateConvert(date)}
-                    </div>
-                    <div className={`col-4 ${styles.smallTitle}`}>{blog.category}</div>
-                </div>
-                <div className="my-3 text-center">
-                    <h2 className={`${styles.titleDetail}`}>{blog.title}</h2>
-                </div>
+        <Page title={blog?.title} description={blog?.title}>
+            <div className="container my-5">
                 <div>
-                    <Image
-                        quality={30}
-                        width={1600}
-                        height={900}
-                        placeholder="blur"
-                        blurDataURL={'base64'}
-                        className={styles.blogImgDetail}
-                        src={blog.image}
-                        alt=""
-                    />
+                    <div className="row d-flex flex-row justify-content-center">
+                        <div
+                            className={`col-4 text-end ${styles.smallTitle}`}
+                            style={{ color: '#bfbfc8' }}
+                        >
+                            {dateConvert(date)}
+                        </div>
+                        <div className={`col-4 ${styles.smallTitle}`}>{blog.category}</div>
+                    </div>
+                    <div className="my-3 text-center">
+                        <h2 className={`${styles.titleDetail}`}>{blog.title}</h2>
+                    </div>
+                    <div>
+                        <Image
+                            quality={30}
+                            width={1600}
+                            height={900}
+                            placeholder="blur"
+                            blurDataURL={'base64'}
+                            className={styles.blogImgDetail}
+                            src={blog.image}
+                            alt=""
+                        />
+                    </div>
+                    <div className={`my-3 ${styles.contentWrapper}`}>
+                        <p className={`${styles.contentDetail}`}>{blog.content}</p>
+                    </div>
+                    <div className="my-5 d-flex justify-content-center">
+                        {blog.tag?.map((t) => {
+                            return (
+                                <div key={t} className={`mx-2 ${styles.tag}`}>
+                                    {t}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
-                <div className={`my-3 ${styles.contentWrapper}`}>
-                    <p className={`${styles.contentDetail}`}>{blog.content}</p>
+                <div className={`my-5 ${styles.borderBottom}`}></div>
+                <div className="row d-flex justify-content-center text-center">
+                    <div className="col-4">
+                        {blogs &&
+                            shuffle(blogs)
+                                .slice(3, 4)
+                                .map((blog) => (
+                                    <Link key={blog._id} href={blog._id}>
+                                        <p
+                                            className={`${styles.pagePost} ${styles.cursorPointer}`}
+                                        >
+                                            PREVIOUS POST
+                                        </p>
+                                    </Link>
+                                ))}
+                    </div>
+                    {/* FIXXXXX */}
+                    <div className={`col-2 `}>
+                        <div className={`${styles.borderStand}`}></div>
+                    </div>
+                    <div className="col-4">
+                        {blogs &&
+                            shuffle(blogs)
+                                .slice(4, 5)
+                                .map((blog) => (
+                                    <Link key={blog._id} href={blog._id}>
+                                        <p
+                                            className={`${styles.pagePost} ${styles.cursorPointer}`}
+                                        >
+                                            NEXT POST
+                                        </p>
+                                    </Link>
+                                ))}
+                    </div>
                 </div>
-                <div className="my-5 d-flex justify-content-center">
-                    {blog.tag?.map((t) => {
-                        return (
-                            <div key={t} className={`mx-2 ${styles.tag}`}>
-                                {t}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-            <div className={`my-5 ${styles.borderBottom}`}></div>
-            <div className="row d-flex justify-content-center text-center">
-                <div className="col-4">
-                    {blogs &&
-                        shuffle(blogs)
-                            .slice(3, 4)
-                            .map((blog) => (
-                                <Link key={blog._id} href={blog._id}>
-                                    <p
-                                        className={`${styles.pagePost} ${styles.cursorPointer}`}
-                                    >
-                                        PREVIOUS POST
-                                    </p>
-                                </Link>
+                <div className={`my-5 ${styles.borderBottom}`}></div>
+                <div>
+                    <div className="row d-flex flex-row justify-content-center text-center">
+                        <h2 className={styles.sidebarTitle}>You Might Also Like</h2>
+                        {relatedBlogs &&
+                            relatedBlogs.slice(0, 3).map((blog) => (
+                                <div
+                                    key={Math.random().toString() + blog._id}
+                                    className={`col-3`}
+                                >
+                                    <BlogRelated blog={blog} />
+                                </div>
                             ))}
-                </div>
-                {/* FIXXXXX */}
-                <div className={`col-2 `}>
-                    <div className={`${styles.borderStand}`}></div>
-                </div>
-                <div className="col-4">
-                    {blogs &&
-                        shuffle(blogs)
-                            .slice(4, 5)
-                            .map((blog) => (
-                                <Link key={blog._id} href={blog._id}>
-                                    <p
-                                        className={`${styles.pagePost} ${styles.cursorPointer}`}
-                                    >
-                                        NEXT POST
-                                    </p>
-                                </Link>
-                            ))}
+                    </div>
                 </div>
             </div>
-            <div className={`my-5 ${styles.borderBottom}`}></div>
-            <div>
-                <div className="row d-flex flex-row justify-content-center text-center">
-                    <h2 className={styles.sidebarTitle}>You Might Also Like</h2>
-                    {relatedBlogs &&
-                        relatedBlogs.slice(0, 3).map((blog) => (
-                            <div
-                                key={Math.random().toString() + blog._id}
-                                className={`col-3`}
-                            >
-                                <BlogRelated blog={blog} />
-                            </div>
-                        ))}
-                </div>
-            </div>
-        </div>
+        </Page>
     );
 };
 

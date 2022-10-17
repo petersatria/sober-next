@@ -65,7 +65,7 @@ const Header = () => {
     isLoggedIn ? (
       <>
         <li className={styles.item}>
-          <Link href={`/profile/${userInformation.id}/details`}>
+          <Link href={`/profile/${userInformation.id}`}>
             <a className={styles["sub-link"]}>{userInformation.username}</a>
           </Link>
         </li>
@@ -109,7 +109,7 @@ const Header = () => {
           </li>
 
           <li className={styles.item}>
-            <Link href="/product">
+            <Link href="/products">
               <a onClick={() => dispatch(headerActions.shopIsActive())} className={shopLinkStyle}>
                 Shop
               </a>
@@ -117,23 +117,15 @@ const Header = () => {
           </li>
 
           <li className={styles.item}>
-            <Link href="/features">
-              <a onClick={() => dispatch(headerActions.featureIsActive())} className={featuresLinkStyle}>
-                Features
-              </a>
-            </Link>
-          </li>
-
-          <li className={styles.item}>
-            <Link href="/pages">
+            <Link href="/about-us">
               <a onClick={() => dispatch(headerActions.pagesIsActive())} className={pagesLinkStyle}>
-                Pages
+                About Us
               </a>
             </Link>
           </li>
 
           <li className={styles.item}>
-            <Link href="/blog">
+            <Link href="/blogs">
               <a onClick={() => dispatch(headerActions.blogIsActive())} className={blogLinkStyle}>
                 Blog
               </a>

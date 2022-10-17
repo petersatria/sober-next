@@ -1,0 +1,30 @@
+.content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.h1Tittle {
+	font-size: 16.5rem;
+	font-weight: 700;
+}
+
+.h2Tittle {
+	font-size: 3.5rem;
+	font-weight: 500;
+	margin: 2rem 0 0;
+}
+
+.pTittle {
+	font-size: 1.6rem;
+	font-weight: 200;
+	line-height: 3.5rem;
+}
+
+.backHome {
+	font-size: 1.4rem;
+	font-weight: 500;
+	text-decoration: none;
+	color: #212529;
+}

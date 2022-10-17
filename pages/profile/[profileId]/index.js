@@ -5,13 +5,13 @@ import { useRouter } from 'next/router'
 
 
 export default function Index() {
-    const router = useRouter()
+  const router = useRouter()
   return (
-      <Layout>
-          <ProfileSidebar active={"index"} />
-            <div className='p-4' style={{width: "100%"}}>
-              <ProfileDetail id={router.query.profileId } />
-            </div>
+    <Layout>
+      <ProfileSidebar active={"index"} />
+      <div className='p-4' style={{ width: "100%" }}>
+        <ProfileDetail id={router.query.profileId} />
+      </div>
     </Layout>
   )
 }

@@ -53,7 +53,7 @@ const ProductDetail = (props) => {
 		// await axios.post('http://localhost:5000/cart', { productId: id, quantity: items })
 
 
-		dispatch(addToCart({ productId: productId, quantity: items, size:sizeItem }))
+		dispatch(addToCart({ productId: productId, quantity: items, size: sizeItem }))
 	}
 
 	const shuffled = () => {
@@ -101,7 +101,7 @@ const ProductDetail = (props) => {
 								{/* <input className={`${styles.fullWidth} ${styles.inputNum}`} type="number" name="quantity" id="quantity" min={1} max={10} onChange={itemsHandler} value={items} /> */}
 								<div className="dropdown">
 									<button className={`btn dropdown-toggle ${styles.fullWidth}`} style={{ fontSize: "14px", padding: "10px", border: "1px solid " }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-										{sizeItem?sizeItem:'Select Size'}
+										{sizeItem ? sizeItem : 'Select Size'}
 									</button>
 									<ul className="dropdown-menu">
 										{product.size && Object.keys(product.size[0]).map((sizes) => {
@@ -112,8 +112,8 @@ const ProductDetail = (props) => {
 							</div >
 							<div className="col-4 mt-5 mt-md-3 mt-lg-5">
 								{/* <Link href='/cart'> */}
-									<div className={`btn btn-dark ${styles.fullWidth}`} onClick={addToCartHandler} style={{ fontSize: "14px", padding: "10px" }}>Add to cart</div>
-									{/* onClick={addToCartHandler} */}
+								<div className={`btn btn-dark ${styles.fullWidth}`} onClick={addToCartHandler} style={{ fontSize: "14px", padding: "10px" }}>Add to cart</div>
+								{/* onClick={addToCartHandler} */}
 								{/* </Link> */}
 							</div>
 						</div >
@@ -153,19 +153,30 @@ export default ProductDetail
 
 export async function getServerSideProps(context) {
 
+	try {
+		const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/product/${context.params.productId}`)
 
-	const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/product/${context.params.productId}`)
+		const res = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/product`)
+		const datas = res.data
 
-	const res = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/product`)
-	const datas = res.data
+		// console.log(data.product)
 
-	// console.log(data.product)
+		return {
+			props: {
+				product: data.product,
+				products: datas.result
 
-	return {
-		props: {
-			product: data.product,
-			products: datas.result
+			}, // will be passed to the page component as props
+		}
+	} catch (error) {
+		return {
+			props: {
+				product: [],
+				products: []
 
-		}, // will be passed to the page component as props
+			}, // will be passed to the page component as props
+		}
 	}
+
+
 }

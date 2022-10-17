@@ -26,11 +26,19 @@ export default ProductList
 
 export async function getServerSideProps(context) {
 
-	const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/product`)
+	try {
+		const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/product`)
 
-	return {
-		props: {
-			products: data.result,
-		}, // will be passed to the page component as props
+		return {
+			props: {
+				products: data.result,
+			}, // will be passed to the page component as props
+		}
+	} catch (error) {
+		return {
+			props: {
+				products: [],
+			}, // will be passed to the page component as props
+		}
 	}
 }
