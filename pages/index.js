@@ -54,7 +54,6 @@ export default function HomePage({
 
     useEffect(() => {
         dispatch(headerActions.homeIsActive());
-        dispatch(fetchCart())
     }, []);
 
     return (
