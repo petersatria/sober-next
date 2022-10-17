@@ -104,7 +104,7 @@ const ProductDetail = (props) => {
 										{sizeItem ? sizeItem : 'Select Size'}
 									</button>
 									<ul className="dropdown-menu">
-										{product.size && Object.keys(product.size[0]).map((sizes) => {
+										{product.size && Object.keys(product.size).map((sizes) => {
 											return <option key={sizes} onClick={itemsHandler} className="dropdown-item" type="button">{sizes.toUpperCase()}</option>
 										})}
 									</ul>

@@ -16,14 +16,16 @@ const ProductList = (props) => {
     const [modalActive, setModalActive] = useState(false);
     const { product } = props;
 
+
+
     // Handler
     const showModalHandler = () => {
         setModalActive(true);
     };
 
     const modalSubmitHandler = (value) => {
-		dispatch(addToCart({ productId: product._id, quantity: 1, size:value }))
-        
+        dispatch(addToCart({ productId: product._id, quantity: 1, size: value }))
+
     };
 
     // Props
@@ -40,6 +42,7 @@ const ProductList = (props) => {
                     name={props.name}
                     onClose={() => setModalActive(false)}
                     onSubmit={modalSubmitHandler}
+                    size={product.size}
                 />
             )}
 

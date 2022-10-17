@@ -12,11 +12,11 @@ import { token } from "../../moduleComponents/tokenAuthorization"
 
 function ProfileDetail(id) {
   const tokenAuth = token()
-const config = {
-  headers: {
-    'Authorization': `Bearer ${tokenAuth}`
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${tokenAuth}`
+    }
   }
-}
   const fetcher = url => axios.get(url, config).then((res) => res.data);
   console.log(tokenAuth);
   const { data, error } = useSWR(`http://localhost:5000/api/profile/${id.id}`, fetcher)
@@ -24,7 +24,7 @@ const config = {
   const [userData, setUserData] = useState({});
 
   const [isLoading, setIsLoading] = useState(true)
-  const splitBirtdate = userData.birthdate ?  userData.birthdate.split("T") : ""
+  const splitBirtdate = userData.birthdate ? userData.birthdate.split("T") : ""
   const birthdate = splitBirtdate[0]
 
   useEffect(() => {

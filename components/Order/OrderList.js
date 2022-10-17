@@ -3,7 +3,9 @@ import axios from "axios";
 import styles from '../../styles/order.module.css'
 import { useRouter } from 'next/router'
 import Order from './Order';
-// import { authAxios } from "../../../moduleComponents/axiosAuth";
+// import { authAxios } from '../../moduleComponents/axiosAuth';
+
+import { token } from "../../moduleComponents/tokenAuthorization"
 
 const OrderList = () => {
 
@@ -12,11 +14,20 @@ const OrderList = () => {
 	const [zero, setZero] = useState(true)
 
 	const router = useRouter()
+	console.log('router', router)
+
+	const tokenAuth = token()
+	const config = {
+		headers: {
+			'Authorization': `Bearer ${tokenAuth}`
+		}
+	}
+	const fetcher = url => axios.get(url, config).then((res) => res.data);
 
 	const getOrders = async () => {
 		try {
-			const { data } = await axios.get(`http://localhost:5000/transactionHistoryDetail/${router.query.userId}`)
-			console.log(data)
+			const { data } = await axios.get(`http://localhost:5000/transactionHistoryDetail/${router.query.profileId}`)
+			console.log('orders', data)
 
 			// console.log('from list', data.result)
 			setZero(false)

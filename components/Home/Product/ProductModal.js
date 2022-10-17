@@ -5,7 +5,7 @@ import styles from './ProductModal.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const ProductModal = ({ image, name, onClose, onSubmit }) => {
+const ProductModal = ({ image, name, onClose, onSubmit, size }) => {
     const selectRef = useRef();
     const [imageLoad, setImageLoad] = useState(true);
 
@@ -54,11 +54,14 @@ const ProductModal = ({ image, name, onClose, onSubmit }) => {
 
                             <div className={styles.input}>
                                 <select ref={selectRef}>
-                                    <option></option>
+                                    {size && Object.keys(size).map((sizes) => {
+                                        return <option key={sizes} value={sizes} >{sizes.toUpperCase()}</option>
+                                    })}
+                                    {/* <option></option>
                                     <option value="S">S</option>
                                     <option value="M">M</option>
                                     <option value="L">L</option>
-                                    <option value="XL">XL</option>
+                                    <option value="XL">XL</option> */}
                                 </select>
 
                                 <button className={`${styles.btn} ${styles.add}`}>
