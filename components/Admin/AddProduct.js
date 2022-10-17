@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { sizeActions } from '../../redux/actions/sizeSlicer';
 import useFetch from '../../hooks/use-fetch';
+import { token } from '../../moduleComponents/tokenAuthorization';
 
 import Notification from '../GeneralUI/Notification';
 
@@ -69,10 +70,14 @@ const AddProduct = () => {
 
         console.log(input);
 
+        const userToken = token();
         await sendRequest({
             url: `${host}api/create-product`,
             method: 'POST',
             data: input,
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
         });
     };
 

@@ -8,6 +8,8 @@ import { sizeActions } from '../../redux/actions/sizeSlicer';
 
 import styles from './AddProduct.module.css';
 import Link from 'next/link';
+import { token } from '../../moduleComponents/tokenAuthorization';
+
 
 const host =
     process.env.NODE_ENV === 'development'
@@ -81,10 +83,15 @@ const UpdateProduct = ({ items, id }) => {
             summary: summaryValue,
         };
 
+        const userToken = token();
+
         await sendRequest({
             url: `${host}api/edit-data/${id}`,
             method: 'PATCH',
             data: input,
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
         });
     };
 
