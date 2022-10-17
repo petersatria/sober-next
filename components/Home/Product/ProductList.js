@@ -5,12 +5,13 @@ import styles from './ProductList.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
 import Image from 'next/future/image';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../redux/actions/cartSlicer'
 // import { addCart } from '../../store/actions/CartAction';
 import ProductModal from './ProductModal';
 
 const ProductList = (props) => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     // State
     const [modalActive, setModalActive] = useState(false);
     const { product } = props;
@@ -18,18 +19,11 @@ const ProductList = (props) => {
     // Handler
     const showModalHandler = () => {
         setModalActive(true);
-        // const dataCart = {
-        //     productId: product._id,
-        //     quantity: 1
-        // }
-
-        // dispatch(addCart(dataCart))
-
-        // dispatch(addCart(dataCart));
     };
 
     const modalSubmitHandler = (value) => {
-        console.log(value);
+		dispatch(addToCart({ productId: product._id, quantity: 1, size:value }))
+        
     };
 
     // Props

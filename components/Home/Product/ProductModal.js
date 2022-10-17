@@ -55,10 +55,10 @@ const ProductModal = ({ image, name, onClose, onSubmit }) => {
                             <div className={styles.input}>
                                 <select ref={selectRef}>
                                     <option></option>
-                                    <option value="s">S</option>
-                                    <option value="m">M</option>
-                                    <option value="l">L</option>
-                                    <option value="xl">XL</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
                                 </select>
 
                                 <button className={`${styles.btn} ${styles.add}`}>

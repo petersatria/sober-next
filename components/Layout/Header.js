@@ -12,7 +12,7 @@ import { confirmNotification } from "../../moduleComponents/notification";
 import { useRouter } from "next/router";
 
 const Header = () => {
-  // const { carts } = useSelector((state) => state.cart);
+  const { carts } = useSelector((state) => state.carts);
   const router = useRouter();
   const { blogIsActive, featureIsActive, headerTransparant, homeIsActive, pagesIsActive, shopIsActive } = useSelector((state) => state.header);
   const dispatch = useDispatch();
@@ -160,7 +160,7 @@ const Header = () => {
               <a className={`${styles["sub-link"]} ${styles["sub-link--cart"]}`}>
                 <FontAwesomeIcon icon={faCartShopping} />
 
-                {/* <div className={styles.cart}>{carts.length}</div> */}
+                <div className={styles.cart}>{carts.length}</div>
               </a>
             </Link>
           </li>

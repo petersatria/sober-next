@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { getCookie } from '../../moduleComponents/cookie'
+import { notifications } from '../../moduleComponents/notification'
 const url = `http://localhost:5000/`
+
 
 export const cartSlicer = createSlice({
     name:'cart slicer',
@@ -10,6 +13,7 @@ export const cartSlicer = createSlice({
     reducers:{},
     extraReducers: (builder)=> { 
         builder.addCase(fetchCart.fulfilled, (state,action)=>{
+            console.log(action, 'action')
             state.carts = action.payload.carts
         }),
         builder.addCase(addToCart.fulfilled, (state,action)=>{
@@ -21,6 +25,9 @@ export const cartSlicer = createSlice({
         }),
         builder.addCase(checkoutCart.fulfilled, (state,action)=>{
             state.carts = []
+        }),
+        builder.addCase(changeQty.fulfilled, (state,action)=>{
+            state.carts = action.payload
         })
     }
 })
@@ -28,17 +35,33 @@ export const cartSlicer = createSlice({
 export default cartSlicer.reducer
 
 
-export const fetchCart = createAsyncThunk('fetch/cart', async(userId='6331733bc8c65fe910662fe3', thunkAPI)=>{
+export const fetchCart = createAsyncThunk('fetch/cart', async(data,thunkAPI)=>{
+    const token = JSON.parse(getCookie('userCookie'))
+    let userId = '0'
+    if(token){
+        userId = token.id
+    }
+
+
     try {
-        const cartUser = await axios.get(`http://localhost:5000/cart/${userId}`)
+        const cartUser = await axios.get(`http://localhost:5000/cart/${userId}`, {
+            headers:{
+                Authorization: `Bearer ${token.token}`
+            }
+        })
+        console.log(cartUser.data)
         return thunkAPI.fulfillWithValue(cartUser.data)
     } catch (error) {
-        
+        console.log(error)
     }
 })
 
 export const addToCart = createAsyncThunk('add/cart', async(data, thunkAPI)=>{
-    let userId='6331733bc8c65fe910662fe3'
+    const token = JSON.parse(getCookie('userCookie'))
+    let userId = '0'
+    if(token){
+        userId = token.id
+    }
     try {
         const { carts } = thunkAPI.getState().carts
         console.log(carts)
@@ -51,23 +74,37 @@ export const addToCart = createAsyncThunk('add/cart', async(data, thunkAPI)=>{
             console.log('sudah ada di cart')
             const newQuantity = {...findProductInCart[0], quantity:findProductInCart[0].quantity+quantity}
             const filterData = carts.filter((val)=>val.productId!==data.productId).concat(newQuantity)
-            await axios.patch(`${url}cart`, {cartId:findProductInCart[0].cartId, productId:data.productId, quantity:findProductInCart[0].quantity+quantity,size:data.size})
+            await axios.patch(`${url}cart`, {cartId:findProductInCart[0].cartId, productId:data.productId, quantity:findProductInCart[0].quantity+quantity,size:data.size},{
+                headers:{
+                    Authorization: `Bearer ${token.token}`
+                }
+            })
+            notifications({statusCode:200,message:"success add to cart"})
             return thunkAPI.fulfillWithValue({payload:filterData, type:'CHANGE_QUANTITY'})
 
         }else{
             console.log('belom ada di cart')
-            const carts = await axios.post(`${url}cart`, {userId, productId:data.productId, quantity:1, cartId:data.cartId, size:data.size})
-            console.log(carts)
+            const carts = await axios.post(`${url}cart`, {userId, productId:data.productId, quantity:1, cartId:data.cartId, size:data.size}, {
+                headers:{
+                    Authorization: `Bearer ${token.token}`
+                }
+            })
+            notifications({statusCode:200,message:"success add to cart"})
             return thunkAPI.fulfillWithValue({payload:carts.data.carts, type:'ADD_TO_CART'})
         }
     } catch (error) {
+        notifications({statusCode:400,message:"failed add to cart"})
         console.log(error)
     }
 
 })
 
 export const deleteCart = createAsyncThunk('delete/cart', async(data,thunkAPI)=>{
-    let userId='6331733bc8c65fe910662fe3'
+    const token = JSON.parse(getCookie('userCookie'))
+    let userId = '0'
+    if(token){
+        userId = token.id
+    }
     try {
         console.log(data.size, data.productId)
         const { carts } = thunkAPI.getState().carts
@@ -81,7 +118,11 @@ export const deleteCart = createAsyncThunk('delete/cart', async(data,thunkAPI)=>
             }
         })
         const newCarts = mapCarts.filter(val=>val!==null)
-        await axios.post(`${url}delete-product-incart`, {cartId:data.cartId, productId:data.productId, size:data.size})
+        await axios.post(`${url}delete-product-incart`, {cartId:data.cartId, productId:data.productId, size:data.size},{
+            headers:{
+                Authorization: `Bearer ${token.token}`
+            }
+        })
         return thunkAPI.fulfillWithValue(newCarts)
     } catch (error) {
         // console.log(error)
@@ -90,10 +131,14 @@ export const deleteCart = createAsyncThunk('delete/cart', async(data,thunkAPI)=>
 
 
 export const checkoutCart = createAsyncThunk('checkout/cart', async(data,thunkAPI)=>{
-    data.userId='6331733bc8c65fe910662fe3'
+    const token = JSON.parse(getCookie('userCookie'))
+    let userId = '0'
+    if(token){
+        userId = token.id
+    }
     let dataPost = {
         total_order:data.total_order,
-        userId:data.userId,
+        userId:userId,
         carts:data.carts
     }
     try {
@@ -114,9 +159,47 @@ export const checkoutCart = createAsyncThunk('checkout/cart', async(data,thunkAP
         //     }
         // })
 
-        await axios.post(`${url}transactionHistoryPost`, dataPost)
+        await axios.post(`${url}transactionHistoryPost`, dataPost, {
+            headers:{
+                Authorization: `Bearer ${token.token}`
+            }
+        })
+        data.navigate.push(`/`)
+        // data.navigate.push(`/order-list/'${userId}`)
         return thunkAPI.fulfillWithValue()
+    } catch (error) {
+        console.log(error)
+    }
+})
 
+
+export const changeQty = createAsyncThunk('changeQTY/cart', async({qty,productId},thunkAPI)=>{
+    const token = JSON.parse(getCookie('userCookie'))
+    let userId = '0'
+    if(token){
+        userId = token.id
+    }
+
+    console.log('masuk')
+    try {
+        const { carts } = thunkAPI.getState().carts
+        const findProductInCart = carts.filter((val)=>val.productId===productId)
+        
+        const newQuantity = {...findProductInCart[0], quantity:qty}
+        const filterData = carts.filter((val)=>val.productId!==productId).concat(newQuantity)
+        console.log(filterData,'filter')
+
+
+        await axios.patch(`${url}cart`, {cartId:findProductInCart[0].cartId, productId:productId, quantity:qty},{
+            headers:{
+                Authorization: `Bearer ${token.token}`
+            }
+        })
+        return thunkAPI.fulfillWithValue(filterData)
+        // dispatch({
+        //     type:'CHANGE_QUANTITY',
+        //     payload:filterData
+        // })
         
     } catch (error) {
         console.log(error)

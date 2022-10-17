@@ -1,25 +1,26 @@
 import styles from './Cart.module.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { fetchCart, deleteCart, checkoutCart } from '../../redux/actions/cartSlicer'
-
+import { fetchCart, deleteCart, checkoutCart, changeQty } from '../../redux/actions/cartSlicer'
+import { useRouter } from 'next/router'
 export default function Cart(){
     const { carts } = useSelector(state=>state.carts)
     const dispatch = useDispatch()
-
-    console.log(carts.length>0?'ada':'ga ada', carts)
+    const router = useRouter()
 
     useEffect(()=>{
         dispatch(fetchCart())
     },[])
 
     const onChangeHandle=(e, productId)=>{
-        // dispatch(changeQty(+e.target.value,productId))
+        dispatch(changeQty({qty:+e.target.value,productId:productId}))
 
     }
 
+    console.log(carts)
+
     const onClickHandle=(number,productId)=>{
-        // dispatch(changeQty(+number,productId))
+        dispatch(changeQty({qty:+number,productId}))
     }
     
     const onDeleteHandle=(productId,cartId)=>{
@@ -36,8 +37,7 @@ export default function Cart(){
     }
 
     const onCheckoutCart=()=>{
-        console.log('masuk')
-        dispatch(checkoutCart({total_order:getTotal(), carts}))
+        dispatch(checkoutCart({total_order:getTotal(), carts, navigate:router}))
     }
     
     
@@ -65,7 +65,7 @@ export default function Cart(){
                             [...carts].sort((a,b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0)).map((val,index)=>{
                                 return(
                                     <tr key={index}>
-                                        <td><img src={`${val.product[0]?.thumbnail}`} className={styles.imageTable} width={100}/><span className='m-2'>{val.product[0]?.name}</span></td>
+                                        <td><img src={`${val.product[0]?.images[0]}`} className={styles.imageTable} width={100}/><span className='m-2'>{`${val.product[0]?.name} (${val.size})`}</span></td>
                                         <td>$ {val.product[0]?.price}</td>
                                         <td className={styles.qtyBox}>
                                             <span style={{color:'silver'}}>QTY:</span>
@@ -81,7 +81,9 @@ export default function Cart(){
                                 )
                             })
                             :
-                            <div>No data</div>
+                            <tr>
+                                <td>No data</td>
+                            </tr>
                         }
                         </tbody>
                     </table>
