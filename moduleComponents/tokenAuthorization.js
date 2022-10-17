@@ -4,7 +4,7 @@ const token = () => {
     let token = ''
     let getUser = getCookie('userCookie');
     if (getUser === null) {
-        token = ''
+        token = null
     } else {
         let parseCookie = JSON.parse(getUser)
         token = parseCookie.token;
