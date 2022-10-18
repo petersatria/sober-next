@@ -16,8 +16,6 @@ const host =
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-import { token } from '../../moduleComponents/tokenAuthorization';
-
 const UpdateProduct = ({ items, id }) => {
     // REDUX SELECTOR DISPATCH AND ACTIONS
     const { s, m, l, xl } = useSelector((state) => state.size);
