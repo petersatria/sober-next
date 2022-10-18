@@ -11,7 +11,7 @@ const UnderConstruction = () => {
 				<div className="col p-5">
 					<h1 className={`${styles.h1Tittle}`}>Coming soon!</h1>
 					<p className={`${styles.pTittle}`}>
-						We're working on our website.
+						We&apos;re working on our website.
 						<br />
 						Check us out on social media or subscribe to our emails while you wait.
 						<br />
