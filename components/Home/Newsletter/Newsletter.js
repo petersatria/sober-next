@@ -5,12 +5,12 @@ import styles from './Newsletter.module.css';
 const Newsletter = () => {
     const inputRef = useRef();
 
-    const submitHandler = async(e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         const email = inputRef.current.value
 
         try {
-            const emailResponse = await axios.post(`http://localhost:5000/newmail`,{email})
+            const emailResponse = await axios.post(`${process.env.NEXT_PUBLIC_URL}newmail`, { email })
             console.log(emailResponse)
         } catch (error) {
             console.log(error)

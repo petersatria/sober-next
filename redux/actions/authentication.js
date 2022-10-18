@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const postUserLogin = createAsyncThunk("userLogin/postUserLogin", async({username, password}, thunkAPI) => {
+export const postUserLogin = createAsyncThunk("userLogin/postUserLogin", async ({ username, password }, thunkAPI) => {
     try {
-        const response = await axios.post("http://localhost:5000/loginData", {
-            username,password
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}loginData`, {
+            username, password
         })
         return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
-        if(error.response.data){
+        if (error.response.data) {
             return thunkAPI.rejectWithValue(error.response.data)
         }
         return thunkAPI.rejectWithValue("Something Wrong In Server")
@@ -18,7 +18,7 @@ export const postUserLogin = createAsyncThunk("userLogin/postUserLogin", async({
 const authenticationSlice = createSlice({
     name: "auth",
     initialState: {
-        userInformation : {},
+        userInformation: {},
         isLoggedIn: false,
         isLoading: false
     },
@@ -47,5 +47,5 @@ const authenticationSlice = createSlice({
     }
 })
 
-export const {getUserData, isUserLoggedIn, isLoading} = authenticationSlice.actions;
+export const { getUserData, isUserLoggedIn, isLoading } = authenticationSlice.actions;
 export default authenticationSlice.reducer;

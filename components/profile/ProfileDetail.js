@@ -19,7 +19,7 @@ function ProfileDetail(id) {
   }
   const fetcher = url => axios.get(url, config).then((res) => res.data);
   console.log(tokenAuth);
-  const { data, error } = useSWR(`http://localhost:5000/api/profile/${id.id}`, fetcher)
+  const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_URL}api/profile/${id.id}`, fetcher)
 
   const [userData, setUserData] = useState({});
 
@@ -40,7 +40,7 @@ function ProfileDetail(id) {
 
   const Getdata = async (idUser) => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/profile/' + idUser)
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/profile/` + idUser)
       setInterval(() => {
         setUserData(data.data)
         setIsLoading(false)

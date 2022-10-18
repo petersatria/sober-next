@@ -27,7 +27,7 @@ const FacebookLoginButton = () => {
 
   const userLogin = async () => {
     setLoading(true);
-    const response = await axios.post(`http://localhost:5000/socialLogin`, {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}socialLogin`, {
       email: facebookEmail,
       password: facebookPassword,
     });
@@ -45,7 +45,7 @@ const FacebookLoginButton = () => {
   const userAutoRegister = async () => {
     try {
       setLoading(true);
-      const responseRegister = await axios.post(`http://localhost:5000/api/user/signup`, {
+      const responseRegister = await axios.post(`${process.env.NEXT_PUBLIC_URL}api/user/signup`, {
         username: facebookUsername,
         email: facebookEmail,
         name: facebookUsername,
@@ -53,7 +53,7 @@ const FacebookLoginButton = () => {
       });
       if (responseRegister.data.status === "success") {
         try {
-         await userLogin()
+          await userLogin()
         } catch (error) {
           console.log(error);
           errorNotification();
@@ -72,7 +72,7 @@ const FacebookLoginButton = () => {
   // useEffect
   useEffect(() => {
     console.log(loading)
-    dispatch(isLoading({loading}));
+    dispatch(isLoading({ loading }));
   }, [loading])
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const FacebookLoginButton = () => {
         await userLogin()
       } catch (error) {
         if (error.response) {
-         await userAutoRegister()
+          await userAutoRegister()
           return;
         }
         console.log(error);

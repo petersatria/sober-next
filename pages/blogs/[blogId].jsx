@@ -126,9 +126,9 @@ export default BlogDetail;
 
 export async function getServerSideProps(context) {
     const { data } = await axios.get(
-        `http://localhost:5000/api/blog/articles/${context.params.blogId}`
+        `${process.env.NEXT_PUBLIC_URL}api/blog/articles/${context.params.blogId}`
     );
-    const res = await axios.get(`http://localhost:5000/api/blog/articles`);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/blog/articles`);
 
     return {
         props: {

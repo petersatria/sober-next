@@ -26,7 +26,7 @@ const OrderList = () => {
 
 	const getOrders = async () => {
 		try {
-			const { data } = await axios.get(`http://localhost:5000/transactionHistoryDetail/${router.query.profileId}`)
+			const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}transactionHistoryDetail/${router.query.profileId}`)
 			console.log('orders', data)
 
 			// console.log('from list', data.result)
