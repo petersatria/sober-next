@@ -5,6 +5,7 @@ import { errorNotification, notificationSocialLogin } from "../../moduleComponen
 import FacebookLogin from "react-facebook-login";
 import { useDispatch } from "react-redux";
 import { getUserData, isUserLoggedIn, isLoading } from "../../redux/actions/authentication";
+import styles from "../../styles/login.module.css"
 
 const FacebookLoginButton = () => {
   const dispatch = useDispatch();
@@ -96,7 +97,7 @@ const FacebookLoginButton = () => {
     <FacebookLogin
       appId="493278945653702"
       fields="name,email,picture,first_name"
-      cssClass="btnFacebook"
+      cssClass={`${styles.btnFacebook}`}
       autoLoad={false}
       callback={responseFacebook}
       icon={<i className="bi bi-facebook" style={{ marginRight: "7px", fontSize: "1.1rem" }}></i>}

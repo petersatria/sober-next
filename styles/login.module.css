@@ -1,8 +1,4 @@
-html {
-    font-size: 100%;
-}
-
-.general-area {
+.generalArea {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4),
             rgba(0, 0, 0, 0.4)), url('../public/loginAssets/wp3646146-men-fashion-wallpapers.jpg');
     background-repeat: no-repeat;
@@ -11,8 +7,62 @@ html {
     animation: fadeIn 1s;
 }
 
-.text-divider{
+.textDivider {
     font-size: 0.9rem;
+}
+
+.imgTagline {
+    animation: fadeIn 2s;
+}
+
+.formArea {
+    border-radius: 10px;
+    background-color: rgba(39, 39, 39, 0.678);
+    max-width: 100%;
+    animation: fadeIn 2s;
+}
+
+.formLabel, .isHaveAccountText {
+    color: rgb(192, 196, 199);
+    font-size: 0.8rem;
+}
+
+.registerText, .forgotPassword {
+    text-decoration: none;
+    color: rgb(0, 74, 212);
+    font-size: 0.8rem;
+}
+
+.registerText:hover,
+.forgotPassword:hover {
+    text-decoration: none;
+    color: rgb(46, 46, 231);
+    cursor: pointer;
+}
+
+.textTagline {
+    font-size: 1.8rem;
+    font-weight: 450;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-shadow: 3px 2px black;
+    animation: fadeIn 2s;
+}
+
+.btnSubmit {
+    width: 100%;
+    height: 45px;
+    border-radius: 15px;
+    font-size: 1rem;
+}
+
+.togglePassword {
+    cursor: pointer;
+    padding-top: 15px;
+}
+
+.googleBtn {
+    margin: 0px 110px;
 }
 
 .btnFacebook {
@@ -32,32 +82,6 @@ html {
 .btnFacebook:hover {
     background: #3b5998;
     opacity: 0.6;
-}
-
-.img-tagline {
-    animation: fadeIn 2s;
-}
-
-#text-tagline {
-    font-size: 1.8rem;
-    font-weight: 450;
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-    text-shadow: 3px 2px black;
-    animation: fadeIn 2s;
-}
-
-.form-area {
-    border-radius: 10px;
-    background-color: rgba(39, 39, 39, 0.678);
-    width: 100%;
-    animation: fadeIn 2s;
-}
-
-.form-label,
-.register span {
-    color: rgb(192, 196, 199);
-    font-size: 0.8rem;
 }
 
 .input:focus::placeholder {
@@ -83,42 +107,12 @@ html {
     font-size: 0.8rem;
 }
 
-#togglePassword {
-    cursor: pointer;
-    padding-top: 15px;
-}
-
-#register,
-#forgot-password {
-    text-decoration: none;
-    color: rgb(0, 74, 212);
-    font-size: 0.8rem;
-}
-
-#register:hover,
-#forgot-password:hover {
-    text-decoration: none;
-    color: rgb(46, 46, 231);
-    cursor: pointer;
-}
-
 .divider:after,
 .divider:before {
     content: "";
     flex: 1;
     height: 1px;
     background: black;
-}
-
-#btn-submit {
-    width: 100%;
-    height: 45px;
-    border-radius: 15px;
-    font-size: 1rem;
-}
-
-#google-btn {
-    margin: 0px 110px;
 }
 
 /* ============================================ animation =====================================================*/
@@ -136,44 +130,40 @@ html {
 
 /* ========================================= media queries =====================================================*/
 @media (min-width: 1370px) {
-    html {
-        font-size: 125%;
-    }
-
     .btnFacebook {
         margin-left: 150px;
         font-size: 0.8rem;
     }
 
-    #text-tagline {
+    .textTagline {
         font-size: 1.7rem;
     }
 
-    #register,
-    #forgot-password {
+    .registerText,
+    .forgotPassword {
         text-decoration: none;
         color: rgb(0, 74, 212);
     }
 
-    #register:hover,
-    #forgot-password:hover {
+    .registerText:hover,
+    .forgotPassword:hover {
         text-decoration: none;
         color: rgb(46, 46, 231);
         cursor: pointer;
     }
 
-    #btn-submit {
+    .btnSubmit {
         height: 55px;
     }
 
-    #google-btn {
+    .googleBtn {
         margin: 0px 150px;
     }
 
 }
 
 @media (max-width: 1200px) {
-    #text-tagline {
+    .textTagline {
         font-size: 30px;
     }
 
@@ -181,17 +171,17 @@ html {
         margin-left: 70px;
     }
 
-    #google-btn {
+    .googleBtn {
         margin: 0px 70px;
     }
 }
 
 @media (max-width: 990px) {
-    #text-tagline {
+    .textTagline {
         font-size: 16px;
     }
 
-    .img-tagline {
+    .imgTagline {
         width: 70%;
     }
 
@@ -199,22 +189,22 @@ html {
         margin-left: 70px;
     }
 
-    #google-btn {
+    .googleBtn {
         margin: 0px 70px;
     }
 }
 
 @media (max-width: 750px) {
-    .general-area {
+    .generalArea {
         background-size: 280%;
         background-position: -110px 0;
     }
 
-    #text-tagline {
+    .textTagline {
         font-size: 20px;
     }
 
-    .img-tagline {
+    .imgTagline {
         width: 45%;
     }
 
@@ -222,22 +212,22 @@ html {
         margin-left: 100px;
     }
 
-    #google-btn {
+    .googleBtn {
         margin: 0px 100px;
     }
 }
 
 @media (max-width: 570px) {
 
-    #text-tagline {
+    .textTagline {
         font-size: 20px;
     }
 
-    .img-tagline {
+    .imgTagline {
         width: 45%;
     }
 
-    .form-area {
+    .formArea {
         border-radius: 0px;
         background-color: rgba(39, 39, 39, 0);
         width: 4%;
@@ -247,26 +237,26 @@ html {
         margin-left: 150px;
     }
 
-    #google-btn {
+    .googleBtn {
         margin: 0px 150px;
     }
 }
 
 @media (max-width: 500px) {
-    .general-area {
+    .generalArea {
         background-size: 260%;
         background-position: -53px 0;
     }
 
-    #text-tagline {
+    .textTagline {
         font-size: 20px;
     }
 
-    .img-tagline {
+    .imgTagline {
         width: 45%;
     }
 
-    .form-area {
+    .formArea {
         border-radius: 0px;
         background-color: rgba(39, 39, 39, 0);
         width: 4%;
@@ -276,26 +266,26 @@ html {
         margin-left: 85px;
     }
 
-    #google-btn {
+    .googleBtn {
         margin: 0px 85px;
     }
 }
 
 @media (max-width: 400px) {
-    .general-area {
+    .generalArea {
         background-size: 260%;
         background-position: -53px 0;
     }
 
-    #text-tagline {
+    .textTagline {
         font-size: 20px;
     }
 
-    .img-tagline {
+    .imgTagline {
         width: 45%;
     }
 
-    .form-area {
+    .formArea {
         border-radius: 0px;
         background-color: rgba(39, 39, 39, 0);
         width: 4%;
@@ -305,7 +295,7 @@ html {
         margin-left: 70px;
     }
 
-    #google-btn {
+    .googleBtn {
         margin: 0px 70px;
     }
 }

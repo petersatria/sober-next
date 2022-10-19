@@ -1,5 +1,4 @@
 import '../styles/globals.css';
-import "../styles/login.css";
 import { Provider } from 'react-redux';
 import { useEffect } from 'react';
 import store from '../redux/store';

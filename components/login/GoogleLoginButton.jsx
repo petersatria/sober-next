@@ -5,6 +5,7 @@ import { errorNotification, notificationSocialLogin } from "../../moduleComponen
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { getUserData, isUserLoggedIn, isLoading } from "../../redux/actions/authentication";
+import styles from "../../styles/login.module.css"
 
 const GoogleLoginButton = () => {
   const dispatch = useDispatch();
@@ -105,7 +106,7 @@ const GoogleLoginButton = () => {
     console.log(googleEmail);
   }, [googleEmail, googlePassword, googleUsername]);
 
-  return <div id="google-btn" className="mb-2"></div>;
+  return <div id="google-btn" className={`mb-2 ${styles.googleBtn}`}></div>;
 };
 
 export default GoogleLoginButton;

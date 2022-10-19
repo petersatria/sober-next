@@ -1,0 +1,46 @@
+.generalArea {
+    min-height: 100vh;
+}
+
+.heroArea {
+    background-image: url('../public/aboutAssets/about-pageheading.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 82vh;
+    animation: fadeIn 1s;
+}
+
+.aboutText {
+    margin-top: 200px;
+}
+
+.aboutText h1 {
+    font-size: 4.7rem;
+}
+
+.linkHome {
+    color: grey;
+    transition: 0.5s;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.linkHome:hover {
+    color: black;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.linkAboutUs {
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.linkSign {
+    color: grey;
+    font-weight: 500;
+}
+
+.companyTitleDescription, .companyDescription {
+    line-height: 2.5rem;
+}
