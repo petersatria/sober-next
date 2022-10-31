@@ -3,15 +3,15 @@ html {
 }
 
 .general-area {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4),
-            rgba(0, 0, 0, 0.4)), url('../public/loginAssets/wp3646146-men-fashion-wallpapers.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url('../public/loginAssets/wp3646146-men-fashion-wallpapers.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
     animation: fadeIn 1s;
 }
 
-.text-divider{
+.text-divider {
     font-size: 0.9rem;
 }
 
@@ -68,7 +68,7 @@ html {
     font-size: 0.8rem;
 }
 
-.input:focus+.label {
+.input:focus + .label {
     transform: translateY(0.1rem);
     opacity: 1;
     visibility: visible;
@@ -104,7 +104,7 @@ html {
 
 .divider:after,
 .divider:before {
-    content: "";
+    content: '';
     flex: 1;
     height: 1px;
     background: black;
@@ -136,9 +136,9 @@ html {
 
 /* ========================================= media queries =====================================================*/
 @media (min-width: 1370px) {
-    html {
+    /* html {
         font-size: 125%;
-    }
+    } */
 
     .btnFacebook {
         margin-left: 150px;
@@ -169,7 +169,6 @@ html {
     #google-btn {
         margin: 0px 150px;
     }
-
 }
 
 @media (max-width: 1200px) {
@@ -228,7 +227,6 @@ html {
 }
 
 @media (max-width: 570px) {
-
     #text-tagline {
         font-size: 20px;
     }

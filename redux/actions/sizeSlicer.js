@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    s: true,
+    xs: true,
+    s: false,
     m: false,
     l: false,
     xl: false,
@@ -49,6 +50,15 @@ const sizeSlicer = createSlice({
             return {
                 ...newState,
                 xl: true,
+            };
+        },
+
+        xsActive(state) {
+            const newState = turnInactive(state);
+
+            return {
+                ...newState,
+                xs: true,
             };
         },
     },

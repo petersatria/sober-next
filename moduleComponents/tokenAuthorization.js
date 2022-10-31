@@ -1,15 +1,15 @@
-import { getCookie } from "./cookie";
+import { getCookie } from './cookie';
 
 const token = () => {
-    let token = ''
+    let token = '';
     let getUser = getCookie('userCookie');
     if (getUser === null) {
-        token = null
+        token = null;
     } else {
-        let parseCookie = JSON.parse(getUser)
+        let parseCookie = JSON.parse(getUser);
         token = parseCookie.token;
     }
-    return token
-}
+    return token;
+};
 
-export { token }
+export { token };
