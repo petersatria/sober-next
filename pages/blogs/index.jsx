@@ -3,9 +3,20 @@ import axios from 'axios';
 import styles from '../../styles/Blog.module.css';
 import { useState } from 'react';
 import BlogPopular from '../../components/Blog/BlogPopular';
-import Page from "../../components/Page";
+import Page from '../../components/Page';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { headerActions } from '../../redux/actions/headerSlicer';
 
 const BlogList = (props) => {
+    // Set header active
+    const router = useRouter();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(headerActions.setActive(router.pathname));
+    }, []);
+
     const [tags, setTags] = useState('');
     const blogs = props?.blogs;
 

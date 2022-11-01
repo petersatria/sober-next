@@ -1,9 +1,10 @@
 .header {
+    position: relative;
     background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 2rem 4rem;
+    padding: 1.9rem 3rem 1rem;
     position: sticky;
     width: 100%;
     top: 0;
@@ -21,22 +22,24 @@
 .header img {
     width: 8.25rem;
     height: 1.5rem;
-    margin-top: -1rem;
+    margin-top: -0.5rem;
 }
 
 .list {
     list-style: none;
     display: flex;
-    gap: 3.2rem;
+    gap: 1.8rem;
     font-size: 1rem;
     text-transform: uppercase;
     align-items: center;
+    letter-spacing: 1px;
 }
 
 .link {
     text-decoration: none;
     color: black;
     font-weight: 600;
+    letter-spacing: 1px;
     position: relative;
 }
 
@@ -85,17 +88,18 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    position: relative;
 }
 
 .cart {
-    background-color: black;
-    color: white;
+    position: absolute;
+    top: -1rem;
+    left: 1rem;
+    color: black;
     border-radius: 50%;
-    width: 1.5rem;
-    height: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1;
 }

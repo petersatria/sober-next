@@ -1,9 +1,9 @@
-import Overlay from '../../GeneralUI/Overlay';
+import Overlay from '../GeneralUI/Overlay';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './SearchResultModal.module.css';
-import ProductList from '../Product/ProductList';
+import ProductList from '../Home/Product/ProductList';
 
 const SearchResultModal = ({ result, onClose }) => {
     return (

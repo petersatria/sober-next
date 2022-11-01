@@ -1,14 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { headerActions } from '../redux/actions/headerSlicer';
-import { fetchCart } from '../redux/actions/cartSlicer';
 import axios from 'axios';
 
 import Hero from '../components/Home/Hero/Hero';
 import ProductsBestWeek from '../components/Home/Product/ProductsBestWeek';
 import ProductsByCategory from '../components/Home/Product/ProductsByCategory';
 import Newsletter from '../components/Home/Newsletter/Newsletter';
-import { useEffect, useState } from 'react';
-import SearchBar from '../components/Home/SearchBar/SearchBar';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function HomePage({
     productsBestWeek,
@@ -17,6 +16,9 @@ export default function HomePage({
     productsDress,
     productsJacket,
 }) {
+    // ROUTER
+    const router = useRouter();
+
     // DISPATCH REDUX
     const dispatch = useDispatch();
 
@@ -53,13 +55,12 @@ export default function HomePage({
     ];
 
     useEffect(() => {
-        dispatch(headerActions.homeIsActive());
+        dispatch(headerActions.setActive(router.pathname));
     }, []);
 
     return (
         <>
             <Hero />
-            <SearchBar />
             <ProductsBestWeek items={productsBestWeek} />
             {productsCategoryItem.map((item) => (
                 <ProductsByCategory

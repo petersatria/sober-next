@@ -1,8 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { dashboardReducers } from './actions/dashboardSlicer';
+import { searchReducers } from './actions/searchSlicer';
 import cartReducer from './actions/cartSlicer';
 import headerReducer from './actions/headerSlicer';
 import sizeReducer from './actions/sizeSlicer';
-import { dashboardReducers } from './actions/dashboardSlicer';
 import authentication from './actions/authentication';
 
 const reducers = combineReducers({
@@ -12,6 +13,7 @@ const reducers = combineReducers({
     header: headerReducer,
     size: sizeReducer,
     dashboard: dashboardReducers,
+    search: searchReducers,
 });
 
 const store = configureStore({

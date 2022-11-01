@@ -20,13 +20,16 @@ const Layout = ({ children }) => {
         };
     }, []);
 
+    const headerCondition = router.pathname !== '/admin';
+    const footerCondition = router.pathname !== '/admin' && router.pathname !== '/search';
+
     const component = loading ? (
         <LoaderSpinner />
     ) : (
         <>
-            {router.pathname !== '/admin' && <Header />}
+            {headerCondition && <Header />}
             {children}
-            {router.pathname !== '/admin' && <Footer />}
+            {footerCondition && <Footer />}
         </>
     );
 
