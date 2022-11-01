@@ -35,16 +35,16 @@ const NavUserList = [
         title: 'User',
         type: 'user',
     },
-    {
-        icon: faPlus,
-        title: 'Add User',
-        type: 'add-user',
-    },
-    {
-        icon: faPen,
-        title: 'Update User',
-        type: 'update-user',
-    },
+    // {
+    //     icon: faPlus,
+    //     title: 'Add User',
+    //     type: 'add-user',
+    // },
+    // {
+    //     icon: faPen,
+    //     title: 'Update User',
+    //     type: 'update-user',
+    // },
 ];
 
 const NavBlogList = [
@@ -69,10 +69,10 @@ function Sidebar() {
     const dispatch = useDispatch();
 
     return (
-        <div className="tw-fixed tw-w-72 tw-z-50 tw-overflow-scroll tw-bg-white tw-h-screen  tw-border tw-border-gray-200 tw-p-6">
+        <div className="tw-fixed tw-z-50 tw-h-screen tw-w-72 tw-overflow-scroll tw-border  tw-border-gray-200 tw-bg-white tw-p-6">
             {/* Header */}
-            <div className="tw-flex tw-justify-between tw-items-center tw-pb-4 tw-mb-4 tw-border-b tw-border-gray-200">
-                <h2 className="tw-text-lg tw-m-0 tw-font-bold">Dashboard</h2>
+            <div className="tw-mb-4 tw-flex tw-items-center tw-justify-between tw-border-b tw-border-gray-200 tw-pb-4">
+                <h2 className="tw-m-0 tw-text-lg tw-font-bold">Dashboard</h2>
 
                 <button
                     className="tw-cursor-pointer"
@@ -95,7 +95,7 @@ function Sidebar() {
             </div>
 
             {/* User lList */}
-            <div className="tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4 tw-mt-2">
+            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4">
                 {NavUserList.map((item) => (
                     <NavButton
                         key={item.title}
@@ -107,7 +107,7 @@ function Sidebar() {
             </div>
 
             {/* Blog lList */}
-            <div className="tw-flex tw-flex-col tw-gap-y-1 tw-mt-2">
+            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1">
                 {NavBlogList.map((item) => (
                     <NavButton
                         key={item.title}

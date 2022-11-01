@@ -119,7 +119,6 @@ const AddProduct = ({ header, product, method, url, type }) => {
     // Input value
     const [nameValue, setNameValue] = useState(initialNameValue);
     const [priceValue, setPriceValue] = useState(initialPriceValue);
-    // const [detailValue, setDetailValue] = useState(initialDetailValue);
     const [categoryValue, setCategoryValue] = useState(initialCategoryValue);
     const [stockXSValue, setStockXSValue] = useState(initialStockXSValue);
     const [stockSValue, setStockSValue] = useState(initialStockSValue);
@@ -127,7 +126,6 @@ const AddProduct = ({ header, product, method, url, type }) => {
     const [stockLValue, setStockLValue] = useState(initialStockLValue);
     const [stockXLValue, setStockXLValue] = useState(initialStockXLValue);
     const [sizeValue, setSizeValue] = useState('');
-    // const [summaryValue, setSummaryValue] = useState('');
     const [imageValue, setImageValue] = useState(initialimagesArr);
 
     // Notification
@@ -138,7 +136,7 @@ const AddProduct = ({ header, product, method, url, type }) => {
         e.preventDefault();
 
         const form = new FormData(e.target);
-        const image = form.get('image');
+        const imageFile = form.get('imageFile');
         const input = {
             name: nameValue,
             detail: form.get('detail'),
@@ -156,7 +154,7 @@ const AddProduct = ({ header, product, method, url, type }) => {
             images: imageValue,
         };
 
-        input.file = image;
+        input.file = imageFile;
         console.log(input);
 
         const userToken = token();
@@ -335,16 +333,16 @@ const AddProduct = ({ header, product, method, url, type }) => {
                     </div>
 
                     <div className={styles.control}>
-                        <label className={styles.label} htmlFor="thumbnail">
+                        <label className={styles.label} htmlFor="category">
                             Category
                         </label>
                         <select
+                            id="category"
                             onChange={(e) => setCategoryValue(e.target.value)}
                             className={styles.input}
                             value={categoryValue}
                             required
                         >
-                            <option></option>
                             <option value="baju">Baju</option>
                             <option value="celana">Celana</option>
                             <option value="dress">Dress</option>
@@ -471,11 +469,11 @@ const AddProduct = ({ header, product, method, url, type }) => {
                     </div>
 
                     <div className={styles.control}>
-                        <label className={styles.label} htmlFor="summary">
+                        <label className={styles.label} htmlFor="image-file">
                             Images
                         </label>
 
-                        <input type="file" name="image" multiple />
+                        <input id="image-file" type="file" name={'imageFile'} multiple />
                     </div>
 
                     <button

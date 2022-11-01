@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { headerActions } from '../redux/actions/headerSlicer';
-import { fetchCart } from '../redux/actions/cartSlicer'
+import { fetchCart } from '../redux/actions/cartSlicer';
 import axios from 'axios';
 
 import Hero from '../components/Home/Hero/Hero';
@@ -87,22 +87,22 @@ export async function getStaticProps() {
 
         // PRODUCTS BESTWEEK
         const productsBestWeek = products
-            .filter((products) => products?.recommendation)
-            .slice(0, 5);
+            ?.filter((products) => products?.recommendation)
+            ?.slice(0, 5);
 
         // PRODUCTS BAJU
         const productsBaju = products.filter((product) => product.category === 'baju');
 
         // PRODUCTS CELANA
-        const productsCelana = products.filter(
+        const productsCelana = products?.filter(
             (product) => product.category === 'celana'
         );
 
         // PRODUCTS DRESS
-        const productsDress = products.filter((product) => product.category === 'dress');
+        const productsDress = products?.filter((product) => product.category === 'dress');
 
         // PRODUCTS JACKET
-        const productsJacket = products.filter(
+        const productsJacket = products?.filter(
             (product) => product.category === 'jacket'
         );
 
