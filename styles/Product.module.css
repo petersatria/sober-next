@@ -119,6 +119,10 @@
 	filter: none;
 }
 
+/* .page-item.active {
+	background-color: #1E1E23;
+} */
+
 
 @media (max-width: 577px) {
 	.wrapperProduct {

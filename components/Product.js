@@ -3,10 +3,10 @@ import Link from 'next/link'
 import Image from 'next/future/image'
 
 const Product = (props) => {
-	const { product, isLoading } = props
+	const { product } = props
 	// console.log('hee', props.product)
 
-	const price = product.price.toLocaleString('id-ID', {
+	const price = product?.price?.toLocaleString('id-ID', {
 		style: 'currency',
 		currency: 'IDR',
 	});
@@ -21,8 +21,8 @@ const Product = (props) => {
 					<Link href={`/products/${product._id}`} >
 						<div className={``} >
 							<div>
-								<Image quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={` ${styles.productImg}`} src={product.images[0]} alt="" />
-								<Image quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={` ${styles.productHover}`} src={product.images[1]} alt="" />
+								<img quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={` ${styles.productImg}`} src={`${product?.images[0]}`} alt="" />
+								<img quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={` ${styles.productHover}`} src={`${product?.images[1]}`} alt="" />
 							</div>
 
 						</div>

@@ -10,6 +10,7 @@ import { getUserData, isUserLoggedIn } from "../../redux/actions/authentication"
 import { headerActions } from "../../redux/actions/headerSlicer";
 import { confirmNotification } from "../../moduleComponents/notification";
 import { useRouter } from "next/router";
+import { faUser, faBagShopping, faCaretDown, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
   const { carts } = useSelector((state) => state.carts);
@@ -64,7 +65,7 @@ const Header = () => {
   const userIsLogin = () =>
     isLoggedIn ? (
       <>
-        <li className={styles.item}>
+        {/* <li className={styles.item}>
           <Link href={`/profile/${userInformation.id}`}>
             <a className={styles["sub-link"]}>{userInformation.username}</a>
           </Link>
@@ -74,6 +75,37 @@ const Header = () => {
           <a className={styles["sub-link"]} onClick={onLogoutClick}>
             Logout
           </a>
+        </li> */}
+
+        <li className={styles.item}>
+          <div className={styles.dropdown}>
+            <a className={styles["sub-link"]}>{userInformation.username} </a>
+            <FontAwesomeIcon className="ms-2" icon={faCaretDown} />
+            <div className={styles.dropdownContent}>
+              <Link href={`/profile/${userInformation.id}`}>
+                <div className="">
+                  <a className={styles["dropwdown-item"]} style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>Profile
+                    <FontAwesomeIcon icon={faUser} />
+                  </a>
+                </div>
+              </Link>
+              <Link href={`/profile/${userInformation.id}/orders`}>
+                <div>
+                  <a className={styles["dropwdown-item"]} style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>Order
+                    <FontAwesomeIcon icon={faBagShopping} />
+                  </a>
+                </div>
+              </Link>
+              <li className={styles.item}>
+                <a className={`py-3 ${styles["dropwdown-item"]} ${styles["logout"]}`}
+                  style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}
+                  onClick={onLogoutClick}>
+                  Logout
+                  <FontAwesomeIcon icon={faRightFromBracket} />
+                </a>
+              </li>
+            </div>
+          </div>
         </li>
       </>
     ) : (

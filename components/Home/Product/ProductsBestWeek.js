@@ -24,7 +24,7 @@ const ProductsBestWeek = ({ items }) => {
     // State
     const [products, setProducts] = useState([]);
 
-    const { data } = useSWR(`${host}api/products`, fetcher);
+    const { data } = useSWR(`${host}api/product`, fetcher);
 
     // Side Effect
     useEffect(() => {

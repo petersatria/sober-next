@@ -4,6 +4,8 @@ import styles from '../../styles/Blog.module.css';
 import { useState } from 'react';
 import BlogPopular from '../../components/Blog/BlogPopular';
 import Page from "../../components/Page";
+import Pagination from "../../components/Pagination/Pagination";
+import BreadCumb from "../../components/BreadCumb";
 
 const BlogList = (props) => {
     const [tags, setTags] = useState('');
@@ -87,8 +89,9 @@ const BlogList = (props) => {
     return (
         <Page title={'All Blogs'} description={'All Blogs'}>
             <div className="container">
+                <BreadCumb linkTo={"All Blogs"} linkRef={"/blogs/"} />
                 <div className="row">
-                    <div className="col-12 col-lg-8">
+                    <div className="col-12 col-lg-8 mb-5">
                         {blogs &&
                             blogs.map((blog) => (
                                 <div key={Math.random().toString() + blog._id}>
@@ -137,6 +140,7 @@ const BlogList = (props) => {
                         </div>
                     </div>
                 </div>
+                <Pagination props={props} />
             </div>
         </Page>
     );
@@ -145,11 +149,12 @@ const BlogList = (props) => {
 export default BlogList;
 
 export async function getServerSideProps(context) {
-    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_URL}api/blog/articles`);
+    const { data } = await axios.get(`http://localhost:5000/api/blog/articles?page=${context.query.page ? context.query.page : 1}`);
 
     return {
         props: {
             blogs: data.result,
+            maxPage: data.maxPage
         }, // will be passed to the page component as props
     };
 }

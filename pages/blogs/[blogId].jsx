@@ -5,6 +5,7 @@ import axios from 'axios';
 import BlogRelated from '../../components/Blog/BlogRelated';
 import Link from 'next/link';
 import Page from "../../components/Page";
+import BreadCumb from "../../components/BreadCumb";
 
 const BlogDetail = (props) => {
     const [relatedBlogs, setRelatedBlogs] = useState('');
@@ -29,8 +30,9 @@ const BlogDetail = (props) => {
     return (
         <Page title={blog?.title} description={blog?.title}>
             <div className="container my-5">
+                <BreadCumb linkTo={blog.title} linkPrev={"All Blogs"} linkRef={"/blogs/"} />
                 <div>
-                    <div className="row d-flex flex-row justify-content-center">
+                    <div className="row d-flex flex-row justify-content-center my-2">
                         <div
                             className={`col-4 text-end ${styles.smallTitle}`}
                             style={{ color: '#bfbfc8' }}

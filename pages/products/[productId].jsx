@@ -70,7 +70,7 @@ const ProductDetail = (props) => {
 		shuffled()
 	}, [product])
 
-	const price = product.price.toLocaleString('id-ID', {
+	const price = product?.price?.toLocaleString('id-ID', {
 		style: 'currency',
 		currency: 'IDR',
 	});
@@ -79,7 +79,7 @@ const ProductDetail = (props) => {
 	return (
 		<Page title={product?.name} description={product?.summary}>
 			<div className="container">
-				<BreadCumb linkTo={product} />
+				{/* <BreadCumb linkTo={product.name} linkPrev={"All Products"} linkRef={"/products/"} /> */}
 				<div className="row text-center my-5">
 					<div className="col-12 col-md-6 align-self-center">
 						<Slider {...settings}>
