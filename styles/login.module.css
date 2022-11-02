@@ -1,303 +1,307 @@
 .generalArea {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4),
-            rgba(0, 0, 0, 0.4)), url('../public/loginAssets/wp3646146-men-fashion-wallpapers.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh;
-    animation: fadeIn 1s;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("../public/loginAssets/wp3646146-men-fashion-wallpapers.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  animation: fadeIn 1s;
 }
 
 .textDivider {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .imgTagline {
-    animation: fadeIn 2s;
+  animation: fadeIn 2s;
 }
 
 .formArea {
-    border-radius: 10px;
-    background-color: rgba(39, 39, 39, 0.678);
-    max-width: 100%;
-    animation: fadeIn 2s;
+  border-radius: 10px;
+  background-color: rgba(39, 39, 39, 0.678);
+  max-width: 100%;
+  animation: fadeIn 2s;
 }
 
-.formLabel, .isHaveAccountText {
-    color: rgb(192, 196, 199);
-    font-size: 0.8rem;
+.formLabel,
+.isHaveAccountText {
+  color: rgb(192, 196, 199);
+  font-size: 0.8rem;
 }
 
-.registerText, .forgotPassword {
-    text-decoration: none;
-    color: rgb(0, 74, 212);
-    font-size: 0.8rem;
+.registerText,
+.forgotPassword {
+  text-decoration: none;
+  color: rgb(0, 74, 212);
+  font-size: 0.8rem;
 }
 
 .registerText:hover,
 .forgotPassword:hover {
-    text-decoration: none;
-    color: rgb(46, 46, 231);
-    cursor: pointer;
+  text-decoration: none;
+  color: rgb(46, 46, 231);
+  cursor: pointer;
 }
 
 .textTagline {
-    font-size: 1.8rem;
-    font-weight: 450;
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-    text-shadow: 3px 2px black;
-    animation: fadeIn 2s;
+  font-size: 1.8rem;
+  font-weight: 450;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-shadow: 3px 2px black;
+  animation: fadeIn 2s;
 }
 
 .btnSubmit {
-    width: 100%;
-    height: 45px;
-    border-radius: 15px;
-    font-size: 1rem;
+  width: 100%;
+  height: 45px;
+  border-radius: 15px;
+  font-size: 1rem;
 }
 
 .togglePassword {
-    cursor: pointer;
-    padding-top: 15px;
+  cursor: pointer;
+  padding-top: 15px;
 }
 
 .googleBtn {
-    margin: 0px 110px;
+  margin: 0px 110px;
 }
 
 .btnFacebook {
-    width: 220px;
-    height: 45px;
-    border-radius: 6px;
-    background: #3b5998;
-    color: white;
-    border: 0px transparent;
-    text-align: center;
-    margin-left: 110px;
-    display: inline-block;
-    margin-top: 5px;
-    font-size: 0.8rem;
+  width: 220px;
+  height: 45px;
+  border-radius: 6px;
+  background: #3b5998;
+  color: white;
+  border: 0px transparent;
+  text-align: center;
+  margin-left: 110px;
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 0.8rem;
 }
 
 .btnFacebook:hover {
-    background: #3b5998;
-    opacity: 0.6;
+  background: #3b5998;
+  opacity: 0.6;
 }
 
 .input:focus::placeholder {
-    opacity: 0;
+  opacity: 0;
 }
 
 .input::placeholder {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
-.input:focus+.label {
-    transform: translateY(0.1rem);
-    opacity: 1;
-    visibility: visible;
-    font-size: 0.8rem;
+.input:focus + .label {
+  transform: translateY(0.1rem);
+  opacity: 1;
+  visibility: visible;
+  font-size: 0.8rem;
 }
 
 .label {
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s;
-    transform: translateY(-2.4rem);
-    font-size: 0.8rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s;
+  transform: translateY(-2.4rem);
+  font-size: 0.8rem;
 }
 
 .divider:after,
 .divider:before {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: black;
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: black;
 }
 
 /* ============================================ animation =====================================================*/
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* ====================================== //animation end tag// =====================================================*/
 
 /* ========================================= media queries =====================================================*/
 @media (min-width: 1370px) {
-    .btnFacebook {
-        margin-left: 150px;
-        font-size: 0.8rem;
-    }
+  .btnFacebook {
+    margin-left: 150px;
+    font-size: 0.8rem;
+  }
 
-    .textTagline {
-        font-size: 1.7rem;
-    }
+  .textTagline {
+    font-size: 1.7rem;
+  }
 
-    .registerText,
-    .forgotPassword {
-        text-decoration: none;
-        color: rgb(0, 74, 212);
-    }
+  .registerText,
+  .forgotPassword {
+    text-decoration: none;
+    color: rgb(0, 74, 212);
+  }
 
-    .registerText:hover,
-    .forgotPassword:hover {
-        text-decoration: none;
-        color: rgb(46, 46, 231);
-        cursor: pointer;
-    }
+  .registerText:hover,
+  .forgotPassword:hover {
+    text-decoration: none;
+    color: rgb(46, 46, 231);
+    cursor: pointer;
+  }
 
-    .btnSubmit {
-        height: 55px;
-    }
+  .btnSubmit {
+    height: 55px;
+  }
 
-    .googleBtn {
-        margin: 0px 150px;
-    }
-
+  .googleBtn {
+    margin: 0px 150px;
+  }
 }
 
 @media (max-width: 1200px) {
-    .textTagline {
-        font-size: 30px;
-    }
+  .textTagline {
+    font-size: 30px;
+  }
 
-    .btnFacebook {
-        margin-left: 70px;
-    }
+  .btnFacebook {
+    margin-left: 70px;
+  }
 
-    .googleBtn {
-        margin: 0px 70px;
-    }
+  .googleBtn {
+    margin: 0px 70px;
+  }
 }
 
 @media (max-width: 990px) {
-    .textTagline {
-        font-size: 16px;
-    }
+  .textTagline {
+    font-size: 18px;
+  }
 
-    .imgTagline {
-        width: 70%;
-    }
+  .formArea {
+    width: 70%;
+  }
 
-    .btnFacebook {
-        margin-left: 70px;
-    }
+  .imgTagline {
+    width: 70%;
+  }
 
-    .googleBtn {
-        margin: 0px 70px;
-    }
+  .btnFacebook {
+    margin-left: 130px;
+  }
+
+  .googleBtn {
+    margin: 0px 130px;
+  }
 }
 
 @media (max-width: 750px) {
-    .generalArea {
-        background-size: 280%;
-        background-position: -110px 0;
-    }
+  .generalArea {
+    background-size: 280%;
+    background-position: -110px 0;
+  }
 
-    .textTagline {
-        font-size: 20px;
-    }
+  .textTagline {
+    font-size: 20px;
+  }
 
-    .imgTagline {
-        width: 45%;
-    }
+  .imgTagline {
+    width: 45%;
+  }
 
-    .btnFacebook {
-        margin-left: 100px;
-    }
+  .btnFacebook {
+    margin-left: 100px;
+  }
 
-    .googleBtn {
-        margin: 0px 100px;
-    }
+  .googleBtn {
+    margin: 0px 100px;
+  }
 }
 
-@media (max-width: 570px) {
+@media (max-width: 576px) {
+  .textTagline {
+    font-size: 20px;
+  }
 
-    .textTagline {
-        font-size: 20px;
-    }
+  .imgTagline {
+    width: 45%;
+  }
 
-    .imgTagline {
-        width: 45%;
-    }
+  .formArea {
+    border-radius: 0px;
+    background-color: rgba(39, 39, 39, 0);
+    width: 80%;
+  }
 
-    .formArea {
-        border-radius: 0px;
-        background-color: rgba(39, 39, 39, 0);
-        width: 4%;
-    }
+  .btnFacebook {
+    margin-left: 110px;
+  }
 
-    .btnFacebook {
-        margin-left: 150px;
-    }
-
-    .googleBtn {
-        margin: 0px 150px;
-    }
+  .googleBtn {
+    margin: 0px 110px;
+  }
 }
 
-@media (max-width: 500px) {
-    .generalArea {
-        background-size: 260%;
-        background-position: -53px 0;
-    }
+/* @media (max-width: 500px) {
+  .generalArea {
+    background-size: 260%;
+    background-position: -53px 0;
+  }
 
-    .textTagline {
-        font-size: 20px;
-    }
+  .textTagline {
+    font-size: 20px;
+  }
 
-    .imgTagline {
-        width: 45%;
-    }
+  .imgTagline {
+    width: 45%;
+  }
 
-    .formArea {
-        border-radius: 0px;
-        background-color: rgba(39, 39, 39, 0);
-        width: 4%;
-    }
+  .formArea {
+    border-radius: 0px;
+    background-color: rgba(39, 39, 39, 0);
+    width: 4%;
+  }
 
-    .btnFacebook {
-        margin-left: 85px;
-    }
+  .btnFacebook {
+    margin-left: 85px;
+  }
 
-    .googleBtn {
-        margin: 0px 85px;
-    }
-}
+  .googleBtn {
+    margin: 0px 85px;
+  }
+} */
 
 @media (max-width: 400px) {
-    .generalArea {
-        background-size: 260%;
-        background-position: -53px 0;
-    }
+  .generalArea {
+    background-size: 260%;
+    background-position: -53px 0;
+  }
 
-    .textTagline {
-        font-size: 20px;
-    }
+  .textTagline {
+    font-size: 20px;
+  }
 
-    .imgTagline {
-        width: 45%;
-    }
+  .imgTagline {
+    width: 45%;
+  }
 
-    .formArea {
-        border-radius: 0px;
-        background-color: rgba(39, 39, 39, 0);
-        width: 4%;
-    }
+  .formArea {
+    border-radius: 0px;
+    background-color: rgba(39, 39, 39, 0);
+    width: 80%;
+  }
 
-    .btnFacebook {
-        margin-left: 70px;
-    }
+  .btnFacebook {
+    margin-left: 30px;
+  }
 
-    .googleBtn {
-        margin: 0px 70px;
-    }
+  .googleBtn {
+    margin: 0px 30px;
+  }
 }
 
 /* ==================================== //media queries end tags// =====================================================*/

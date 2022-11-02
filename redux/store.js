@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import cartReducer from './actions/cartSlicer';
-import headerReducer from './actions/headerSlicer';
-import sizeReducer from './actions/sizeSlicer';
+import cartReducer from "./actions/cartSlicer";
+import headerReducer from "./actions/headerSlicer";
+import sizeReducer from "./actions/sizeSlicer";
 import authentication from "./actions/authentication";
 
 const reducers = combineReducers({

@@ -3,12 +3,27 @@ import { NextResponse } from "next/server";
 export function middleware(req) {
   const { pathname, origin } = req.nextUrl;
   const PUBLIC_FILE = /\.(.*)$/;
-  if (pathname.startsWith("/_next") || pathname.startsWith("/api") || pathname.startsWith("/static") || PUBLIC_FILE.test(pathname)) return NextResponse.next();
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/static") ||
+    PUBLIC_FILE.test(pathname)
+  )
+    return NextResponse.next();
 
   let user = req.cookies.get("userCookie");
   let verify = "";
 
-  if (pathname === "/login" || pathname === "/" || pathname === "/blogs" || pathname.includes("/blogs/6") || pathname === "/products" || pathname.includes("/products/6") || pathname === "/about-us" || pathname === "/signup") {
+  if (
+    pathname === "/login" ||
+    pathname === "/" ||
+    pathname === "/blogs" ||
+    pathname.includes("/blogs/6") ||
+    pathname === "/products" ||
+    pathname.includes("/products/6") ||
+    pathname === "/about-us" ||
+    pathname === "/signup"
+  ) {
     return NextResponse.next();
   }
 

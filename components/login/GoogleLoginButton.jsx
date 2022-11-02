@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { setCookie, getCookie } from "../../moduleComponents/cookie";
-import { errorNotification, notificationSocialLogin } from "../../moduleComponents/notification";
+import {
+  errorNotification,
+  notificationSocialLogin,
+} from "../../moduleComponents/notification";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
-import { getUserData, isUserLoggedIn, isLoading } from "../../redux/actions/authentication";
-import styles from "../../styles/login.module.css"
+import {
+  getUserData,
+  isUserLoggedIn,
+  isLoading,
+} from "../../redux/actions/authentication";
+import styles from "../../styles/login.module.css";
 
 const GoogleLoginButton = () => {
   const dispatch = useDispatch();
@@ -24,6 +31,7 @@ const GoogleLoginButton = () => {
     setGoogleEmail(userDecode.email);
     setGooglePassword(userDecode.given_name);
     setGoogleRole("user");
+    console.log(userDecode.given_name, "llllllllllllllllllllllll");
   };
 
   const userLogin = async () => {
@@ -46,12 +54,16 @@ const GoogleLoginButton = () => {
   const userAutoRegister = async () => {
     try {
       setLoading(true);
-      const responseRegister = await axios.post(`http://localhost:5000/api/user/signup`, {
-        username: googleUsername,
-        email: googleEmail,
-        password: googlePassword,
-        name: googleUsername,
-      });
+      const responseRegister = await axios.post(
+        `http://localhost:5000/api/user/signup`,
+        {
+          username: googleUsername,
+          email: googleEmail,
+          password: googlePassword,
+          name: googleUsername,
+          role: googleRole,
+        }
+      );
       if (responseRegister.data.status === "success") {
         try {
           await userLogin();
@@ -80,21 +92,25 @@ const GoogleLoginButton = () => {
   useEffect(() => {
     /*global google*/
     google.accounts.id.initialize({
-      client_id: "723325124358-7idukikel5vlp0logd8crflsclqlfcs4.apps.googleusercontent.com",
+      client_id:
+        "723325124358-7idukikel5vlp0logd8crflsclqlfcs4.apps.googleusercontent.com",
       callback: handleCallbackResponse,
     });
-    google.accounts.id.renderButton(document.getElementById("google-btn"), { theme: "outline", size: "large" });
+    google.accounts.id.renderButton(document.getElementById("google-btn"), {
+      theme: "outline",
+      size: "large",
+    });
   }, []);
 
   useEffect(() => {
     const userGoogle = async () => {
       try {
-       await userLogin();
+        await userLogin();
       } catch (error) {
         if (error.response) {
-          console.log('lllllllllllllllllllllllll')
+          console.log("lllllllllllllllllllllllll");
           await userAutoRegister();
-          return
+          return;
         }
         console.log(error);
         errorNotification();
