@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { fetchCart, deleteCart, checkoutCart, changeQty } from '../../redux/actions/cartSlicer'
 import { useRouter } from 'next/router'
+import BreadCumb from "../BreadCumb"
 export default function Cart() {
     const { carts } = useSelector(state => state.carts)
     const dispatch = useDispatch()
@@ -49,6 +50,7 @@ export default function Cart() {
                     <div className={styles.cartNumber}>{carts.length}</div>
                 </div>
             </div>
+            <BreadCumb linkTo={"My Cart"} linkPrev={"All Products"} linkRef={"/products/"} />
             <div className={`${styles.cartContent} mt-5`}>
                 <table className={`${styles.tableCart}`}>
                     <thead>

@@ -7,7 +7,7 @@ const BreadCumb = (props) => {
 	console.log('LINK', linkRef)
 
 	return (
-		<div className="wrapper-header">
+		<div className="wrapper-header my-2">
 			<div className="breadcumb-header">
 				<Link href="/">Home</Link>
 				<p className="bi bi-chevron-right"></p>

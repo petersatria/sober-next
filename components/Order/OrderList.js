@@ -108,6 +108,7 @@ const OrderList = () => {
                   return order.order?.map((orderTrans) => {
                     return (
                       <Print
+                        key={index + 1}
                         number={index + 1}
                         product={product}
                         productTrans={order}

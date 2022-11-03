@@ -130,6 +130,7 @@
     min-width: 190px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    right: 20px;
 }
 
 .dropdownContent a {
@@ -171,6 +172,10 @@
 
 .logout:hover {
     color: red;
+}
+
+.admin {
+    display: none;
 }
 
 .menu-icon {
@@ -243,6 +248,18 @@
 
     .link::after {
         background-color: white;
+    }
+
+    .dropdown:hover .dropdownContent {
+        display: none;
+    }
+
+    .iconDown {
+        display: none;
+    }
+
+    .admin {
+        display: block;
     }
 }
 

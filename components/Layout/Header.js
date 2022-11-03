@@ -109,8 +109,11 @@ const Header = () => {
 
                 <li className={styles.item}>
                     <div className={styles.dropdown}>
-                        <a className={styles["sub-link"]}>{userInformation.username} </a>
-                        <FontAwesomeIcon className="ms-2" icon={faCaretDown} />
+                        <Link href={`/profile/${userInformation.id}`}>
+                            <a className={styles["sub-link"]}>{userInformation.username}
+                                <FontAwesomeIcon className={`ms-2 ${styles.iconDown}`} icon={faCaretDown} />
+                            </a>
+                        </Link>
                         <div className={styles.dropdownContent}>
                             {userInformation.role === 'admin' &&
                                 <Link href={`/admin`}>
@@ -146,6 +149,15 @@ const Header = () => {
                         </div>
                     </div>
                 </li>
+                {userInformation.role === 'admin' &&
+                    <Link href={`/admin`}>
+                        <div className={styles.admin}>
+                            <a className={styles["sub-link"]}>Admin
+                                <FontAwesomeIcon className="ms-2" icon={faUserPlus} />
+                            </a>
+                        </div>
+                    </Link>
+                }
             </>
         ) : (
             <>

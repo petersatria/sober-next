@@ -11,6 +11,17 @@ const Order = (props) => {
 		setProductImage(props.product.images)
 	}, [])
 
+	const price = props?.productTrans?.price?.toLocaleString('id-ID', {
+		style: 'currency',
+		currency: 'IDR',
+	});
+
+	const totalPrice = props?.productTrans?.price * props.productTrans.quantity
+	const totalRupiah = totalPrice?.toLocaleString('id-ID', {
+		style: 'currency',
+		currency: 'IDR',
+	});
+
 	return (
 		<div className={`m-5 ${styles.wrapperCard}`}>
 			<div className="card-body">
@@ -28,7 +39,7 @@ const Order = (props) => {
 						<p className={`text-end ${styles.productPrice}`}>X {props.productTrans.quantity}</p>
 					</div>
 					<div className="col-md-3 align-self-center ps-0 pe-4">
-						<p className={`text-end ${styles.productPrice}`}>Rp{props.productTrans.price}</p>
+						<p className={`text-end ${styles.productPrice}`}>{price}</p>
 					</div>
 				</div>
 				<div className={styles.borderTop}></div>
@@ -41,7 +52,7 @@ const Order = (props) => {
 						</div>
 					</div>
 					<div className="col-md-3 align-self-center ps-0 pe-4">
-						<p className={`text-end m-0 ${styles.productPrice}`}>Rp{props.productTrans.price * props.productTrans.quantity}</p>
+						<p className={`text-end m-0 ${styles.productPrice}`}>{totalRupiah}</p>
 					</div>
 				</div>
 			</div>
