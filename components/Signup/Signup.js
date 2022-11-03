@@ -4,7 +4,8 @@ import useFetch from '../../hooks/use-fetch';
 
 import Form from '../GeneralUI/Form';
 import Input from '../GeneralUI/Input';
-import Notification from '../GeneralUI/Notification';
+// import Notification from '../GeneralUI/Notification';
+import { notifications } from '../../moduleComponents/notification';
 import LoadingSpinner from '../GeneralUI/LoadingSpinner';
 
 import ValidationFunction from '../../lib/ValidationFunction';
@@ -17,7 +18,6 @@ const host =
         : process.env.REACT_APP_URL;
 
 const Signup = () => {
-    const [notif, setNotif] = useState(null);
     const [loading, setLoading] = useState(false);
 
     // Router
@@ -43,31 +43,23 @@ const Signup = () => {
         }
 
         if (result === 'error') {
-            setNotif({
-                title: 'Error!',
-                message: 'Something went wrong',
-                status: 'error',
-            });
+            (async () =>
+                await notifications({
+                    statusCode: 400,
+                    message: 'Something went wrong',
+                }))();
         }
 
         if (result === 'success') {
-            setNotif({
-                title: 'Registered',
-                message: 'Successfully registered',
-                status: 'success',
-            });
+            (async () =>
+                await notifications({ statusCode: 200, message: 'Register success' }))();
 
             setTimeout(() => {
                 router.replace('/login');
-            }, 3500);
+            }, 2200);
         }
 
         setLoading(false);
-        const timer = setTimeout(() => setNotif(null), 5000);
-
-        return () => {
-            clearTimeout(timer);
-        };
     }, [result, router]);
 
     // Handler
@@ -108,14 +100,6 @@ const Signup = () => {
 
     return (
         <div className={styles.signup}>
-            {notif && (
-                <Notification
-                    title={notif.title}
-                    message={notif.message}
-                    status={notif.status}
-                />
-            )}
-
             {loading && <LoadingSpinner />}
 
             <Form onSubmit={submitFormHandler}>

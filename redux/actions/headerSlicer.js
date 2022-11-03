@@ -10,7 +10,6 @@ const headerSlicer = createSlice({
     initialState,
     reducers: {
         setActive(state, actions) {
-            console.log(actions);
             state.isActive = actions.payload;
         },
 

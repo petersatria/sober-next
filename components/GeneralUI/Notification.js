@@ -20,14 +20,16 @@ const Notification = ({ message, status, title }) => {
     const notifStyle = `${styles.notif} ${background}`;
 
     return (
-        <Overlay>
+        <>
             {show && (
-                <div onClick={showHandler} className={notifStyle}>
-                    <p>{title} |</p>
-                    <p>{message}...</p>
-                </div>
+                <Overlay>
+                    <div onClick={showHandler} className={notifStyle}>
+                        <p>{title} |</p>
+                        <p>{message}...</p>
+                    </div>
+                </Overlay>
             )}
-        </Overlay>
+        </>
     );
 };
 

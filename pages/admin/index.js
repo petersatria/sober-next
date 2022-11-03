@@ -73,30 +73,40 @@ function Dashboard({ products, users, blogs }) {
 }
 
 export async function getServerSideProps() {
-    const resProducts = await axios.get(`${host}api/product`);
-    const resUsers = await axios.get(`${host}api/user`);
-    const resBlog = await axios.get(`${host}api/blog/articles`);
+    try {
+        const resProducts = await axios.get(`${host}api/product`);
+        const resUsers = await axios.get(`${host}api/user`);
+        const resBlog = await axios.get(`${host}api/blog/articles`);
 
-    const products = resProducts.data.result.map((item) => {
-        item['size-xs'] = item.size.xs || null;
-        item['size-s'] = item.size.s || null;
-        item['size-m'] = item.size.m || null;
-        item['size-l'] = item.size.l || null;
-        item['size-xl'] = item.size.xl || null;
-        return item;
-    });
+        const products = resProducts.data.result.map((item) => {
+            item['size-xs'] = item?.size?.xs || null;
+            item['size-s'] = item?.size?.s || null;
+            item['size-m'] = item?.size?.m || null;
+            item['size-l'] = item?.size?.l || null;
+            item['size-xl'] = item?.size?.xl || null;
+            return item;
+        });
 
-    const users = resUsers.data.data;
+        const users = resUsers?.data?.data;
 
-    const blogs = resBlog.data.result;
+        const blogs = resBlog?.data?.result;
 
-    return {
-        props: {
-            products,
-            users,
-            blogs,
-        },
-    };
+        return {
+            props: {
+                products,
+                users,
+                blogs,
+            },
+        };
+    } catch (err) {
+        return {
+            props: {
+                products: [],
+                users: [],
+                blogs: [],
+            },
+        };
+    }
 }
 
 export default Dashboard;

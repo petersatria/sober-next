@@ -37,11 +37,11 @@ function ProductDashboard({ products }) {
             const res = await axios.get(`${host}api/product`);
 
             const data = res.data.result.map((item) => {
-                item['size-xs'] = item.size.xs || null;
-                item['size-s'] = item.size.s || null;
-                item['size-m'] = item.size.m || null;
-                item['size-l'] = item.size.l || null;
-                item['size-xl'] = item.size.xl || null;
+                item['size-xs'] = item?.size?.xs || null;
+                item['size-s'] = item?.size?.s || null;
+                item['size-m'] = item?.size?.m || null;
+                item['size-l'] = item?.size?.l || null;
+                item['size-xl'] = item?.size?.xl || null;
                 return item;
             });
             setData(data);
