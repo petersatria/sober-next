@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { setCookie, getCookie } from "../../moduleComponents/cookie";
-import { errorNotification, notificationSocialLogin } from "../../moduleComponents/notification";
+import {
+  errorNotification,
+  notificationSocialLogin,
+} from "../../moduleComponents/notification";
 import FacebookLogin from "react-facebook-login";
 import { useDispatch } from "react-redux";
-import { getUserData, isUserLoggedIn, isLoading } from "../../redux/actions/authentication";
+import {
+  getUserData,
+  isUserLoggedIn,
+  isLoading,
+} from "../../redux/actions/authentication";
+import styles from "../../styles/login.module.css";
 
 const FacebookLoginButton = () => {
   const dispatch = useDispatch();
@@ -18,7 +26,7 @@ const FacebookLoginButton = () => {
   const [loading, setLoading] = useState(false);
 
   const responseFacebook = (response) => {
-    setLoading(true)
+    setLoading(true);
     setFacebookUsername(response.first_name);
     setFacebookEmail(response.email);
     setFacebookPassword(response.name);
@@ -36,24 +44,28 @@ const FacebookLoginButton = () => {
     if (isNotif) {
       setCookie(`userCookie`, JSON.stringify(response.data.sendData), 1);
       dispatch(getUserData(JSON.parse(getCookie("userCookie"))));
-      dispatch(isUserLoggedIn(true))
+      dispatch(isUserLoggedIn(true));
       router.push("/");
       return;
     }
-  }
+  };
 
   const userAutoRegister = async () => {
     try {
       setLoading(true);
-      const responseRegister = await axios.post(`${process.env.NEXT_PUBLIC_URL}api/user/signup`, {
-        username: facebookUsername,
-        email: facebookEmail,
-        name: facebookUsername,
-        password: facebookPassword,
-      });
+      const responseRegister = await axios.post(
+        `http://localhost:5000/api/user/signup`,
+        {
+          username: facebookUsername,
+          email: facebookEmail,
+          name: facebookUsername,
+          password: facebookPassword,
+          role: facebookRole,
+        }
+      );
       if (responseRegister.data.status === "success") {
         try {
-          await userLogin()
+          await userLogin();
         } catch (error) {
           console.log(error);
           errorNotification();
@@ -67,21 +79,21 @@ const FacebookLoginButton = () => {
       console.log(error);
       errorNotification();
     }
-  }
+  };
 
   // useEffect
   useEffect(() => {
-    console.log(loading)
+    console.log(loading);
     dispatch(isLoading({ loading }));
-  }, [loading])
+  }, [loading]);
 
   useEffect(() => {
     const userFacebook = async () => {
       try {
-        await userLogin()
+        await userLogin();
       } catch (error) {
         if (error.response) {
-          await userAutoRegister()
+          await userAutoRegister();
           return;
         }
         console.log(error);
@@ -96,10 +108,15 @@ const FacebookLoginButton = () => {
     <FacebookLogin
       appId="493278945653702"
       fields="name,email,picture,first_name"
-      cssClass="btnFacebook"
+      cssClass={`${styles.btnFacebook}`}
       autoLoad={false}
       callback={responseFacebook}
-      icon={<i className="bi bi-facebook" style={{ marginRight: "7px", fontSize: "1.1rem" }}></i>}
+      icon={
+        <i
+          className="bi bi-facebook"
+          style={{ marginRight: "7px", fontSize: "1.1rem" }}
+        ></i>
+      }
     />
   );
 };
