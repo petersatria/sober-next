@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useFetch from '../../hooks/use-fetch';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { searchActions } from '../../redux/actions/searchSlicer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -13,11 +13,12 @@ const host =
         : process.env.REACT_APP_URL;
 
 const SearchBar = () => {
-    // STATE
-    const [searchValue, setSearchValue] = useState('');
+    // GLOBAL STATE
+    // const [searchValue, setSearchValue] = useState('');
+    const searchState = useSelector((state) => state.search);
 
     // FETCH
-    const { sendRequest } = useFetch(true);
+    const { sendRequest, result } = useFetch(true);
 
     // REF
     const inputRef = useRef();
@@ -43,10 +44,6 @@ const SearchBar = () => {
         );
     };
 
-    const searchHandler = (e) => {
-        setSearchValue(e.target.value);
-    };
-
     // SIDE EFFECT
     useEffect(() => {
         const timer = setTimeout(submitHandler, 300);
@@ -54,7 +51,12 @@ const SearchBar = () => {
         return () => {
             clearTimeout(timer);
         };
-    }, [searchValue]);
+    }, [searchState.searchValue]);
+
+    useEffect(() => {
+        if (result === 'error') dispatch(searchActions.setStatusCode(404));
+        if (result === 'success') dispatch(searchActions.setStatusCode(200));
+    }, [result]);
 
     return (
         <div className={styles.container}>
@@ -66,8 +68,10 @@ const SearchBar = () => {
                     className={styles.input}
                     type="text"
                     placeholder="Search..."
-                    onChange={searchHandler}
-                    value={searchValue}
+                    onChange={(e) =>
+                        dispatch(searchActions.setSearchValue(e.target.value))
+                    }
+                    value={searchState.searchValue}
                 />
 
                 <button className={styles.btn}>
