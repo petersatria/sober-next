@@ -54,14 +54,14 @@ const ProductModal = ({ image, name, onClose, onSubmit, size }) => {
 
                             <div className={styles.input}>
                                 <select ref={selectRef}>
-                                    {size && Object.keys(size).map((sizes) => {
-                                        return <option key={sizes} value={sizes} >{sizes.toUpperCase()}</option>
-                                    })}
-                                    {/* <option></option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option> */}
+                                    {size &&
+                                        Object.keys(size).map((sizes) => {
+                                            return (
+                                                <option key={sizes} value={sizes}>
+                                                    {sizes.toUpperCase()}
+                                                </option>
+                                            );
+                                        })}
                                 </select>
 
                                 <button className={`${styles.btn} ${styles.add}`}>

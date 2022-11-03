@@ -3,6 +3,7 @@ import { headerActions } from '../redux/actions/headerSlicer';
 import axios from 'axios';
 
 import Hero from '../components/Home/Hero/Hero';
+import Video from '../components/Home/Video/Video';
 import ProductsBestWeek from '../components/Home/Product/ProductsBestWeek';
 import ProductsByCategory from '../components/Home/Product/ProductsByCategory';
 import Newsletter from '../components/Home/Newsletter/Newsletter';
@@ -61,6 +62,7 @@ export default function HomePage({
     return (
         <>
             <Hero />
+            <Video />
             <ProductsBestWeek items={productsBestWeek} />
             {productsCategoryItem.map((item) => (
                 <ProductsByCategory
@@ -83,8 +85,8 @@ export async function getStaticProps() {
             : process.env.REACT_APP_URL;
 
     try {
-        const res = await axios.get(`${host}api/products`);
-        const products = res.data.data;
+        const res = await axios.get(`${host}api/product`);
+        const products = res.data.result;
 
         // PRODUCTS BESTWEEK
         const productsBestWeek = products

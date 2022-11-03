@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useFetch from '../../hooks/use-fetch';
 import { useDispatch } from 'react-redux';
 import { searchActions } from '../../redux/actions/searchSlicer';
@@ -13,6 +13,9 @@ const host =
         : process.env.REACT_APP_URL;
 
 const SearchBar = () => {
+    // STATE
+    const [searchValue, setSearchValue] = useState('');
+
     // FETCH
     const { sendRequest } = useFetch(true);
 
@@ -22,8 +25,9 @@ const SearchBar = () => {
     // GLOBAL STATE
     const dispatch = useDispatch();
 
+    // HANDLER
     const submitHandler = (e) => {
-        e.preventDefault();
+        e?.preventDefault();
 
         const dataHandler = (data) => {
             dispatch(searchActions.setResult(data.result));
@@ -39,9 +43,18 @@ const SearchBar = () => {
         );
     };
 
-    const closeHandler = () => {
-        setSearchResult(null);
+    const searchHandler = (e) => {
+        setSearchValue(e.target.value);
     };
+
+    // SIDE EFFECT
+    useEffect(() => {
+        const timer = setTimeout(submitHandler, 300);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [searchValue]);
 
     return (
         <div className={styles.container}>
@@ -53,7 +66,10 @@ const SearchBar = () => {
                     className={styles.input}
                     type="text"
                     placeholder="Search..."
+                    onChange={searchHandler}
+                    value={searchValue}
                 />
+
                 <button className={styles.btn}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>

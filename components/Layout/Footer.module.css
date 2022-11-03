@@ -33,6 +33,21 @@
     color: #999;
 }
 
-.media>*:hover {
+.media > *:hover {
     color: black;
+}
+@media (max-width: 451px) {
+    .container {
+        padding: 1.2rem 2rem;
+    }
+
+    .contact {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 0.1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 351px) {
 }

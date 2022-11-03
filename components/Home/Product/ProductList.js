@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Image from 'next/future/image';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../../redux/actions/cartSlicer'
+import { addToCart } from '../../../redux/actions/cartSlicer';
 // import { addCart } from '../../store/actions/CartAction';
 import ProductModal from './ProductModal';
 
@@ -16,16 +16,13 @@ const ProductList = (props) => {
     const [modalActive, setModalActive] = useState(false);
     const { product } = props;
 
-
-
     // Handler
     const showModalHandler = () => {
         setModalActive(true);
     };
 
     const modalSubmitHandler = (value) => {
-        dispatch(addToCart({ productId: product._id, quantity: 1, size: value }))
-
+        dispatch(addToCart({ productId: product._id, quantity: 1, size: value }));
     };
 
     // Props
@@ -55,22 +52,35 @@ const ProductList = (props) => {
                             }}
                         >
                             <div className={styles.link}>
-                                <Image
-                                    src={props.img[0]}
-                                    alt="Product"
-                                    className={styles.img}
-                                    width={300}
-                                    height={420}
-                                    layout="responsive"
-                                />
-                                <Image
-                                    src={props.img[1]}
-                                    alt="Product"
-                                    className={`${styles.img} ${styles['img--2']}`}
-                                    width={300}
-                                    height={420}
-                                    layout="responsive"
-                                />
+                                {props.img.length > 1 ? (
+                                    <>
+                                        <Image
+                                            src={props.img[0]}
+                                            alt="Product"
+                                            className={styles.img}
+                                            width={300}
+                                            height={420}
+                                            layout="responsive"
+                                        />
+                                        <Image
+                                            src={props.img[1]}
+                                            alt="Product"
+                                            className={`${styles.img} ${styles['img--2']}`}
+                                            width={300}
+                                            height={420}
+                                            layout="responsive"
+                                        />
+                                    </>
+                                ) : (
+                                    <Image
+                                        src={props.img[0]}
+                                        alt="Product"
+                                        className={styles.img}
+                                        width={300}
+                                        height={420}
+                                        layout="responsive"
+                                    />
+                                )}
                             </div>
                         </a>
                     </Link>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import useSWR from 'swr';
 import axios from 'axios';
 
@@ -16,7 +17,7 @@ const fetcher = (url) =>
     axios
         .get(url)
         .then((res) =>
-            res.data.data.filter((products) => products?.recommendation).slice(0, 5)
+            res.data.result.filter((products) => products?.recommendation).slice(0, 5)
         )
         .catch((err) => []);
 
@@ -24,7 +25,7 @@ const ProductsBestWeek = ({ items }) => {
     // State
     const [products, setProducts] = useState([]);
 
-    const { data } = useSWR(`${host}api/products`, fetcher);
+    const { data } = useSWR(`${host}api/product`, fetcher);
 
     // Side Effect
     useEffect(() => {
@@ -44,7 +45,7 @@ const ProductsBestWeek = ({ items }) => {
 
             <section className={styles.container}>
                 <div className={styles.list}>
-                    {products.map((product) => (
+                    {products.slice(0, 5).map((product) => (
                         <ProductList
                             key={product._id}
                             img={product.images}
@@ -55,6 +56,10 @@ const ProductsBestWeek = ({ items }) => {
                         />
                     ))}
                 </div>
+
+                <Link href="/products">
+                    <a className={styles.btn}>Show All</a>
+                </Link>
             </section>
         </>
     );
