@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
@@ -16,7 +17,6 @@ const fetcher = (url) => axios.get(url).then((res) => res.data.result);
 
 const ProductsByCategory = ({ items, image, heading, category }) => {
     // State
-    const [showAllProducts, setShowAllProducts] = useState(false);
     const [products, setProducts] = useState([]);
 
     // SWR | Fetching data
@@ -29,48 +29,27 @@ const ProductsByCategory = ({ items, image, heading, category }) => {
         setProducts(productsByCategory);
     }, [data]);
 
-    // Handler
-    const clickHandler = () => {
-        setShowAllProducts((prevState) => !prevState);
-    };
-
-    // Component
-    const firstFiveProducts = products
-        .slice(0, 5)
-        .map((product) => (
-            <ProductList
-                key={product._id}
-                img={product.images}
-                name={product.name}
-                price={product.price}
-                hot={product.recommendation}
-                product={product}
-            />
-        ));
-
-    const allProducts = products.map((product) => (
-        <ProductList
-            key={product._id}
-            img={product.images}
-            name={product.name}
-            price={product.price}
-            hot={product.recommendation}
-            product={product}
-        />
-    ));
-
     return (
         <>
             <ProductsHeader image={image} heading={heading} />
 
             <section className={styles.container}>
                 <div className={styles.list}>
-                    {showAllProducts ? allProducts : firstFiveProducts}
+                    {products.slice(0, 10).map((product) => (
+                        <ProductList
+                            key={product._id}
+                            img={product.images}
+                            name={product.name}
+                            price={product.price}
+                            hot={product.recommendation}
+                            product={product}
+                        />
+                    ))}
                 </div>
 
-                <button onClick={clickHandler} className={styles.btn}>
-                    {showAllProducts ? 'Show Less' : 'Show More'}
-                </button>
+                <Link href="/products">
+                    <a className={styles.btn}>Show All</a>
+                </Link>
             </section>
         </>
     );

@@ -4,7 +4,7 @@
 }
 
 .input {
-    padding: 0.5rem rem;
+    padding-bottom: 0.5rem;
     border: none;
     border-bottom: 1px solid #ccc;
     transition: border-bottom 0.3s;
@@ -45,4 +45,14 @@
     color: red;
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .input {
+        font-size: 0.9rem;
+    }
+
+    .error {
+        font-size: 0.7rem;
+    }
 }

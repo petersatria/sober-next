@@ -3,8 +3,20 @@ import BreadCumb from "../../components/BreadCumb";
 import axios from "axios";
 import Page from "../../components/Page";
 import Pagination from "../../components/Pagination/Pagination";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { headerActions } from '../../redux/actions/headerSlicer';
 
 const ProductList = (props) => {
+
+    // Set header active
+    const router = useRouter();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(headerActions.setActive(router.pathname));
+    }, []);
+
 
 	const products = props?.products;
 

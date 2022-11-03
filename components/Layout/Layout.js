@@ -1,34 +1,39 @@
-import Footer from './Footer';
-import Header from './Header';
-import LoaderSpinner from '../GeneralUI/LoadingSpinner';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchCart } from './../../redux/actions/cartSlicer'
+import { fetchCart } from './../../redux/actions/cartSlicer';
+import Header from './Header';
+import Footer from './Footer';
+import LoaderSpinner from '../GeneralUI/LoadingSpinner';
 
 const Layout = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch()
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchCart())
-    const timer = setTimeout(() => setLoading(false), 1500);
+    useEffect(() => {
+        dispatch(fetchCart());
+        const timer = setTimeout(() => setLoading(false), 1500);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, []);
 
-  const component = loading ? (
-    <LoaderSpinner />
-  ) : (
-    <>
-      <Header />
-      {children}
-      <Footer />
-    </>
-  );
+    const headerCondition = router.pathname !== '/admin';
+    const footerCondition = router.pathname !== '/admin' && router.pathname !== '/search';
 
-  return <>{component}</>;
+    const component = loading ? (
+        <LoaderSpinner />
+    ) : (
+        <>
+            {headerCondition && <Header />}
+            {children}
+            {footerCondition && <Footer />}
+        </>
+    );
+
+    return <>{component}</>;
 };
 
 export default Layout;
