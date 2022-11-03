@@ -10,7 +10,7 @@ import { getUserData, isUserLoggedIn } from "../../redux/actions/authentication"
 import { headerActions } from "../../redux/actions/headerSlicer";
 import { confirmNotification } from "../../moduleComponents/notification";
 import { useRouter } from "next/router";
-import { faUser, faBagShopping, faCaretDown, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBagShopping, faCaretDown, faRightFromBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
   const { carts } = useSelector((state) => state.carts);
@@ -62,6 +62,8 @@ const Header = () => {
     window.scrollTo(0, 0);
   };
 
+  console.log('userInformation', userInformation.role)
+
   const userIsLogin = () =>
     isLoggedIn ? (
       <>
@@ -82,6 +84,15 @@ const Header = () => {
             <a className={styles["sub-link"]}>{userInformation.username} </a>
             <FontAwesomeIcon className="ms-2" icon={faCaretDown} />
             <div className={styles.dropdownContent}>
+              {userInformation.role === 'admin' &&
+                <Link href={`/admin`}>
+                  <div className="">
+                    <a className={styles["dropwdown-item"]} style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', color: 'red' }}>Admin
+                      <FontAwesomeIcon icon={faUserPlus} />
+                    </a>
+                  </div>
+                </Link>
+              }
               <Link href={`/profile/${userInformation.id}`}>
                 <div className="">
                   <a className={styles["dropwdown-item"]} style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>Profile

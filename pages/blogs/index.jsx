@@ -10,6 +10,9 @@ import BreadCumb from "../../components/BreadCumb";
 const BlogList = (props) => {
     const [tags, setTags] = useState('');
     const blogs = props?.blogs;
+    const {allBlogs} = props
+
+    console.log('ALLLLLLL',allBlogs)
 
     // const allTags = () => {
     // 	blogs.map((blg) => {
@@ -23,15 +26,15 @@ const BlogList = (props) => {
     // allTags()
     // console.log('assss', allTags())
 
-    const category = (blogs) => {
-        const allCat = blogs.map((blog) => blog.category);
+    const category = (allBlogs) => {
+        const allCat = allBlogs.map((blog) => blog.category);
         const newCat = new Set(allCat);
         return [...newCat];
     };
 
     const counDate = () => {
         const counDate = {};
-        const date = blogs.map((blog) => new Date(blog.timestamp));
+        const date = allBlogs.map((blog) => new Date(blog.timestamp));
 
         const monthNames = [
             'January',
@@ -71,7 +74,7 @@ const BlogList = (props) => {
 
     const counCategory = () => {
         const countCat = {};
-        const allCat = blogs.map((blog) => blog.category);
+        const allCat = allBlogs.map((blog) => blog.category);
         allCat.map(function (x) {
             countCat[x] = (countCat[x] || 0) + 1;
         });
@@ -103,8 +106,8 @@ const BlogList = (props) => {
                     <div className="col-12 col-lg-4 ps-5 my-5 d-none d-lg-block ">
                         <div className="mb-5">
                             <h2 className={styles.sidebarTitle}>Popular Post</h2>
-                            {blogs &&
-                                blogs
+                            {allBlogs &&
+                                allBlogs
                                     .slice(0, 3)
                                     .map((blog) => (
                                         <BlogPopular key={blog._id} blog={blog} />
@@ -113,23 +116,23 @@ const BlogList = (props) => {
                         <div className={styles.borderBottom}></div>
                         <div className="my-5">
                             <h2 className={styles.sidebarTitle}>Categories</h2>
-                            <div className="mt-4">{counCategory(blogs)}</div>
+                            <div className="mt-4">{counCategory(allBlogs)}</div>
                         </div>
                         <div className={styles.borderBottom}></div>
                         <div className="my-5">
                             <h2 className={styles.sidebarTitle}>Archives</h2>
-                            <div className="mt-4">{counDate(blogs)}</div>
+                            <div className="mt-4">{counDate(allBlogs)}</div>
                         </div>
                         <div className={styles.borderBottom}></div>
                         <div className="my-5">
                             <h2 className={styles.sidebarTitle}>Browse Tags</h2>
                             {/* <div className="row d-flex flex-row justify-content-center text-center"> */}
                             <div className="row text-center mt-4">
-                                {blogs &&
-                                    blogs.map((blog) => {
+                                {allBlogs &&
+                                    allBlogs.map((blog) => {
                                         return (
                                             <div
-                                                key={blog.tag}
+                                                key={blog.tag + Math.random()}
                                                 className={`col mx-1 my-1 ${styles.tag}`}
                                             >
                                                 {blog.tag[1]}
@@ -150,9 +153,11 @@ export default BlogList;
 
 export async function getServerSideProps(context) {
     const { data } = await axios.get(`http://localhost:5000/api/blog/articles?page=${context.query.page ? context.query.page : 1}`);
+    const allData = await axios.get(`http://localhost:5000/api/blog/articles`);
 
     return {
         props: {
+            allBlogs : allData.data.result,
             blogs: data.result,
             maxPage: data.maxPage
         }, // will be passed to the page component as props
