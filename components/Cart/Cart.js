@@ -17,9 +17,11 @@ export default function Cart() {
 
     }
 
-    console.log(carts)
-
     const onClickHandle = (number, productId) => {
+        if(number < 1){
+            return
+        }
+        
         dispatch(changeQty({ qty: +number, productId }))
     }
 
