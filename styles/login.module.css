@@ -246,7 +246,7 @@
   }
 }
 
-/* @media (max-width: 500px) {
+@media (max-width: 500px) {
   .generalArea {
     background-size: 260%;
     background-position: -53px 0;
@@ -263,19 +263,19 @@
   .formArea {
     border-radius: 0px;
     background-color: rgba(39, 39, 39, 0);
-    width: 4%;
+    width: 100%;
   }
 
   .btnFacebook {
-    margin-left: 85px;
+    margin-left: 120px;
   }
 
   .googleBtn {
-    margin: 0px 85px;
+    margin: 0px 120px;
   }
-} */
+}
 
-@media (max-width: 400px) {
+@media (max-width: 430px) {
   .generalArea {
     background-size: 260%;
     background-position: -53px 0;
@@ -292,15 +292,44 @@
   .formArea {
     border-radius: 0px;
     background-color: rgba(39, 39, 39, 0);
-    width: 80%;
+    width: 100%;
   }
 
   .btnFacebook {
-    margin-left: 30px;
+    margin-left: 80px;
   }
 
   .googleBtn {
-    margin: 0px 30px;
+    margin: 0px 80px;
+  }
+}
+
+@media (max-width: 330px) {
+  .generalArea {
+    background-size: 260%;
+    background-position: -53px 0;
+  }
+
+  .textTagline {
+    font-size: 19px;
+  }
+
+  .imgTagline {
+    width: 45%;
+  }
+
+  .formArea {
+    border-radius: 0px;
+    background-color: rgba(39, 39, 39, 0);
+    width: 100%;
+  }
+
+  .btnFacebook {
+    margin-left: 40px;
+  }
+
+  .googleBtn {
+    margin: 0px 40px;
   }
 }
 
