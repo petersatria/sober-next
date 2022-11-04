@@ -130,6 +130,7 @@
   box-shadow: 8px 8px;
   transition: 0.5s;
   border: 4px solid black;
+  border-radius: 15px;
   width: 80%;
   height: 200px;
   justify-content: center;
@@ -210,13 +211,13 @@
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1300px) {
   .heroArea {
-    background-position: -200px 0;
+    background-position: 0;
   }
 
   .aboutText {
-    margin-top: 300px;
+    margin-top: 200px;
   }
 
   .aboutText h1 {
@@ -252,11 +253,11 @@
   }
 
   .hero2Area {
-    background-position: 330px 0px;
+    background-position: -180px 0px;
   }
 
   .hero2 {
-    transform: translateY(150px);
+    transform: translateY(20px);
     margin-right: 0px;
   }
 
@@ -275,13 +276,78 @@
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 1030px) {
   .heroArea {
-    background-position: -600px 0;
+    background-position: -200px 0;
   }
 
   .aboutText {
-    margin-top: 300px;
+    margin-top: 200px;
+  }
+
+  .aboutText h1 {
+    font-size: 5rem;
+  }
+
+  .linkHome {
+    font-size: 0.9rem;
+  }
+
+  .linkHome:hover {
+    font-size: 0.9rem;
+  }
+
+  .linkAboutUs {
+    font-size: 0.9rem;
+  }
+
+  .companyTitleDescription {
+    font-size: 1.4rem;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .companyDescription {
+    font-size: 1.1rem;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .textPerFeature {
+    font-size: 1rem;
+  }
+
+  .hero2Area {
+    background-position: -180px 0px;
+  }
+
+  .hero2 {
+    transform: translateY(20px);
+    margin-right: 0px;
+  }
+
+  .textFounder {
+    font-size: 3.2rem;
+  }
+
+  .textFounder2 {
+    font-size: 1.1rem;
+    padding-left: 70px;
+    padding-right: 70px;
+  }
+
+  .nameFounder {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 770px) {
+  .heroArea {
+    background-position: -200px 0;
+  }
+
+  .aboutText {
+    margin-top: 200px;
   }
 
   .aboutText h1 {
@@ -313,24 +379,26 @@
   }
 
   .hero2Area {
-    background-position: 140px 0px;
+    background-position: 280px 0px;
   }
 
   .hero2 {
-    transform: translateY(150px);
+    transform: translateY(50px);
     margin-right: 0px;
   }
 
   .textFounder {
-    font-size: 3rem;
+    font-size: 2.8rem;
   }
 
   .textFounder2 {
-    font-size: 1rem;
+    font-size: 0.7rem;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .nameFounder {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .borderBrandImg {
@@ -413,6 +481,183 @@
     font-size: 0.8rem;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .nameFounder {
+    font-size: 2rem;
+  }
+
+  .borderBrandImg {
+    box-shadow: 8px 8px;
+    transition: 0.5s;
+    border: 4px solid black;
+    width: 80%;
+    height: 200px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
+  }
+
+  .borderBrandImg:hover {
+    box-shadow: 0px 0px;
+    transform: translateY(6px);
+  }
+}
+
+@media (max-width: 430px) {
+  .heroArea {
+    min-height: 60vh;
+    background-position: -300px 0;
+  }
+  .aboutText {
+    margin-top: 150px;
+  }
+
+  .aboutText h1 {
+    font-size: 3.5rem;
+  }
+
+  .linkHome {
+    font-size: 0.9rem;
+  }
+
+  .linkHome:hover {
+    font-size: 0.9rem;
+  }
+
+  .linkAboutUs {
+    font-size: 0.9rem;
+  }
+
+  .companyTitleDescription {
+    line-height: 2rem;
+    font-size: 1rem;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .companyDescription {
+    line-height: 2rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 0.8rem;
+  }
+
+  .textPerFeature {
+    font-size: 0.7rem;
+  }
+
+  .hero2Area {
+    background-position: -40px 0px;
+  }
+
+  .hero2 {
+    transform: translateY(40px);
+    margin-right: 0px;
+  }
+
+  .textFounder {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .textFounder2 {
+    font-size: 0.8rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .nameFounder {
+    font-size: 2rem;
+  }
+
+  .borderBrandImg {
+    box-shadow: 8px 8px;
+    transition: 0.5s;
+    border: 4px solid black;
+    width: 80%;
+    height: 200px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
+  }
+
+  .borderBrandImg:hover {
+    box-shadow: 0px 0px;
+    transform: translateY(6px);
+  }
+}
+
+@media (max-width: 330px) {
+  .heroArea {
+    min-height: 60vh;
+    background-position: -300px 0;
+  }
+  .aboutText {
+    margin-top: 150px;
+  }
+
+  .aboutText h1 {
+    font-size: 3.5rem;
+  }
+
+  .linkHome {
+    font-size: 0.9rem;
+  }
+
+  .linkHome:hover {
+    font-size: 0.9rem;
+  }
+
+  .linkAboutUs {
+    font-size: 0.9rem;
+  }
+
+  .companyTitleDescription {
+    line-height: 2rem;
+    font-size: 1rem;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .companyDescription {
+    line-height: 2rem;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 0.8rem;
+  }
+
+  .textPerFeature {
+    font-size: 0.7rem;
+  }
+
+  .hero2Area {
+    background-position: -40px 0px;
+  }
+
+  .hero2 {
+    transform: translateY(10px);
+    margin-right: 0px;
+  }
+
+  .textFounder {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .textFounder2 {
+    font-size: 0.7rem;
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 10px;
   }
 
   .nameFounder {
