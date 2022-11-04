@@ -8,6 +8,7 @@ import {
     faBlog,
     faPlus,
     faPen,
+    faList
 } from '@fortawesome/free-solid-svg-icons';
 import NavButton from './NavButton';
 
@@ -65,6 +66,24 @@ const NavBlogList = [
     },
 ];
 
+const NavCategoryList = [
+    {
+        icon: faList,
+        title: 'Category',
+        type: 'category',
+    },
+    {
+        icon: faPlus,
+        title: 'Add Category',
+        type: 'add-category',
+    },
+    {
+        icon: faPen,
+        title: 'Update Category',
+        type: 'update-category',
+    },
+];
+
 function Sidebar() {
     const dispatch = useDispatch();
 
@@ -107,8 +126,20 @@ function Sidebar() {
             </div>
 
             {/* Blog lList */}
-            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1">
+            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4">
                 {NavBlogList.map((item) => (
+                    <NavButton
+                        key={item.title}
+                        icon={item.icon}
+                        title={item.title}
+                        type={item.type}
+                    />
+                ))}
+            </div>
+
+            {/* Category lList */}
+            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4">
+                {NavCategoryList.map((item) => (
                     <NavButton
                         key={item.title}
                         icon={item.icon}

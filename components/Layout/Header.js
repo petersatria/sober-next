@@ -15,6 +15,8 @@ import { getUserData, isUserLoggedIn } from '../../redux/actions/authentication'
 import { headerActions } from '../../redux/actions/headerSlicer';
 import { confirmNotification } from '../../moduleComponents/notification';
 import { useRouter } from 'next/router';
+import { emptyCart } from '../../redux/actions/cartSlicer';
+
 
 const Header = () => {
     // Local State
@@ -78,6 +80,7 @@ const Header = () => {
         let confirm = await confirmNotification(titleText, confirmText);
         if (confirm) {
             dispatch(isUserLoggedIn(false));
+            dispatch(emptyCart())
             eraseCookie('userCookie');
             router.push('/login');
             return;
