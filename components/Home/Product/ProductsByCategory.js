@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import useSWR from 'swr';
 
 import ProductList from './ProductList';
 import ProductsHeader from './ProductsHeader';
@@ -13,21 +12,21 @@ const host =
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-const fetcher = (url) => axios.get(url).then((res) => res.data.result);
-
 const ProductsByCategory = ({ items, image, heading, category }) => {
     // State
-    const [products, setProducts] = useState([]);
-
-    // SWR | Fetching data
-    const { data } = useSWR(`${host}api/productCategory`, fetcher);
+    const [products, setProducts] = useState(items);
 
     // Side Effect
     useEffect(() => {
-        if (!data) return setProducts(items);
-        const productsByCategory = data.filter((p) => p.category === category);
-        setProducts(productsByCategory);
-    }, [data]);
+        (async () => {
+            try {
+                const res = await axios.post(`${host}api/productCategory`, { category });
+                setProducts(res.data.result);
+            } catch (err) {
+                console.log('not found');
+            }
+        })();
+    }, []);
 
     return (
         <>

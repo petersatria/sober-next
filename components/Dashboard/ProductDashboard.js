@@ -14,7 +14,6 @@ import {
     Filter,
     ContextMenu,
     ExcelExport,
-    PdfExport,
 } from '@syncfusion/ej2-react-grids';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -23,9 +22,6 @@ const host =
     process.env.NODE_ENV === 'development'
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
-
-// const userToken =
-//     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzE1YTgwZGI0ZmFjNjJkNjA2NzA5YyIsInVzZXJuYW1lIjoiZGl2YWp1bmkiLCJlbWFpbCI6ImRpdmFqdW5pIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjY3MTAwMTYyLCJleHAiOjE2NjcxODY1NjJ9.QJxOStave2vtUYQ4HLednaGjw6o8E9imb8d8IO_bpfk';
 
 function ProductDashboard({ products }) {
     const [data, setData] = useState(products);
@@ -67,37 +63,6 @@ function ProductDashboard({ products }) {
                     console.log(err);
                 }
             });
-
-        // update
-        if (requestType === 'save') {
-            // modify size
-            data.size.xs = data['size-xs'];
-            data.size.s = data['size-s'];
-            data.size.m = data['size-m'];
-            data.size.l = data['size-l'];
-            data.size.xl = data['size-xl'];
-
-            // modify image
-            data.images = data.images.split(',');
-
-            // delete per size category
-            delete data['size-xs'];
-            delete data['size-s'];
-            delete data['size-m'];
-            delete data['size-l'];
-            delete data['size-xl'];
-
-            try {
-                const res = await axios({
-                    url: `${host}api/edit-data/${data._id}`,
-                    method: 'PATCH',
-                    data,
-                    headers: {
-                        Authorization: `Bearer ${userToken}`,
-                    },
-                });
-            } catch (err) {}
-        }
     };
 
     // Grid Column Template
@@ -117,14 +82,17 @@ function ProductDashboard({ products }) {
         }
         return (
             <div className="tw-flex tw-justify-center tw-gap-4">
-                {imagesArr.map((img, i) => (
-                    <img
-                        key={i}
-                        src={img}
-                        alt={name}
-                        className="tw-h-40 tw-w-40 tw-object-cover"
-                    />
-                ))}
+                {imagesArr.map((img, i) => {
+                    if (!img) return;
+                    return (
+                        <img
+                            key={i}
+                            src={img}
+                            alt={name}
+                            className="tw-h-40 tw-w-40 tw-object-cover"
+                        />
+                    );
+                })}
             </div>
         );
     };
@@ -148,21 +116,14 @@ function ProductDashboard({ products }) {
                     allowTextWrap
                     allowPaging
                     allowExcelExport
-                    allowPdfExport
                     actionComplete={gridActionHandler}
-                    contextMenuItems={[
-                        'PdfExport',
-                        'ExcelExport',
-                        'Copy',
-                        'Edit',
-                        'Delete',
-                    ]}
+                    contextMenuItems={['ExcelExport', 'Copy', 'Delete']}
                     textWrapSettings={{ wrapMode: 'Content' }}
                     pageSettings={{ pageSizes: true, pageSize: 10 }}
                     selectionSettings={{ type: 'Multiple' }}
                     filterSettings={{ type: 'Excel' }}
-                    editSettings={{ allowDeleting: true, allowEditing: true }}
-                    toolbar={['Delete', 'Edit', 'Update', 'Cancel', 'Search']}
+                    editSettings={{ allowDeleting: true }}
+                    toolbar={['Delete', 'Search']}
                 >
                     <Inject
                         services={[
@@ -175,7 +136,6 @@ function ProductDashboard({ products }) {
                             Filter,
                             ContextMenu,
                             ExcelExport,
-                            PdfExport,
                         ]}
                     />
                     <ColumnsDirective>
@@ -229,6 +189,7 @@ function ProductDashboard({ products }) {
                             width="150"
                             field="price"
                             headerText="Price"
+                            editType="numericedit"
                             template={priceTemplate}
                         />
 

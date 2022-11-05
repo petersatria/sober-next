@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { sizeActions } from '../../redux/actions/sizeSlicer';
 import { token } from '../../moduleComponents/tokenAuthorization';
+import createFileList from 'create-file-list';
 import {
     HtmlEditor,
     Inject,
@@ -12,7 +13,8 @@ import {
     Toolbar,
 } from '@syncfusion/ej2-react-richtexteditor';
 import useFetch from '../../hooks/use-fetch';
-import Notification from '../GeneralUI/Notification';
+import { notifications } from '../../moduleComponents/notification';
+import LoadingSpinner from '../GeneralUI/LoadingSpinner';
 import styles from './FormProduct.module.css';
 
 // Rich Text Editor Settings
@@ -128,43 +130,39 @@ const AddProduct = ({ header, product, method, url, type }) => {
     const [sizeValue, setSizeValue] = useState('');
     const [imageValue, setImageValue] = useState(initialimagesArr);
 
-    // Notification
-    const [notif, setNotif] = useState(null);
+    // File Length
+    const [fileLength, setFileLength] = useState(0);
+
+    // Loading state
+    const [loading, setLoading] = useState(null);
 
     // HANDLER
     const submitHandler = async (e) => {
         e.preventDefault();
 
         const form = new FormData(e.target);
-        const imageFile = form.get('imageFile');
-        const input = {
-            name: nameValue,
-            detail: form.get('detail'),
-            summary: form.get('summary'),
-            price: priceValue,
-            category: categoryValue,
-            size: sizeValue,
-            stock: {
-                xs: +stockXSValue,
-                s: +stockSValue,
-                m: +stockMValue,
-                l: +stockLValue,
-                xl: +stockXLValue,
-            },
-            images: imageValue,
-        };
 
-        input.file = imageFile;
-        console.log(input);
+        form.append('name', nameValue);
+        form.append('price', priceValue);
+        form.append('category', categoryValue);
+        form.append('size', sizeValue);
+        form.append('stock', {
+            xs: +stockXSValue,
+            s: +stockSValue,
+            m: +stockMValue,
+            l: +stockLValue,
+            xl: +stockXLValue,
+        });
+        form.append('imagesLink', imageValue.length > 0 ? imageValue : '');
 
         const userToken = token();
         await sendRequest({
             url,
             method,
-            data: input,
+            data: form,
             headers: {
                 Authorization: `Bearer ${userToken}`,
-                // 'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
             },
         });
     };
@@ -175,37 +173,29 @@ const AddProduct = ({ header, product, method, url, type }) => {
         if (!result) return;
 
         if (result === 'pending') {
-            setNotif({
-                title: 'Sending',
-                message: 'Please Wait',
-                status: 'pending',
-            });
+            setLoading(true);
             return;
         }
 
         if (result === 'error') {
-            setNotif({
-                title: 'Error',
-                message: `Product ${type === 'update' ? 'Update' : 'Add'} Failed`,
-                status: 'error',
-            });
+            (async () =>
+                await notifications({
+                    statusCode: 400,
+                    message: 'Something went wrong',
+                }))();
         }
 
         if (result === 'success') {
-            setNotif({
-                title: 'Success',
-                message: `Product ${type === 'update' ? 'Updated' : 'Added'}`,
-                status: 'success',
-            });
+            (async () =>
+                await notifications({
+                    statusCode: 200,
+                    message: `${type === 'update' ? 'Product updated' : 'Product Added'}`,
+                }))();
 
-            setTimeout(() => router.reload(), 3000);
+            setTimeout(() => router.reload(), 2200);
         }
 
-        const timer = setTimeout(() => setNotif(null), 3000);
-
-        return () => {
-            clearTimeout(timer);
-        };
+        setLoading(false);
     }, [result]);
 
     // Size
@@ -270,7 +260,7 @@ const AddProduct = ({ header, product, method, url, type }) => {
                     className={styles.input}
                     type="url"
                     id="image"
-                    required
+                    required={fileLength < 1}
                 />
             </div>
         );
@@ -287,13 +277,7 @@ const AddProduct = ({ header, product, method, url, type }) => {
 
     return (
         <>
-            {notif && (
-                <Notification
-                    title={notif.title}
-                    message={notif.message}
-                    status={notif.status}
-                />
-            )}
+            {loading && <LoadingSpinner />}
 
             <section className={styles.container}>
                 <div className={styles.heading}>
@@ -473,7 +457,13 @@ const AddProduct = ({ header, product, method, url, type }) => {
                             Images
                         </label>
 
-                        <input id="image-file" type="file" name={'imageFile'} multiple />
+                        <input
+                            id="image-file"
+                            type="file"
+                            name="images"
+                            multiple
+                            onChange={(e) => setFileLength(e.target.files.length)}
+                        />
                     </div>
 
                     <button

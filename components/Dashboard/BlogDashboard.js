@@ -14,9 +14,8 @@ import {
     Filter,
     ContextMenu,
     ExcelExport,
-    PdfExport,
 } from '@syncfusion/ej2-react-grids';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 
 const host =
@@ -60,23 +59,6 @@ function BlogDashboard({ blogs }) {
                     console.log(err);
                 }
             });
-
-        // update
-        if (requestType === 'save') {
-            try {
-                const res = await axios({
-                    url: `${host}api/blog/articles/update/${data._id}`,
-                    method: 'PATCH',
-                    data,
-                    headers: {
-                        Authorization: `Bearer ${userToken}`,
-                    },
-                });
-                console.log(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        }
     };
 
     // Template
@@ -95,9 +77,11 @@ function BlogDashboard({ blogs }) {
 
     // Tags Template
     const tagsTemplate = ({ tag }) => {
+        const formatedTag = tag.join().split(',');
+
         return (
             <ul className="tw-space-y-2">
-                {tag.map((tag, i) => (
+                {formatedTag.map((tag, i) => (
                     <li key={i}>
                         <span>{`${i + 1}. ${tag}`}</span>
                     </li>
@@ -112,6 +96,8 @@ function BlogDashboard({ blogs }) {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
+            minute: '2-digit',
+            hour: '2-digit',
         });
         return <p>{formatedDate}</p>;
     };
@@ -135,21 +121,14 @@ function BlogDashboard({ blogs }) {
                     allowPaging
                     allowTextWrap
                     allowExcelExport
-                    allowPdfExport
                     actionComplete={gridActionHandler}
-                    contextMenuItems={[
-                        'PdfExport',
-                        'ExcelExport',
-                        'Copy',
-                        'Edit',
-                        'Delete',
-                    ]}
+                    contextMenuItems={['ExcelExport', 'Copy', 'Delete']}
                     textWrapSettings={{ wrapMode: 'Content' }}
                     pageSettings={{ pageSizes: true, pageSize: 10 }}
                     selectionSettings={{ type: 'Multiple' }}
                     filterSettings={{ type: 'Excel' }}
-                    editSettings={{ allowDeleting: true, allowEditing: true }}
-                    toolbar={['Delete', 'Edit', 'Update', 'Cancel', 'Search']}
+                    editSettings={{ allowDeleting: true }}
+                    toolbar={['Delete', 'Search']}
                 >
                     <Inject
                         services={[
@@ -162,7 +141,6 @@ function BlogDashboard({ blogs }) {
                             Filter,
                             ContextMenu,
                             ExcelExport,
-                            PdfExport,
                         ]}
                     />
                     <ColumnsDirective>
@@ -205,10 +183,11 @@ function BlogDashboard({ blogs }) {
 
                         {/* Timestamp */}
                         <ColumnDirective
-                            width="180"
+                            width="230"
                             field="timestamp"
                             headerText="Timestamp"
                             template={timestampTemplate}
+                            editType="datetimepickeredit"
                         />
 
                         {/* Images */}
