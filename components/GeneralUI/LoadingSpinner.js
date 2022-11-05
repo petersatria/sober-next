@@ -1,6 +1,6 @@
 import Overlay from './Overlay';
 
-import styles from './LoadingSpinner.module.css';
+import styles from './Loading.module.css';
 
 const LoaderSpinner = () => {
     return (
