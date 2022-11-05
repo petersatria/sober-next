@@ -165,15 +165,15 @@
 
 @media (max-width: 1200px) {
   .textTagline {
-    font-size: 30px;
+    font-size: 25px;
   }
 
   .btnFacebook {
-    margin-left: 70px;
+    margin-left: 120px;
   }
 
   .googleBtn {
-    margin: 0px 70px;
+    margin: 0px 120px;
   }
 }
 
@@ -199,10 +199,14 @@
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 770px) {
   .generalArea {
-    background-size: 280%;
-    background-position: -110px 0;
+    background-size: 190%;
+    background-position: -335px 0;
+  }
+
+  .formArea {
+    max-width: 65%;
   }
 
   .textTagline {
@@ -214,11 +218,38 @@
   }
 
   .btnFacebook {
-    margin-left: 100px;
+    margin-left: 110px;
   }
 
   .googleBtn {
-    margin: 0px 100px;
+    margin: 0 110px;
+  }
+}
+
+@media (max-width: 767px) {
+  .generalArea {
+    background-size: 190%;
+    background-position: -335px 0;
+  }
+
+  .textTagline {
+    font-size: 20px;
+  }
+
+  .imgTagline {
+    width: 45%;
+  }
+
+  .formArea {
+    max-width: 100%;
+  }
+
+  .btnFacebook {
+    margin-left: 70px;
+  }
+
+  .googleBtn {
+    margin: 0px 70px;
   }
 }
 
@@ -232,8 +263,8 @@
   }
 
   .formArea {
-    border-radius: 0px;
-    background-color: rgba(39, 39, 39, 0);
+    border-radius: 10px;
+    background-color: rgba(39, 39, 39, 0.678);
     width: 80%;
   }
 
@@ -290,17 +321,110 @@
   }
 
   .formArea {
-    border-radius: 0px;
+    border-radius: 0;
     background-color: rgba(39, 39, 39, 0);
     width: 100%;
   }
 
   .btnFacebook {
-    margin-left: 80px;
+    margin-left: 90px;
+    font-size: 12px;
   }
 
   .googleBtn {
-    margin: 0px 80px;
+    margin: 0px 90px;
+  }
+
+  .textDivider {
+    font-size: 0.7rem;
+  }
+
+  .label {
+    font-size: 0.7rem;
+  }
+
+  .input::placeholder {
+    font-size: 0.7rem;
+  }
+
+  .input:focus + .label {
+    font-size: 0.7rem;
+  }
+
+  .formLabel,
+  .isHaveAccountText {
+    font-size: 0.7rem;
+  }
+
+  .registerText,
+  .forgotPassword {
+    font-size: 0.7rem;
+  }
+
+  .btnSubmit {
+    height: 40px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .generalArea {
+    background-size: 260%;
+    background-position: -53px 0;
+  }
+
+  .textTagline {
+    font-size: 20px;
+  }
+
+  .imgTagline {
+    width: 45%;
+  }
+
+  .formArea {
+    border-radius: 0;
+    background-color: rgba(39, 39, 39, 0);
+    width: 100%;
+  }
+
+  .btnFacebook {
+    margin-left: 70px;
+    font-size: 11px;
+  }
+
+  .googleBtn {
+    margin: 0px 70px;
+  }
+
+  .textDivider {
+    font-size: 0.7rem;
+  }
+
+  .label {
+    font-size: 0.7rem;
+  }
+
+  .input::placeholder {
+    font-size: 0.7rem;
+  }
+
+  .input:focus + .label {
+    font-size: 0.7rem;
+  }
+
+  .formLabel,
+  .isHaveAccountText {
+    font-size: 0.7rem;
+  }
+
+  .registerText,
+  .forgotPassword {
+    font-size: 0.7rem;
+  }
+
+  .btnSubmit {
+    height: 40px;
+    font-size: 0.7rem;
   }
 }
 
@@ -325,11 +449,43 @@
   }
 
   .btnFacebook {
-    margin-left: 40px;
+    margin-left: 35px;
+    font-size: 12px;
   }
 
   .googleBtn {
-    margin: 0px 40px;
+    margin: 0px 35px;
+  }
+
+  .textDivider {
+    font-size: 0.7rem;
+  }
+
+  .label {
+    font-size: 0.7rem;
+  }
+
+  .input::placeholder {
+    font-size: 0.7rem;
+  }
+
+  .input:focus + .label {
+    font-size: 0.7rem;
+  }
+
+  .formLabel,
+  .isHaveAccountText {
+    font-size: 0.7rem;
+  }
+
+  .registerText,
+  .forgotPassword {
+    font-size: 0.7rem;
+  }
+
+  .btnSubmit {
+    height: 40px;
+    font-size: 0.7rem;
   }
 }
 

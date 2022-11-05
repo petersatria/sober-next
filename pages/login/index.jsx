@@ -12,7 +12,7 @@ const Login = () => {
     <Page title={"Login"} description={"sober"}>
       <section className={styles.generalArea}>
         {isLoading && <LoaderSpinner />}
-        <div className="container py-5 h-100">
+        <div className="container py-lg-5 py-md-4 py-3 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <BodyTagline />
             <FormBody />
