@@ -8,13 +8,16 @@ import UserDashboard from '../../components/Dashboard/UserDashboard';
 import BlogDashboard from '../../components/Dashboard/BlogDashboard';
 import FormBlog from '../../components/Dashboard/FormBlog';
 import UpdateBlogs from '../../components/Dashboard/UpdateBlogs';
+import BannerDashboard from '../../components/Dashboard/BannerDashboard';
+import FormBanner from '../../components/Dashboard/FormBanner';
+import UpdateBanner from '../../components/Dashboard/UpdateBanner';
 
 const host =
     process.env.NODE_ENV === 'development'
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-function Dashboard({ products, users, blogs }) {
+function Dashboard({ products, users, blogs, bannersData }) {
     const dashboardState = useSelector((state) => state.dashboard);
     return (
         <DashboardLayout>
@@ -47,7 +50,24 @@ function Dashboard({ products, users, blogs }) {
                     {dashboardState.activeSection === 'user' && (
                         <UserDashboard users={users} />
                     )}
+                    
+                    {/* Banner */}
+                    {dashboardState.activeSection === 'banner' && (
+                        <BannerDashboard banners={bannersData} />
+                    )}
 
+                    {dashboardState.activeSection === 'add-banner' && (
+                        <FormBanner
+                            header="Add Banner"
+                            method="POST"
+                            url={`${host}api/banner/create-banner`}
+                            type="add"
+                        />
+                    )}
+
+                    {dashboardState.activeSection === 'update-banner' && (
+                        <UpdateBanner bannersData={bannersData} />
+                    )}
                     {/* Blog */}
 
                     {dashboardState.activeSection === 'blog' && (
@@ -77,6 +97,7 @@ export async function getServerSideProps() {
         const resProducts = await axios.get(`${host}api/product`);
         const resUsers = await axios.get(`${host}api/user`);
         const resBlog = await axios.get(`${host}api/blog/articles`);
+        const resBanner = await axios.get(`${host}api/banners/all`);
 
         const products = resProducts.data.result.map((item) => {
             item['size-xs'] = item?.size?.xs || null;
@@ -90,12 +111,14 @@ export async function getServerSideProps() {
         const users = resUsers?.data?.data;
 
         const blogs = resBlog?.data?.result;
+        const banners = resBanner?.data?.result;
 
         return {
             props: {
                 products,
                 users,
                 blogs,
+                bannersData
             },
         };
     } catch (err) {
@@ -104,6 +127,7 @@ export async function getServerSideProps() {
                 products: [],
                 users: [],
                 blogs: [],
+                bannersData: [],
             },
         };
     }
