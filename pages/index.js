@@ -57,7 +57,7 @@ export default function HomePage({
 
     useEffect(() => {
         dispatch(headerActions.setActive(router.pathname));
-    }, []);
+    }, [dispatch, router.pathname]);
 
     return (
         <>
