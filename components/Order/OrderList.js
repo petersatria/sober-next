@@ -31,20 +31,17 @@ const OrderList = () => {
   const [isButtonPrint, setIsButtonPrint] = useState(false);
 
   const router = useRouter();
-  console.log("router", router);
 
   const tokenAuth = token();
-  const config = {
-    headers: {
-      Authorization: `Bearer ${tokenAuth}`,
-    },
-  };
-  const fetcher = (url) => axios.get(url, config).then((res) => res.data);
 
   const getOrders = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/transactionHistoryDetail/${router.query.profileId}`
+        `http://localhost:5000/transactionHistoryDetail/${router.query.profileId}`, {
+        headers: {
+          Authorization: `Bearer ${tokenAuth}`,
+        },
+      }
       );
       console.log("orders", data);
 
