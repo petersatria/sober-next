@@ -33,7 +33,11 @@ function UserDashboard({ users }) {
     // ReFetching initial data
     useEffect(() => {
         const getData = async () => {
-            const res = await axios.get(`${host}api/user`);
+            const res = await axios.get(`${host}api/user`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            });
 
             const data = res.data.data;
             setData(data);

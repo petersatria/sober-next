@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+// import { authAxios } from '../../moduleComponents/axiosAuth';
 import axios from 'axios';
 import DashboardLayout from '../../components/Dashboard/DashboardLayout';
 import ProductDashboard from '../../components/Dashboard/ProductDashboard';
@@ -26,8 +27,9 @@ function Dashboard({ products, users, blogs, categories, bannersData }) {
     return (
         <DashboardLayout>
             <div
-                className={`${dashboardState.sidebar && 'md:tw-ml-72'
-                    } overflow-scroll h-screen`}
+                className={`${
+                    dashboardState.sidebar && 'md:tw-ml-72'
+                } overflow-scroll h-screen`}
             >
                 {/* Product */}
                 <div className="tw-m-2 tw-mt-2 tw-rounded-2xl tw-p-2 tw-shadow-md md:tw-m-10 md:tw-mt-5 md:tw-p-10">
@@ -107,20 +109,23 @@ function Dashboard({ products, users, blogs, categories, bannersData }) {
                     {dashboardState.activeSection === 'update-category' && (
                         <UpdateCategories blogs={blogs} />
                     )}
-
-
                 </div>
             </div>
         </DashboardLayout>
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
     try {
+        const userToken = JSON.parse(req.cookies.userCookie).token;
         const resProducts = await axios.get(`${host}api/product`);
-        const resUsers = await axios.get(`${host}api/user`);
+        const resUsers = await axios.get(`${host}api/user`, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        });
         const resBlog = await axios.get(`${host}api/blog/articles`);
-        const resCategories = await axios.get(`${host}category`)
+        const resCategories = await axios.get(`${host}category`);
         const resBanner = await axios.get(`${host}api/banners/all`);
 
         const products = resProducts.data.result.map((item) => {
@@ -133,12 +138,12 @@ export async function getServerSideProps() {
         });
 
         const users = resUsers?.data?.data;
+        console.log(products);
 
         const blogs = resBlog?.data?.result;
         const banners = resBanner?.data?.result;
 
         const categories = resCategories?.data?.result;
-
 
         return {
             props: {
@@ -146,7 +151,7 @@ export async function getServerSideProps() {
                 users,
                 blogs,
                 categories,
-                bannersData
+                bannersData,
             },
         };
     } catch (err) {
