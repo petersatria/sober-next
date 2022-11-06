@@ -138,7 +138,6 @@ export async function getServerSideProps({ req }) {
         });
 
         const users = resUsers?.data?.data;
-        console.log(products);
 
         const blogs = resBlog?.data?.result;
         const banners = resBanner?.data?.result;
