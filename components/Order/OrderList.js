@@ -89,7 +89,7 @@ const OrderList = () => {
           >
             <thead
               style={{
-                "-webkit-print-color-adjust": "exact",
+                WebkitPrintColorAdjust: "exact",
                 backgroundColor: "black",
                 color: "white",
               }}
@@ -120,13 +120,13 @@ const OrderList = () => {
               })}
             <tfoot
               style={{
-                "-webkit-print-color-adjust": "exact",
+                WebkitPrintColorAdjust: "exact",
                 backgroundColor: "black",
                 color: "white",
               }}
             >
               <tr>
-                <td colspan="4">Total Expenses</td>
+                <td colSpan="4">Total Expenses</td>
                 <td>{formatCurrency(generalTotal(), "Rp. ")}</td>
               </tr>
             </tfoot>
