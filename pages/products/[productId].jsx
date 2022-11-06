@@ -85,7 +85,7 @@ const ProductDetail = (props) => {
 						<Slider {...settings}>
 							{product.images && product.images.map((img) => (
 								<div key={img}>
-									<Image quality={30} width={500} height={500} placeholder="blur" blurDataURL={img} className={styles.productDetailImg} src={img} alt="" />
+									<img quality={30} width={500} height={500} placeholder="blur" blurDataURL={img} className={styles.productDetailImg} src={img} alt="" />
 								</div>
 							))}
 						</Slider>

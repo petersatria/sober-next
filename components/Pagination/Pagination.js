@@ -1,18 +1,35 @@
 import { useRouter } from 'next/router'
 import styles from './Pagination.module.css'
 
-const Pagination = ({ props }) => {
+const Pagination = ({ props, category }) => {
 	const router = useRouter()
+
+	// console.log('props filter', filter)
 
 	const currPage = router?.query?.page || 1
 	const maxPage = props.maxPage
 	const prevOne = parseInt(currPage) > 1 ? parseInt(currPage) - 1 : null
 	const nextOne = parseInt(currPage) < maxPage ? parseInt(currPage) + 1 : null
 
+	const currCategory = router.query.category ? category : undefined
+
+	const removeQueryParam = (param) => {
+		const { pathname, query } = router;
+		const params = new URLSearchParams(query?.category);
+		params.delete(param);
+		router.replace(
+			{ pathname, query: params.toString() },
+			undefined,
+			{ shallow: true }
+		);
+	};
+
 	const onClickHandler = (page) => {
+		console.log('router push', page)
+
 		router.push({
 			pathname: router.pathname,
-			query: { page },
+			query: { page, category },
 		});
 	};
 

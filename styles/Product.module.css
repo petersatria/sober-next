@@ -131,3 +131,34 @@
 		align-items: center;
 	}
 }
+
+/* Sidebar */
+
+.sidebarTitle {
+	font-size: 20px;
+	font-weight: 400;
+	color: #23232c;
+	font-family: 'Montserrat';
+}
+
+.tag {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: #fff;
+	background-color: #bfbfc8;
+	padding: 4px 12px;
+	/* letter-spacing: 1px; */
+	transition: all 0.8s;
+	max-width: 150px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.tag:hover {
+	background-color: #23232c
+}
+
+.borderBottom {
+	border-bottom: 1px solid #eaebee;
+}

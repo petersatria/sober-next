@@ -13,7 +13,7 @@ const Blog = (props) => {
 		<article className="row my-5">
 			<div className="col-6 d-flex flex-row justify-content-center">
 				<Link href={`/blogs/${blog._id}`} >
-					<Image quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={`${styles.blogImg} ${styles.cursorPointer}`} src={blog.image} alt="" />
+					<img quality={30} width={500} height={500} placeholder="blur" blurDataURL={"base64"} className={`${styles.blogImg} ${styles.cursorPointer}`} src={blog.image} alt="" />
 				</Link>
 			</div>
 			<div className="col-6 py-3 px-4 d-flex flex-column justify-content-between ">
