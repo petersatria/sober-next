@@ -24,6 +24,7 @@ const host =
 
 function Dashboard({ products, users, blogs, categories, bannersData }) {
     const dashboardState = useSelector((state) => state.dashboard);
+    console.log(products);
     return (
         <DashboardLayout>
             <div
@@ -150,10 +151,11 @@ export async function getServerSideProps({ req }) {
                 users,
                 blogs,
                 categories,
-                bannersData,
+                banners,
             },
         };
     } catch (err) {
+        console.log(err);
         return {
             props: {
                 products: [],

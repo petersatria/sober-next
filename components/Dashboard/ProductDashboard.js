@@ -31,7 +31,6 @@ function ProductDashboard({ products }) {
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(`${host}api/product`);
-            console.log(res);
 
             const data = res.data.result.map((item) => {
                 item['size-xs'] = item?.size?.xs || null;
@@ -110,7 +109,7 @@ function ProductDashboard({ products }) {
             <div className="tw-mt-8">
                 <GridComponent
                     height="400"
-                    dataSource={data}
+                    dataSource={products}
                     allowResizing
                     allowSorting
                     allowFiltering
