@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Image from 'next/future/image';
 import { token } from '../../moduleComponents/tokenAuthorization';
 import {
     GridComponent,
@@ -85,11 +86,13 @@ function ProductDashboard({ products }) {
                 {imagesArr.map((img, i) => {
                     if (!img) return;
                     return (
-                        <img
+                        <Image
                             key={i}
                             src={img}
                             alt={name}
                             className="tw-h-40 tw-w-40 tw-object-cover"
+                            width={212}
+                            height={320}
                         />
                     );
                 })}
