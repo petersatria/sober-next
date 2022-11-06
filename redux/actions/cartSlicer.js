@@ -13,7 +13,6 @@ export const cartSlicer = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchCart.fulfilled, (state, action) => {
-            console.log(action, 'action')
             state.carts = action.payload.carts
         }),
             builder.addCase(addToCart.fulfilled, (state, action) => {
@@ -46,7 +45,9 @@ export const fetchCart = createAsyncThunk('fetch/cart', async (data, thunkAPI) =
         if (!token) {
             return thunkAPI.fulfillWithValue({ carts: [] })
         }
-        const cartUser = await axios.get(`${process.env.NEXT_PUBLIC_URL}cart/${userId}`, {
+
+
+        const cartUser = await axios.get(`http://localhost:5000/cart/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token.token}`
             }
@@ -181,7 +182,6 @@ export const changeQty = createAsyncThunk('changeQTY/cart', async ({ qty, produc
         userId = token.id
     }
 
-    console.log('masuk')
     try {
         const { carts } = thunkAPI.getState().carts
         const findProductInCart = carts.filter((val) => val.productId === productId)
