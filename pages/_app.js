@@ -11,9 +11,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Meta from '../components/meta/head';
 
 // Registering Syncfusion license key
-registerLicense(
-    'ORg4AjUWIQA/Gnt2VVhjQlFaclhJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRd0VhW31dcH1VTmFYVEM='
-);
+registerLicense(process.env.NEXT_PUBLIC_SYNCFUSION_KEY);
 
 function MyApp({ Component, pageProps }) {
     useEffect(() => {
