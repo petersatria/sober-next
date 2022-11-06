@@ -44,7 +44,7 @@ function UserDashboard({ users }) {
         };
 
         getData();
-    }, []);
+    }, [userToken]);
 
     // Data Changes
     const gridActionHandler = async ({ requestType, data }) => {
