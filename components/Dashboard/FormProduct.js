@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { sizeActions } from '../../redux/actions/sizeSlicer';
 import { token } from '../../moduleComponents/tokenAuthorization';
-import createFileList from 'create-file-list';
 import {
     HtmlEditor,
     Inject,

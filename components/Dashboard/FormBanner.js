@@ -13,7 +13,7 @@ import {
     Toolbar,
 } from '@syncfusion/ej2-react-richtexteditor';
 import useFetch from '../../hooks/use-fetch';
-import Notification from '../GeneralUI/Notification';
+// import Notification from '../GeneralUI/Notification';
 import styles from './FormProduct.module.css';
 
 // Rich Text Editor Settings
@@ -76,10 +76,10 @@ const FormBanner = ({ header, banner, method, url, type, imgActive }) => {
     // INITIAL INPUT VALUE
     let initialActiveValue = type === 'update' ? (banner?.active ? banner?.active : false) : false;
     const initialImageValue = type === 'update' ? (banner?.image ? banner?.image : '') : '';
-    
+
 
     // Formated Initial Content and Initial Timestamp
-    
+
 
     // ROUTER
     const router = useRouter();
@@ -94,7 +94,7 @@ const FormBanner = ({ header, banner, method, url, type, imgActive }) => {
     const [imageValue, setImageValue] = useState();
     const [activeValue, setActiveValue] = useState(initialActiveValue);
     const [imageLink, setImageLink] = useState(initialImageValue)
-   
+
     // Notification
     const [notif, setNotif] = useState(null);
 
@@ -116,7 +116,7 @@ const FormBanner = ({ header, banner, method, url, type, imgActive }) => {
         };
 
         // input.file = imageFile;
-      
+
 
         const userToken = token();
         await sendRequest({
@@ -128,7 +128,7 @@ const FormBanner = ({ header, banner, method, url, type, imgActive }) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        
+
     };
 
     // SIDE EFFECT
@@ -183,37 +183,30 @@ const FormBanner = ({ header, banner, method, url, type, imgActive }) => {
 
     // CLASS
     const buttonTags = `${styles.btn} ${styles.image}`;
-    
+
 
     return (
         <>
-            {notif && (
-                <Notification
-                    title={notif.title}
-                    message={notif.message}
-                    status={notif.status}
-                />
-            )}
 
             <section className={styles.container}>
                 <div className={styles.heading}>
                     <h1 className={styles.header}>{header}</h1>
                 </div>
-                    {imgActive &&
-                        (<div>
-                            <img
+                {imgActive &&
+                    (<div>
+                        <img
                             src={imageLink}
                             alt="Picture of the author"
                             width={200}
                             height={200} />
-                            <button  onClick={(e)=> console.log("hay")}>test</button>
-                        </div>)}
+                        <button onClick={(e) => console.log("hay")}>test</button>
+                    </div>)}
                 <form onSubmit={submitHandler} className={styles.form}>
                     <div className={styles.control}>
                         <label className={styles.label} htmlFor="active">
                             Active
                         </label>
-                        <select 
+                        <select
                             onChange={(e) => setActiveValue(e.target.value)}
                             value={activeValue}
                             className={styles.input}
@@ -236,19 +229,19 @@ const FormBanner = ({ header, banner, method, url, type, imgActive }) => {
                             Image
                         </label>
 
-                        <input id="image" type="file" name="imageFile" className={styles.input}  onChange={(e) => setImageValue(e.target.files[0])}/>
+                        <input id="image" type="file" name="imageFile" className={styles.input} onChange={(e) => setImageValue(e.target.files[0])} />
                     </div>
                     <div className={styles.control}>
                         <label className={styles.label} htmlFor="image">
                             Image Link
                         </label>
 
-                        <input id="image" type="text" name="imageLink" className={styles.input} onChange={(e) => setImageLink(e.target.value)}/>
+                        <input id="image" type="text" name="imageLink" className={styles.input} onChange={(e) => setImageLink(e.target.value)} />
                     </div>
 
-                   
 
-                        <button  className={styles.btn}>Send</button>
+
+                    <button className={styles.btn}>Send</button>
                 </form>
             </section>
         </>

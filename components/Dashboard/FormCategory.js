@@ -12,7 +12,7 @@ import {
     Toolbar,
 } from '@syncfusion/ej2-react-richtexteditor';
 import useFetch from '../../hooks/use-fetch';
-import Notification from '../GeneralUI/Notification';
+// import Notification from '../GeneralUI/Notification';
 import styles from './FormProduct.module.css';
 
 // Rich Text Editor Settings
@@ -115,7 +115,7 @@ const FormBlog = ({ header, blog, method, url, type }) => {
 
         const input = {
             name: nameValue,
-            deleted:false
+            deleted: false
         };
 
         const userToken = token();
@@ -184,13 +184,6 @@ const FormBlog = ({ header, blog, method, url, type }) => {
 
     return (
         <>
-            {notif && (
-                <Notification
-                    title={notif.title}
-                    message={notif.message}
-                    status={notif.status}
-                />
-            )}
 
             <section className={styles.container}>
                 <div className={styles.heading}>
