@@ -54,6 +54,7 @@ const ProductDetail = (props) => {
 
 
 		dispatch(addToCart({ productId: productId, quantity: items, size: sizeItem }))
+		// console.log({ productId: productId, quantity: items, size: sizeItem.toLowerCase() })
 	}
 
 	const shuffled = () => {
