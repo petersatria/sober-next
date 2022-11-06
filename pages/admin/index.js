@@ -6,15 +6,19 @@ import UpdateProducts from '../../components/Dashboard/UpdateProducts';
 import FormProduct from '../../components/Dashboard/FormProduct';
 import UserDashboard from '../../components/Dashboard/UserDashboard';
 import BlogDashboard from '../../components/Dashboard/BlogDashboard';
+import CategoryDashboard from '../../components/Dashboard/CategoryDashboard';
 import FormBlog from '../../components/Dashboard/FormBlog';
+import FormCategory from '../../components/Dashboard/FormCategory';
+
 import UpdateBlogs from '../../components/Dashboard/UpdateBlogs';
+import UpdateCategories from '../../components/Dashboard/UpdateCategories';
 
 const host =
     process.env.NODE_ENV === 'development'
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-function Dashboard({ products, users, blogs }) {
+function Dashboard({ products, users, blogs, categories }) {
     const dashboardState = useSelector((state) => state.dashboard);
     return (
         <DashboardLayout>
@@ -66,6 +70,26 @@ function Dashboard({ products, users, blogs }) {
                     {dashboardState.activeSection === 'update-blog' && (
                         <UpdateBlogs blogs={blogs} />
                     )}
+
+                    {/* Category */}
+                    
+                    {dashboardState.activeSection === 'category' && (
+                        <CategoryDashboard categories={categories} />
+                    )}
+                    {dashboardState.activeSection === 'add-category' && (
+                        <FormCategory
+                            header={'Add Category'}
+                            method="POST"
+                            url={`${host}add-category`}
+                            type="add"
+                        />
+                    )}
+
+                    {dashboardState.activeSection === 'update-category' && (
+                        <UpdateCategories blogs={blogs} />
+                    )}
+
+
                 </div>
             </div>
         </DashboardLayout>
@@ -77,6 +101,7 @@ export async function getServerSideProps() {
         const resProducts = await axios.get(`${host}api/product`);
         const resUsers = await axios.get(`${host}api/user`);
         const resBlog = await axios.get(`${host}api/blog/articles`);
+        const resCategories = await axios.get(`${host}category`)
 
         const products = resProducts.data.result.map((item) => {
             item['size-xs'] = item?.size?.xs || null;
@@ -91,11 +116,15 @@ export async function getServerSideProps() {
 
         const blogs = resBlog?.data?.result;
 
+        const categories = resCategories?.data?.result;
+        
+
         return {
             props: {
                 products,
                 users,
                 blogs,
+                categories
             },
         };
     } catch (err) {
@@ -104,6 +133,7 @@ export async function getServerSideProps() {
                 products: [],
                 users: [],
                 blogs: [],
+                categories:[]
             },
         };
     }

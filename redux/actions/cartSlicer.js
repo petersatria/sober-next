@@ -10,9 +10,14 @@ export const cartSlicer = createSlice({
     initialState: {
         carts: []
     },
-    reducers: {},
+    reducers: {
+        emptyCart: (state, action) => {
+            state.carts = [];
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchCart.fulfilled, (state, action) => {
+            console.log(action, 'action')
             state.carts = action.payload.carts
         }),
             builder.addCase(addToCart.fulfilled, (state, action) => {
@@ -181,7 +186,6 @@ export const changeQty = createAsyncThunk('changeQTY/cart', async ({ qty, produc
     if (token) {
         userId = token.id
     }
-
     try {
         const { carts } = thunkAPI.getState().carts
         const findProductInCart = carts.filter((val) => val.productId === productId)
@@ -206,3 +210,5 @@ export const changeQty = createAsyncThunk('changeQTY/cart', async ({ qty, produc
         console.log(error)
     }
 })
+
+export const { emptyCart } = cartSlicer.actions;

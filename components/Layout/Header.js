@@ -7,15 +7,17 @@ import {
     faUser, faBagShopping, faCaretDown, faRightFromBracket, faUserPlus
 } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/future/image';
-import styles from "./Header.module.css";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
-import { eraseCookie, getCookie } from "../../moduleComponents/cookie";
-import { getUserData, isUserLoggedIn } from "../../redux/actions/authentication";
-import { headerActions } from "../../redux/actions/headerSlicer";
-import { confirmNotification } from "../../moduleComponents/notification";
-import { useRouter } from "next/router";
+import styles from './Header.module.css';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useSelector, useDispatch } from 'react-redux';
+import { eraseCookie, getCookie } from '../../moduleComponents/cookie';
+import { getUserData, isUserLoggedIn } from '../../redux/actions/authentication';
+import { headerActions } from '../../redux/actions/headerSlicer';
+import { confirmNotification } from '../../moduleComponents/notification';
+import { useRouter } from 'next/router';
+import { emptyCart } from '../../redux/actions/cartSlicer';
+
 
 const Header = () => {
     // Local State
@@ -79,6 +81,7 @@ const Header = () => {
         let confirm = await confirmNotification(titleText, confirmText);
         if (confirm) {
             dispatch(isUserLoggedIn(false));
+            dispatch(emptyCart())
             eraseCookie('userCookie');
             router.push('/login');
             return;
