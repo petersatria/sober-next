@@ -71,30 +71,11 @@ const RTEItems = {
     quickToolbarSettings: quickToolbarSettings,
 };
 
-const FormBlog = ({ header, blog, method, url, type }) => {
+const FormBlog = ({ header, category, method, url, type }) => {
     // INITIAL INPUT VALUE
     const initialCategoryValue =
-        type === 'update' ? (blog?.category ? blog.category : '') : '';
-    let initialContentValue =
-        type === 'update' ? (blog?.content ? blog.content : '') : '';
-    let initialTitleValue = type === 'update' ? (blog?.title ? blog?.title : '') : '';
-    const initialTimestampValue =
-        type === 'update' ? (blog?.timestamp ? blog?.timestamp : '') : '';
-    const initialImageValue = type === 'update' ? (blog?.image ? blog?.image : '') : '';
-    const initialTagsArr =
-        type === 'update' ? (blog?.tag?.length > 0 ? blog.tag : []) : '';
-    const initialTagsNum = type === 'update' ? (blog?.tag ? blog.tag.length : 1) : 1;
+        type === 'update' ? (category?.name ? category?.name : '') : '';
 
-    // Formated Initial Content and Initial Timestamp
-    initialContentValue = initialContentValue.replace(/<[^>]+>/g, '');
-
-    const timestampDateType = new Date(initialTimestampValue);
-    const timestampYear = timestampDateType.getFullYear();
-    const timestampMonth = String(timestampDateType.getMonth() + 1).padStart(2, 0);
-    const timestampDate = String(timestampDateType.getDate()).padStart(2, 0);
-    const timestampHour = timestampDateType.getHours();
-    const timestampMinute = timestampDateType.getMinutes();
-    initialTimestampValue = `${timestampYear}-${timestampMonth}-${timestampDate}T${timestampHour}:${timestampMinute}`;
 
     // ROUTER
     const router = useRouter();
@@ -105,6 +86,10 @@ const FormBlog = ({ header, blog, method, url, type }) => {
     // STATE
     // Input value
     const [nameValue, setNameValue] = useState('');
+
+    useEffect(() => {
+        setNameValue(initialCategoryValue);
+    }, [category?._id]);
 
     // Notification
     const [notif, setNotif] = useState(null);
@@ -206,7 +191,7 @@ const FormBlog = ({ header, blog, method, url, type }) => {
                     </div>
 
                     <div className={styles.actions}>
-                        <button className={styles.btn}>ADD</button>
+                        <button className={styles.btn}>{type==='update'?'UPDATE':'ADD'}</button>
                     </div>
                 </form>
             </section>

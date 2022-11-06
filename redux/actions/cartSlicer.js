@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { getCookie } from '../../moduleComponents/cookie'
 import { notifications } from '../../moduleComponents/notification'
-const url = `${process.env.NEXT_PUBLIC_URL}`
+const url = `${process.env.DEV_URL}`
 
 
 export const cartSlicer = createSlice({
@@ -71,7 +71,6 @@ export const addToCart = createAsyncThunk('add/cart', async (data, thunkAPI) => 
     }
     try {
         const { carts } = thunkAPI.getState().carts
-        console.log(carts)
         const findProductInCart = carts.filter((val) => val.productId == data.productId && val.size === data.size)
         const quantity = data.quantity ? +data.quantity : 1
 
@@ -149,31 +148,38 @@ export const checkoutCart = createAsyncThunk('checkout/cart', async (data, thunk
         carts: data.carts
     }
     try {
-        // const { data } = await axios.post(`${url}getTokenPayment`, {userId, total_order})
-        // window.snap.pay(data, {
-        //     onSuccess:async()=>{
-        //         console.log('success')
-        //         await axios.post(`${url}transactionHistoryPost`, dataPost)
-        //         dispatch({
-        //             type:'CHECKOUT_CART'
-        //         })
-
-        //         navigate('/order-list/'+userId)
-        //     },
-        //     onClose: function () {
-        //         // muncul ketika event snap di close
-        //         console.log('closed failed')
-        //     }
-        // })
-
-        await axios.post(`${url}transactionHistoryPost`, dataPost, {
+        const dataToken = await axios.post(`${url}getTokenPayment`, {userId, total_order:dataPost.total_order}, {
             headers: {
                 Authorization: `Bearer ${token.token}`
             }
         })
-        data.navigate.push(`/`)
+        window.snap.pay(dataToken.data, {
+            onSuccess:async()=>{
+                console.log('success push')
+                await axios.post(`${url}transactionHistoryPost`, dataPost, {
+                    headers: {
+                        Authorization: `Bearer ${token.token}`
+                    }
+                })
+
+                // data.navigate.push(`profile/${userId}/orders`)
+                return thunkAPI.fulfillWithValue(data.navigate)
+            },
+            onClose: function () {
+                // muncul ketika event snap di close
+                console.log('closed failed')
+            }
+        })
+
+
+        // await axios.post(`${url}transactionHistoryPost`, dataPost, {
+        //     headers: {
+        //         Authorization: `Bearer ${token.token}`
+        //     }
+        // })
+        // data.navigate.push(`/`)
         // data.navigate.push(`/order-list/'${userId}`)
-        return thunkAPI.fulfillWithValue()
+        // return thunkAPI.fulfillWithValue()
     } catch (error) {
         console.log(error)
     }

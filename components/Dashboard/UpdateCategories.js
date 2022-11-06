@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import FormBlog from './FormBlog';
+import FormCategory from './FormCategory';
 import styles from './FormProduct.module.css';
 import axios from 'axios'
 // Host
@@ -8,10 +8,9 @@ const host =
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-function UpdateBlogs({ blogs }) {
-    const [blog, setBlog] = useState(blogs[0]);
+function UpdateCategory({ blogs }) {
+    const [category, setCategory] = useState({})
     const [categories, setCategories] = useState([])
-    console.log('categories', categories)
 
 
     useEffect(()=>{
@@ -20,6 +19,7 @@ function UpdateBlogs({ blogs }) {
 
             const data = res.data.result;
             setCategories(data);
+            setCategory(data[0])
         };
 
         getData();
@@ -27,8 +27,8 @@ function UpdateBlogs({ blogs }) {
 
     // Handler
     const changeHandler = (e) => {
-        const searchedProduct = blogs.find((blog) => blog._id === e.target.value);
-        setBlog(searchedProduct);
+        const searchedProduct = categories.find((category) => category._id === e.target.value);
+        setCategory(searchedProduct);
     };
 
     // Component
@@ -48,17 +48,17 @@ function UpdateBlogs({ blogs }) {
                 </select>
             </div>
 
-            {blog && (
-                <FormBlog
-                    header={`Update ${blog.title}`}
-                    blog={blog}
-                    method="PATCH"
-                    url={`${host}api/blog/articles/update/${blog._id}`}
-                    type="update"
+            {category && (
+                <FormCategory
+                header={`Update ${category.name}`}
+                category={category}
+                method="PATCH"
+                url={`${host}edit-category/${category._id}`}
+                type="update"
                 />
             )}
         </>
     );
 }
 
-export default UpdateBlogs;
+export default UpdateCategory;

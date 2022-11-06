@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { fetchCart, deleteCart, checkoutCart, changeQty } from '../../redux/actions/cartSlicer'
 import { useRouter } from 'next/router'
 import BreadCumb from "../BreadCumb"
-export default function Cart() {
+export default function     Cart() {
     const { carts } = useSelector(state => state.carts)
     const dispatch = useDispatch()
     const router = useRouter()
@@ -92,11 +92,11 @@ export default function Cart() {
                     </tbody>
                 </table>
 
-                <div className={`${styles.couponContainer} mt-5`}>
+                {/* <div className={`${styles.couponContainer} mt-5`}>
                     <div>Coupon</div>
                     <input placeholder='Coupon code' className={styles.inputCoupon} />
                     <button className={styles.buttonCoupon}>APPLY COUPON</button>
-                </div>
+                </div> */}
 
 
                 <div className={`${styles.checkoutContainer} mt-5`}>
