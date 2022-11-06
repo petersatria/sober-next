@@ -36,16 +36,6 @@ const NavUserList = [
         title: 'User',
         type: 'user',
     },
-    // {
-    //     icon: faPlus,
-    //     title: 'Add User',
-    //     type: 'add-user',
-    // },
-    // {
-    //     icon: faPen,
-    //     title: 'Update User',
-    //     type: 'update-user',
-    // },
 ];
 
 const NavBlogList = [
@@ -113,9 +103,9 @@ function Sidebar() {
                 ))}
             </div>
 
-            {/* User lList */}
+            {/* Blog lList */}
             <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4">
-                {NavUserList.map((item) => (
+                {NavBlogList.map((item) => (
                     <NavButton
                         key={item.title}
                         icon={item.icon}
@@ -125,9 +115,9 @@ function Sidebar() {
                 ))}
             </div>
 
-            {/* Blog lList */}
-            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4">
-                {NavBlogList.map((item) => (
+            {/* User lList */}
+            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 ">
+                {NavUserList.map((item) => (
                     <NavButton
                         key={item.title}
                         icon={item.icon}

@@ -12,7 +12,8 @@ import {
     Toolbar,
 } from '@syncfusion/ej2-react-richtexteditor';
 import useFetch from '../../hooks/use-fetch';
-import Notification from '../GeneralUI/Notification';
+import { notifications } from '../../moduleComponents/notification';
+import LoadingSpinner from '../GeneralUI/LoadingSpinner';
 import styles from './FormProduct.module.css';
 
 // Rich Text Editor Settings
@@ -75,25 +76,37 @@ const FormBlog = ({ header, blog, method, url, type }) => {
     // INITIAL INPUT VALUE
     const initialCategoryValue =
         type === 'update' ? (blog?.category ? blog.category : '') : '';
+
     let initialContentValue =
         type === 'update' ? (blog?.content ? blog.content : '') : '';
+
     let initialTitleValue = type === 'update' ? (blog?.title ? blog?.title : '') : '';
+
     const initialTimestampValue =
         type === 'update' ? (blog?.timestamp ? blog?.timestamp : '') : '';
-    const initialImageValue = type === 'update' ? (blog?.image ? blog?.image : '') : '';
-    const initialTagsArr =
-        type === 'update' ? (blog?.tag?.length > 0 ? blog.tag : []) : '';
-    const initialTagsNum = type === 'update' ? (blog?.tag ? blog.tag.length : 1) : 1;
 
-    // Formated Initial Content and Initial Timestamp
+    const initialImageValue = type === 'update' ? (blog?.image ? blog?.image : '') : '';
+
+    const initialTagsArr =
+        type === 'update'
+            ? blog?.tag?.length > 0
+                ? blog.tag.join().split(',')
+                : []
+            : '';
+
+    const initialTagsNum =
+        type === 'update' ? (blog?.tag ? blog.tag.join().split(',').length : 1) : 1;
+
+    // Formated Initial Content
     initialContentValue = initialContentValue.replace(/<[^>]+>/g, '');
 
+    // Formated Initial Timestamp
     const timestampDateType = new Date(initialTimestampValue);
     const timestampYear = timestampDateType.getFullYear();
     const timestampMonth = String(timestampDateType.getMonth() + 1).padStart(2, 0);
     const timestampDate = String(timestampDateType.getDate()).padStart(2, 0);
-    const timestampHour = timestampDateType.getHours();
-    const timestampMinute = timestampDateType.getMinutes();
+    const timestampHour = String(timestampDateType.getHours()).padStart(2, 0);
+    const timestampMinute = String(timestampDateType.getMinutes()).padStart(2, 0);
     initialTimestampValue = `${timestampYear}-${timestampMonth}-${timestampDate}T${timestampHour}:${timestampMinute}`;
 
     // ROUTER
@@ -113,35 +126,32 @@ const FormBlog = ({ header, blog, method, url, type }) => {
     const [imageValue, setImageValue] = useState(initialImageValue);
     const [tagsValue, setTagsValue] = useState(initialTagsArr);
 
-    // Notification
-    const [notif, setNotif] = useState(null);
+    // Image Input
+    const [imageInput, setImageInput] = useState('image-link');
+
+    // Loading State
+    const [loading, setLoading] = useState(null);
 
     // HANDLER
     const submitHandler = async (e) => {
         e.preventDefault();
 
         const form = new FormData(e.target);
-        const imageFile = form.get('imageFile');
-        const input = {
-            category: categoryValue,
-            title: titleValue,
-            content: form.get('content'),
-            timestamp: timestampValue,
-            image: imageValue,
-            tag: tagsValue,
-        };
 
-        input.file = imageFile;
-        console.log(input);
+        form.append('category', categoryValue);
+        form.append('title', titleValue);
+        form.append('timestamp', timestampValue);
+        form.append('tag', [...tagsValue]);
+        !form.get('image') && form.append('imageLink', imageValue);
 
         const userToken = token();
         await sendRequest({
             url,
             method,
-            data: input,
+            data: form,
             headers: {
                 Authorization: `Bearer ${userToken}`,
-                // 'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
             },
         });
     };
@@ -152,37 +162,29 @@ const FormBlog = ({ header, blog, method, url, type }) => {
         if (!result) return;
 
         if (result === 'pending') {
-            setNotif({
-                title: 'Sending',
-                message: 'Please Wait',
-                status: 'pending',
-            });
+            setLoading(true);
             return;
         }
 
         if (result === 'error') {
-            setNotif({
-                title: 'Error',
-                message: `Blog ${type === 'update' ? 'Update' : 'Add'} Failed`,
-                status: 'error',
-            });
+            (async () =>
+                await notifications({
+                    statusCode: 400,
+                    message: 'Something went wrong',
+                }))();
         }
 
         if (result === 'success') {
-            setNotif({
-                title: 'Success',
-                message: `Blog ${type === 'update' ? 'Updated' : 'Added'}`,
-                status: 'success',
-            });
+            (async () =>
+                await notifications({
+                    statusCode: 200,
+                    message: `${type === 'update' ? 'Product updated' : 'Product Added'}`,
+                }))();
 
-            setTimeout(() => router.reload(), 3000);
+            // setTimeout(() => router.reload(), 2200);
         }
 
-        const timer = setTimeout(() => setNotif(null), 3000);
-
-        return () => {
-            clearTimeout(timer);
-        };
+        setLoading(false);
     }, [result]);
 
     // Initial Value
@@ -231,13 +233,7 @@ const FormBlog = ({ header, blog, method, url, type }) => {
 
     return (
         <>
-            {notif && (
-                <Notification
-                    title={notif.title}
-                    message={notif.message}
-                    status={notif.status}
-                />
-            )}
+            {loading && <LoadingSpinner />}
 
             <section className={styles.container}>
                 <div className={styles.heading}>
@@ -306,12 +302,32 @@ const FormBlog = ({ header, blog, method, url, type }) => {
                     </div>
 
                     <div className={styles.control}>
-                        <label className={styles.label} htmlFor="image">
-                            Image
-                        </label>
-
-                        <input id="image" type="file" name="imageFile" />
+                        <label className={styles.label}>Image</label>
+                        <select
+                            onChange={(e) => setImageInput(e.target.value)}
+                            className={styles.input}
+                            value={imageInput}
+                        >
+                            <option value="image-link">Image Link</option>
+                            <option value="image-file">Image File</option>
+                        </select>
                     </div>
+
+                    {imageInput === 'image-link' ? (
+                        <div className={`${styles.control} tw-mb-5`}>
+                            <input
+                                onChange={(e) => setImageValue(e.target.value)}
+                                value={imageValue}
+                                className={styles.input}
+                                type="url"
+                                required
+                            />
+                        </div>
+                    ) : (
+                        <div className={`${styles.control} tw-mb-5`}>
+                            <input id="image" type="file" required name="image" />
+                        </div>
+                    )}
 
                     <button
                         onClick={() => {

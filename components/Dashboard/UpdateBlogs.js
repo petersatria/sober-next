@@ -26,9 +26,7 @@ function UpdateBlogs({ blogs }) {
     return (
         <>
             <div className={styles.control}>
-                <label className={styles.label} htmlFor="size">
-                    Choose Blog To Update
-                </label>
+                <label className={styles.label}>Choose Blog To Update</label>
                 <select onChange={changeHandler} className={styles.input}>
                     {option}
                 </select>
