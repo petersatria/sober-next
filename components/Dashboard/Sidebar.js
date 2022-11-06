@@ -8,7 +8,8 @@ import {
     faBlog,
     faPlus,
     faPen,
-    faList
+    faList,
+    faImage,
 } from '@fortawesome/free-solid-svg-icons';
 import NavButton from './NavButton';
 
@@ -53,6 +54,23 @@ const NavBlogList = [
         icon: faPen,
         title: 'Update Blog',
         type: 'update-blog',
+    },
+];
+const NavBannerList = [
+    {
+        icon: faImage,
+        title: 'Banner',
+        type: 'banner',
+    },
+    {
+        icon: faPlus,
+        title: 'Add Banner',
+        type: 'add-banner',
+    },
+    {
+        icon: faPen,
+        title: 'Update Banner',
+        type: 'update-banner',
     },
 ];
 
@@ -126,6 +144,17 @@ function Sidebar() {
                     />
                 ))}
             </div>
+            {/* Banner List */}
+            <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4">
+                {NavBannerList.map((item) => (
+                    <NavButton
+                        key={item.title}
+                        icon={item.icon}
+                        title={item.title}
+                        type={item.type}
+                    />
+                ))}
+            </div>
 
             {/* Category lList */}
             <div className="tw-mt-2 tw-flex tw-flex-col tw-gap-y-1 tw-border-b tw-border-gray-200 tw-pb-4">
@@ -138,6 +167,7 @@ function Sidebar() {
                     />
                 ))}
             </div>
+
         </div>
     );
 }

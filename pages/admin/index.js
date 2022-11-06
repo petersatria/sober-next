@@ -12,20 +12,22 @@ import FormCategory from '../../components/Dashboard/FormCategory';
 
 import UpdateBlogs from '../../components/Dashboard/UpdateBlogs';
 import UpdateCategories from '../../components/Dashboard/UpdateCategories';
+import BannerDashboard from '../../components/Dashboard/BannerDashboard';
+import FormBanner from '../../components/Dashboard/FormBanner';
+import UpdateBanner from '../../components/Dashboard/UpdateBanner';
 
 const host =
     process.env.NODE_ENV === 'development'
         ? process.env.DEV_URL
         : process.env.REACT_APP_URL;
 
-function Dashboard({ products, users, blogs, categories }) {
+function Dashboard({ products, users, blogs, categories, bannersData }) {
     const dashboardState = useSelector((state) => state.dashboard);
     return (
         <DashboardLayout>
             <div
-                className={`${
-                    dashboardState.sidebar && 'md:tw-ml-72'
-                } overflow-scroll h-screen`}
+                className={`${dashboardState.sidebar && 'md:tw-ml-72'
+                    } overflow-scroll h-screen`}
             >
                 {/* Product */}
                 <div className="tw-m-2 tw-mt-2 tw-rounded-2xl tw-p-2 tw-shadow-md md:tw-m-10 md:tw-mt-5 md:tw-p-10">
@@ -52,6 +54,23 @@ function Dashboard({ products, users, blogs, categories }) {
                         <UserDashboard users={users} />
                     )}
 
+                    {/* Banner */}
+                    {dashboardState.activeSection === 'banner' && (
+                        <BannerDashboard banners={bannersData} />
+                    )}
+
+                    {dashboardState.activeSection === 'add-banner' && (
+                        <FormBanner
+                            header="Add Banner"
+                            method="POST"
+                            url={`${host}api/banner/create-banner`}
+                            type="add"
+                        />
+                    )}
+
+                    {dashboardState.activeSection === 'update-banner' && (
+                        <UpdateBanner bannersData={bannersData} />
+                    )}
                     {/* Blog */}
 
                     {dashboardState.activeSection === 'blog' && (
@@ -72,7 +91,7 @@ function Dashboard({ products, users, blogs, categories }) {
                     )}
 
                     {/* Category */}
-                    
+
                     {dashboardState.activeSection === 'category' && (
                         <CategoryDashboard categories={categories} />
                     )}
@@ -102,6 +121,7 @@ export async function getServerSideProps() {
         const resUsers = await axios.get(`${host}api/user`);
         const resBlog = await axios.get(`${host}api/blog/articles`);
         const resCategories = await axios.get(`${host}category`)
+        const resBanner = await axios.get(`${host}api/banners/all`);
 
         const products = resProducts.data.result.map((item) => {
             item['size-xs'] = item?.size?.xs || null;
@@ -115,16 +135,18 @@ export async function getServerSideProps() {
         const users = resUsers?.data?.data;
 
         const blogs = resBlog?.data?.result;
+        const banners = resBanner?.data?.result;
 
         const categories = resCategories?.data?.result;
-        
+
 
         return {
             props: {
                 products,
                 users,
                 blogs,
-                categories
+                categories,
+                bannersData
             },
         };
     } catch (err) {
@@ -133,7 +155,8 @@ export async function getServerSideProps() {
                 products: [],
                 users: [],
                 blogs: [],
-                categories:[]
+                categories: [],
+                bannersData: [],
             },
         };
     }
