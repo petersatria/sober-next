@@ -4,6 +4,11 @@ import { useEffect } from 'react'
 import { fetchCart, deleteCart, checkoutCart, changeQty } from '../../redux/actions/cartSlicer'
 import { useRouter } from 'next/router'
 import BreadCumb from "../BreadCumb"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+    faTrash
+} from '@fortawesome/free-solid-svg-icons';
+
 export default function     Cart() {
     const { carts } = useSelector(state => state.carts)
     const dispatch = useDispatch()
@@ -55,7 +60,7 @@ export default function     Cart() {
             <BreadCumb linkTo={"My Cart"} linkPrev={"All Products"} linkRef={"/products/"} />
             <div className={`${styles.cartContent} mt-5`}>
                 <table className={`${styles.tableCart}`}>
-                    <thead>
+                    <thead className={styles.tableHead}>
                         <tr>
                             <th>Product</th>
                             <th>Price</th>
@@ -68,19 +73,21 @@ export default function     Cart() {
                             carts.length > 0 ?
                                 [...carts].sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0)).map((val, index) => {
                                     return (
-                                        <tr key={index}>
-                                            <td><img src={`${val.product[0]?.images[0]}`} className={styles.imageTable} width={100} /><span className='m-2'>{`${val.product[0]?.name} (${val.size})`}</span></td>
+                                        <tr key={index} className={styles.cartBoxContent}>
+                                            <td className={styles.cartProductBox}><img src={`${val.product[0]?.images[0]}`} className={styles.imageTable} width={100} /><span className='m-2'>{`${val.product[0]?.name} (${val.size})`}</span></td>
                                             <td>Rp {val.product[0]?.price}</td>
-                                            <td className={styles.qtyBox}>
-                                                <span style={{ color: 'silver' }}>QTY:</span>
-                                                <div className={styles.qtyBoxInput}>
-                                                    <button className={`${styles.cartChangeQtyButton} ${styles.incrementButton}`} onClick={() => { onClickHandle(+val.quantity + 1, val.productId) }}>+</button>
-                                                    <input className={styles.cartChangeQtyInput} onChange={(e) => { onChangeHandle(e, val.productId) }} placeholder={val.quantity} />
-                                                    <button className={`${styles.cartChangeQtyButton} ${styles.decrementButton}`} onClick={() => { onClickHandle(+val.quantity - 1, val.productId) }}>-</button>
+                                            <td>
+                                                <div className={styles.qtyBox}>
+                                                    <span style={{ color: 'silver' }}>QTY:</span>
+                                                    <div className={styles.qtyBoxInput}>
+                                                        <button className={`${styles.cartChangeQtyButton} ${styles.incrementButton}`} onClick={() => { onClickHandle(+val.quantity + 1, val.productId) }}>+</button>
+                                                        <input className={styles.cartChangeQtyInput} onChange={(e) => { onChangeHandle(e, val.productId) }} placeholder={val.quantity} />
+                                                        <button className={`${styles.cartChangeQtyButton} ${styles.decrementButton}`} onClick={() => { onClickHandle(+val.quantity - 1, val.productId) }}>-</button>
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>Rp {val.quantity * val.product[0]?.price}.00</td>
-                                            <td><button className={styles.cartChangeQtyButton} style={{ fontSize: '1rem' }} onClick={() => { onDeleteHandle({ productId: val.productId, cartId: val.cartId, size: val.size }) }}>X</button></td>
+                                            <td><button className={styles.cartDeleteButton} style={{ fontSize: '1rem' }} onClick={() => { onDeleteHandle({ productId: val.productId, cartId: val.cartId, size: val.size }) }}><FontAwesomeIcon icon={faTrash}/></button></td>
                                         </tr>
                                     )
                                 })
