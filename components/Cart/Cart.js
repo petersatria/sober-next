@@ -18,17 +18,20 @@ export default function     Cart() {
         dispatch(fetchCart())
     }, [])
 
-    const onChangeHandle = (e, productId) => {
-        dispatch(changeQty({ qty: +e.target.value, productId: productId }))
+    const onChangeHandle = (e, productId,size) => {
+        let number = +e.target.value
+        if(number < 1){
+            number = 0
+        }
+        dispatch(changeQty({ qty: number, productId: productId,size }))
 
     }
 
-    const onClickHandle = (number, productId) => {
+    const onClickHandle = (number, productId, size) => {
         if(number < 1){
             return
         }
-        
-        dispatch(changeQty({ qty: +number, productId }))
+        dispatch(changeQty({ qty: +number, productId, size }))
     }
 
     const onDeleteHandle = (productId, cartId) => {
@@ -80,9 +83,9 @@ export default function     Cart() {
                                                 <div className={styles.qtyBox}>
                                                     <span style={{ color: 'silver' }}>QTY:</span>
                                                     <div className={styles.qtyBoxInput}>
-                                                        <button className={`${styles.cartChangeQtyButton} ${styles.incrementButton}`} onClick={() => { onClickHandle(+val.quantity + 1, val.productId) }}>+</button>
-                                                        <input className={styles.cartChangeQtyInput} onChange={(e) => { onChangeHandle(e, val.productId) }} placeholder={val.quantity} />
-                                                        <button className={`${styles.cartChangeQtyButton} ${styles.decrementButton}`} onClick={() => { onClickHandle(+val.quantity - 1, val.productId) }}>-</button>
+                                                        <button className={`${styles.cartChangeQtyButton} ${styles.incrementButton}`} onClick={() => { onClickHandle(+val.quantity + 1, val.productId, val.size) }}>+</button>
+                                                        <input className={styles.cartChangeQtyInput} onChange={(e) => { onChangeHandle(e, val.productId,val.size) }} placeholder={val.quantity} />
+                                                        <button className={`${styles.cartChangeQtyButton} ${styles.decrementButton}`} onClick={() => { onClickHandle(+val.quantity - 1, val.productId,val.size) }}>-</button>
                                                     </div>
                                                 </div>
                                             </td>

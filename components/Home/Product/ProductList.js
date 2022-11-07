@@ -21,6 +21,7 @@ const ProductList = (props) => {
         setModalActive(true);
     };
 
+
     const modalSubmitHandler = (value) => {
         dispatch(addToCart({ productId: product._id, quantity: 1, size: value.toUpperCase() }));
         // console.log({ productId: product._id, quantity: 1, size: value })

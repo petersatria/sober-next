@@ -3,6 +3,8 @@ import axios from 'axios'
 import { getCookie } from '../../moduleComponents/cookie'
 import { notifications } from '../../moduleComponents/notification'
 const url = `${process.env.REACT_APP_URL}`
+// const url = `${process.env.DEV_URL}`
+
 
 
 export const cartSlicer = createSlice({
@@ -17,14 +19,12 @@ export const cartSlicer = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCart.fulfilled, (state, action) => {
-            console.log(action, 'action')
             state.carts = action.payload.carts
         }),
             builder.addCase(addToCart.fulfilled, (state, action) => {
                 state.carts = action.payload.payload
             }),
             builder.addCase(deleteCart.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.carts = action.payload
             }),
             builder.addCase(checkoutCart.fulfilled, (state, action) => {
@@ -74,12 +74,9 @@ export const addToCart = createAsyncThunk('add/cart', async (data, thunkAPI) => 
         const findProductInCart = carts.filter((val) => val.productId == data.productId && val.size === data.size)
         const quantity = data.quantity ? +data.quantity : 1
 
-        console.log(findProductInCart)
-        console.log(quantity)
         if (findProductInCart.length > 0) {
-            console.log('sudah ada di cart')
             const newQuantity = { ...findProductInCart[0], quantity: findProductInCart[0].quantity + quantity }
-            const filterData = carts.filter((val) => val.productId !== data.productId).concat(newQuantity)
+            const filterData = carts.filter((val) => (val._id !== findProductInCart[0]._id)).concat(newQuantity)
             await axios.patch(`${url}cart`, { cartId: findProductInCart[0].cartId, productId: data.productId, quantity: findProductInCart[0].quantity + quantity, size: data.size }, {
                 headers: {
                     Authorization: `Bearer ${token.token}`
@@ -89,7 +86,6 @@ export const addToCart = createAsyncThunk('add/cart', async (data, thunkAPI) => 
             return thunkAPI.fulfillWithValue({ payload: filterData, type: 'CHANGE_QUANTITY' })
 
         } else {
-            console.log('belom ada di cart')
             const carts = await axios.post(`${url}cart`, { userId, productId: data.productId, quantity: 1, cartId: data.cartId, size: data.size }, {
                 headers: {
                     Authorization: `Bearer ${token.token}`
@@ -112,9 +108,7 @@ export const deleteCart = createAsyncThunk('delete/cart', async (data, thunkAPI)
         userId = token.id
     }
     try {
-        console.log(data.size, data.productId)
         const { carts } = thunkAPI.getState().carts
-        console.log(carts)
 
         const mapCarts = carts.map((val) => {
             if (val.productId === data.productId && val.size === data.size) {
@@ -131,7 +125,7 @@ export const deleteCart = createAsyncThunk('delete/cart', async (data, thunkAPI)
         })
         return thunkAPI.fulfillWithValue(newCarts)
     } catch (error) {
-        // console.log(error)
+        console.log(error)
     }
 })
 
@@ -186,7 +180,7 @@ export const checkoutCart = createAsyncThunk('checkout/cart', async (data, thunk
 })
 
 
-export const changeQty = createAsyncThunk('changeQTY/cart', async ({ qty, productId }, thunkAPI) => {
+export const changeQty = createAsyncThunk('changeQTY/cart', async ({ qty, productId, size }, thunkAPI) => {
     const token = JSON.parse(getCookie('userCookie'))
     let userId = '0'
     if (token) {
@@ -194,14 +188,13 @@ export const changeQty = createAsyncThunk('changeQTY/cart', async ({ qty, produc
     }
     try {
         const { carts } = thunkAPI.getState().carts
-        const findProductInCart = carts.filter((val) => val.productId === productId)
+        const findProductInCart = carts.filter((val) => (val.productId === productId && val.size === size))
 
         const newQuantity = { ...findProductInCart[0], quantity: qty }
-        const filterData = carts.filter((val) => val.productId !== productId).concat(newQuantity)
-        console.log(filterData, 'filter')
+        const filterData = carts.filter((val) => (val._id !== newQuantity._id)).concat(newQuantity)
 
 
-        await axios.patch(`${url}cart`, { cartId: findProductInCart[0].cartId, productId: productId, quantity: qty }, {
+        await axios.patch(`${url}cart`, { cartId: findProductInCart[0].cartId, productId: productId, quantity: qty, size }, {
             headers: {
                 Authorization: `Bearer ${token.token}`
             }
