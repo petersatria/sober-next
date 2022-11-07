@@ -48,7 +48,7 @@
 
 .tableCart {
     border-collapse: collapse;
-    width: 50%;
+    width: 75%;
     font-size: 1rem;
 }
   
@@ -60,14 +60,18 @@
 .tableCart th, .tableCart td {
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-right: 10px;
+    /* margin-right: 500px; */
+}
+
+.cartProductBox {
+    display: flex;
+    align-items: center;
 }
 
 .qtyBox{
     display:flex;
-    height:13vh;
     justify-content:left; 
-    align-items:center;
+    align-items: center;
 }
 
 .qtyBoxInput{
@@ -79,9 +83,14 @@
     padding: 0 10px;
 }
 
-
-
 .cartChangeQtyButton{
+    border: transparent;
+    background-color: transparent;
+    font-size: 1rem;
+    color: silver;
+}
+
+.cartDeleteButton{
     border: transparent;
     background-color: transparent;
     font-size: 1rem;
@@ -103,7 +112,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 1.5vw;
-    width: 50%;
+    width: 75%;
     font-size: 1rem;
 }
 
@@ -130,12 +139,12 @@
     height: 45vh;
     display: flex;
     padding: 5vh 1.5vw;
-    width: 50%;
+    width: 75%;
     font-size: 1rem;
 }
 
 .checkoutContent{
-    margin-left: 10vw;
+    margin-left: 35vw;
 }
 
 .subTotalCheckout{
@@ -182,33 +191,155 @@
     color: white;
 }
 
-@media only screen and (max-width: 360px) {
- 
-    .containerCart{
-       font-size: 0.8rem;
+
+
+@media (max-width: 1280px) {
+    .subTotalCheckout > div:first-child,.shippingCheckout > div:first-child, .totalCheckout > div:first-child {
+        margin-right: 20vh;
     }
 
-    .tableCart{
-        width: 90% !important;
+    .cartChangeQtyInput{
+        width: 4vw;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .tableCart {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+    .cartChangeQtyInput{
+        width: 4vw;
     }
 
     .checkoutContainer{
-        width: 100% !important;
-    }
-    
-    .totalCheckout > div:first-child{
-        margin-right: 15vw;
+        width: 90%;
+        font-size: 0.9rem;
     }
 
-    .shippingCheckout > div:first-child{
-        margin-right: 15vw;
+    .checkoutContent{
+        margin-left: 45vw;
     }
 
-    .subTotalCheckout > div:first-child{
-        margin-right: 15vw;
+    .subTotalCheckout > div:first-child,.shippingCheckout > div:first-child, .totalCheckout > div:first-child {
+        margin-right: 15vh;
     }
 
-    .totalCheckout,.shippingCheckout,.subTotalCheckout{
-        width: 60vw;
+}
+
+@media (max-width: 768px) {
+    .tableCart {
+        font-size: 0.8rem;
     }
-  }
+
+    .qtyBoxInput{
+        width: 10vw;
+    }
+
+    .checkoutContainer{
+        width: 90%;
+        font-size: 0.8rem;
+    }
+
+    .checkoutContent{
+        margin-left: 40vw;
+    }
+
+    .subTotalCheckout,.shippingCheckout, .totalCheckout {
+        width: 35vw;
+    }
+
+    .subTotalCheckout > div:first-child,.shippingCheckout > div:first-child, .totalCheckout > div:first-child {
+        margin-right: 15vh;
+    }
+}
+
+@media (max-width: 640px) {
+    .tableCart {
+        width: 95%;
+        font-size: 0.7rem;
+    }
+
+    .qtyBoxInput{
+        width: 12vw;
+    }
+
+    .cartChangeQtyInput{
+        width: 5vw;
+    }
+
+    .checkoutContainer{
+        width: 95%;
+        font-size: 0.7rem;
+    }
+
+    .checkoutContent{
+        margin-left: 40vw;
+    }
+
+    .subTotalCheckout,.shippingCheckout, .totalCheckout {
+        width: 40vw;
+    }
+
+    .subTotalCheckout > div:first-child,.shippingCheckout > div:first-child, .totalCheckout > div:first-child {
+        margin-right: 15vh;
+    }
+}
+
+
+@media (max-width: 351px) {
+    .checkoutContainer{
+        width: 98%;
+        font-size: 0.7rem;
+    }
+
+    .checkoutContent{
+        margin-left: 15vw;
+    }
+    .subTotalCheckout,.shippingCheckout, .totalCheckout {
+        width: 65vw;
+    }
+
+    .subTotalCheckout > div:first-child,.shippingCheckout > div:first-child, .totalCheckout > div:first-child {
+        margin-right: 13vh;
+    }
+
+    .imageTable{
+        width: 50%;
+    }
+
+    .tableCart {
+        width: 98%;
+        font-size: 0.7rem;
+    }
+
+    .cartBoxContent{
+        position: relative;
+    }
+
+    .tableHead {
+        color: white;
+    }
+
+    .qtyBox{
+        position: absolute;
+        bottom: 3%;
+        right: 3%;
+    }
+
+    .qtyBoxInput{
+        width: 25vw;
+    }
+
+    .cartChangeQtyInput{
+        width: 15vw;
+    }
+
+    .cartDeleteButton{
+        position: absolute;
+        bottom: 7%;
+        right: 1%;
+    }
+
+}

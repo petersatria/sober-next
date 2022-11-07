@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { getCookie } from '../../moduleComponents/cookie'
 import { notifications } from '../../moduleComponents/notification'
-const url = `${process.env.DEV_URL}`
+const url = `${process.env.NEXT_PUBLIC_URL}`
 
 
 export const cartSlicer = createSlice({
