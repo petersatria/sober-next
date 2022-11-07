@@ -36,10 +36,13 @@ const GoogleLoginButton = () => {
 
   const userLogin = async () => {
     setLoading(true);
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}socialLogin`, {
-      email: googleEmail,
-      password: googlePassword,
-    });
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}socialLogin`,
+      {
+        email: googleEmail,
+        password: googlePassword,
+      }
+    );
     setLoading(false);
     let isNotif = await notificationSocialLogin(response);
     if (isNotif) {
@@ -55,7 +58,7 @@ const GoogleLoginButton = () => {
     try {
       setLoading(true);
       const responseRegister = await axios.post(
-        `http://localhost:5000/api/user/signup`,
+        `${process.env.NEXT_PUBLIC_URL}api/user/signup`,
         {
           username: googleUsername,
           email: googleEmail,

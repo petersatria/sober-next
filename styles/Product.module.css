@@ -162,3 +162,14 @@
 .borderBottom {
 	border-bottom: 1px solid #eaebee;
 }
+
+.small {
+	color: #909097;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.small:hover {
+	color: #23232c;
+	font-weight: 500;
+}

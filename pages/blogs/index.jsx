@@ -158,11 +158,13 @@ export default BlogList;
 
 export async function getServerSideProps(context) {
   const { data } = await axios.get(
-    `http://localhost:5000/api/blog/articles?page=${
+    `${process.env.NEXT_PUBLIC_URL}api/blog/articles?page=${
       context.query.page ? context.query.page : 1
     }`
   );
-  const allData = await axios.get(`http://localhost:5000/api/blog/articles`);
+  const allData = await axios.get(
+    `${process.env.NEXT_PUBLIC_URL}api/blog/articles`
+  );
 
   return {
     props: {

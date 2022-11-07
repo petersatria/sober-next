@@ -109,7 +109,7 @@ const ProductList = (props) => {
         // </div>
         <div
           key={key}
-          className={`my-1 ${styles.tag}`}
+          className={`my-1 me-2 ${styles.tag}`}
           onClick={filterHandler}
           value={key}
         >
@@ -122,22 +122,31 @@ const ProductList = (props) => {
   return (
     <Page title={"All Products"} description={"All Products"}>
       <div className="container">
-        <BreadCumb linkTo={"All Products"} linkRef={"/products/"} />
+        <BreadCumb
+          linkTo={
+            category.length
+              ? `Product for: ${category.map((e) => e.toUpperCase())}`
+              : "All Products"
+          }
+          linkRef={"/products/"}
+        />
         <div className="row">
-          <div className="col-12 col-lg-3 my-3 d-none d-lg-block">
-            <div>
-              <div className={`${styles.borderBottom}`}></div>
-              <h2 className={`mb-3 ${styles.sidebarTitle}`}>Filter Product</h2>
+          <div className="col-12 col-lg-3 col-md-12 my-2 d-none d-md-block">
+            <div className={`${styles.borderBottom}`}></div>
+            <h2 className={`mb-3 mt-3 ${styles.sidebarTitle}`}>
+              Filter Product
+            </h2>
+            <div className="d-flex flex-md-row flex-lg-column">
               {countCategory(allData)}
-              <Link href="/products">
-                <button className="mt-2" onClick={resetFilter}>
-                  Reset
-                </button>
-              </Link>
-              <div className={`my-5 ${styles.borderBottom}`}></div>
             </div>
+            <Link href="/products">
+              <button className="mt-2" onClick={resetFilter}>
+                <p className={styles.small}>Reset filter</p>
+              </button>
+            </Link>
+            <div className={`my-5 ${styles.borderBottom}`}></div>
           </div>
-          <div className="col-12 col-lg-9 my-3">
+          <div className="col-12 col-lg-9 my-2">
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 text-center">
               {/* filter cat */}
               {/* {filter
@@ -208,12 +217,14 @@ export async function getServerSideProps(context) {
     console.log(categoryQuery);
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/product?page=${
+      `${process.env.NEXT_PUBLIC_URL}api/product?page=${
         page ? page : 1
       }${removeCommaCategory}`
     );
 
-    const allData = await axios.get(`http://localhost:5000/api/product`);
+    const allData = await axios.get(
+      `${process.env.NEXT_PUBLIC_URL}api/product`
+    );
 
     return {
       props: {

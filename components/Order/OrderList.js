@@ -37,7 +37,7 @@ const OrderList = () => {
   const getOrders = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/transactionHistoryDetail/${router.query.profileId}`, {
+        `${process.env.NEXT_PUBLIC_URL}transactionHistoryDetail/${router.query.profileId}`, {
         headers: {
           Authorization: `Bearer ${tokenAuth}`,
         },

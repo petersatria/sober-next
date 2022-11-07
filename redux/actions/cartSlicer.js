@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { getCookie } from '../../moduleComponents/cookie'
 import { notifications } from '../../moduleComponents/notification'
-const url = `${process.env.DEV_URL}`
+const url = `${process.env.REACT_APP_URL}`
 
 
 export const cartSlicer = createSlice({
@@ -52,7 +52,7 @@ export const fetchCart = createAsyncThunk('fetch/cart', async (data, thunkAPI) =
         }
 
 
-        const cartUser = await axios.get(`http://localhost:5000/cart/${userId}`, {
+        const cartUser = await axios.get(`${process.env.NEXT_PUBLIC_URL}cart/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token.token}`
             }
@@ -148,13 +148,13 @@ export const checkoutCart = createAsyncThunk('checkout/cart', async (data, thunk
         carts: data.carts
     }
     try {
-        const dataToken = await axios.post(`${url}getTokenPayment`, {userId, total_order:dataPost.total_order}, {
+        const dataToken = await axios.post(`${url}getTokenPayment`, { userId, total_order: dataPost.total_order }, {
             headers: {
                 Authorization: `Bearer ${token.token}`
             }
         })
         window.snap.pay(dataToken.data, {
-            onSuccess:async()=>{
+            onSuccess: async () => {
                 console.log('success push')
                 await axios.post(`${url}transactionHistoryPost`, dataPost, {
                     headers: {

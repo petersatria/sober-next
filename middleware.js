@@ -22,7 +22,8 @@ export function middleware(req) {
     pathname === "/products" ||
     pathname.includes("/products/6") ||
     pathname === "/about-us" ||
-    pathname === "/signup"
+    pathname === "/signup" ||
+    pathname === "/search"
   ) {
     return NextResponse.next();
   }

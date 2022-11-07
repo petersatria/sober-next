@@ -9,6 +9,7 @@ import ProductsByCategory from '../components/Home/Product/ProductsByCategory';
 import Newsletter from '../components/Home/Newsletter/Newsletter';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Page from "../components/Page";
 
 export default function HomePage({
     productsBestWeek,
@@ -61,19 +62,21 @@ export default function HomePage({
 
     return (
         <>
-            <Hero />
-            <Video />
-            <ProductsBestWeek items={productsBestWeek} />
-            {productsCategoryItem.map((item) => (
-                <ProductsByCategory
-                    key={item.id}
-                    items={item.items}
-                    image={item.image}
-                    heading={item.heading}
-                    category={item.category}
-                />
-            ))}
-            <Newsletter />
+            <Page title={"Shop Online Fashion"} description={"Fashion in Indonesia"}>
+                <Hero />
+                <Video />
+                <ProductsBestWeek items={productsBestWeek} />
+                {productsCategoryItem.map((item) => (
+                    <ProductsByCategory
+                        key={item.id}
+                        items={item.items}
+                        image={item.image}
+                        heading={item.heading}
+                        category={item.category}
+                    />
+                ))}
+                <Newsletter />
+            </Page>
         </>
     );
 }

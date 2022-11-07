@@ -5,7 +5,7 @@ export const postUserLogin = createAsyncThunk(
   "userLogin/postUserLogin",
   async ({ username, password }, thunkAPI) => {
     try {
-      const response = await axios.post("http://localhost:5000/loginData", {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}loginData`, {
         username,
         password,
       });
