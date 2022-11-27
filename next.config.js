@@ -13,7 +13,7 @@ const nextConfig = {
             'd29c1z66frfv6c.cloudfront.net',
             'demo.uix.store',
             'sp-ao.shortpixel.ai',
-            'apiv1sober.herokuapp.com'
+            'api-v2-sober.vercel.app'
         ],
     },
 };
